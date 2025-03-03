@@ -6,41 +6,42 @@
 <div class="page-content-container">
 	<h1>Sök på filmtitel</h1>
 
-	<form method="get">
-		<input type="text" name="searchInput" placeholder="sök på filmtitel.." />
+	<form class="search-input" method="get">
+		<input type="text" name="searchInput" placeholder="sök på filmtitel.." required/>
 		<button type="submit">Sök</button>
 	</form>
 
-	@if (!string.IsNullOrEmpty(Model.SearchInput))
-	{
-		<section class="search-result-head">
-			<h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat</h6>
-		</section>
+    @* Kolla så söksträngen har ett värde *@
+    @if (!string.IsNullOrEmpty(Model.SearchInput))
+    {
+		@* Kolla så det finns filmer att visa *@
+        if (Model.Movies.Count > 0)
+        {
+            @* Extra sökinfo *@
+            <section class="search-result-head">
+                <h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat</h6>
+            </section>
 
-		<section class="search-result-body">
-			<table>
-				<thead>
-					<tr>
-						<th>Poster</th>
-						<th>Info</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var movie in Model.Movies)
-					{
-						<tr onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
-							<td>
-								<img src="@movie.Poster" style="width: 100px" />
-							</td>
-							<td class="search-result-movie-details">
-								@movie.Title <br />
-								(@movie.Year) <br />
-								@movie.Type
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</section>
-	}
+			@* Skriv ut alla filmer som hittades *@
+            <section>
+                @foreach (var movie in Model.Movies)
+                {   
+
+                    <div class="search-result-movie-row" onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
+                        <div>
+                            <img src="@movie.Poster" />
+                        </div>
+                        <div class="search-result-movie-details">
+                            <p class="search-result-title">@movie.Title</p>
+                            <p class="search-result-year">@movie.Type (@movie.Year)</p>
+                        </div>
+                    </div>
+                }
+            </section>
+        }
+        else
+        {
+            <p>Inga filmer hittades för "@Model.SearchInput". Prova igen!</p>
+        }
+    }
 </div>

@@ -51,6 +51,7 @@ article {
 img {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    max-width: 8rem;
 }
 
 tr:hover {
@@ -66,6 +67,7 @@ tr:hover {
     margin: 0 auto;
     padding: 0 10px;
     flex-direction: column;
+    margin-top: 4rem;
 }
 
 .section-all-reviews {
@@ -77,9 +79,41 @@ h2 {
     margin-left: 0;
 }
 
-.search-result-row-movie {
+.search-result-head{
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+}
+
+.search-input{
+    margin-top: 2rem;
+}
+
+.search-result-movie-row {
+    display:flex;
+    text-align: center;
     border: 1px solid black;
     border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-movie-row:hover{
+    background-color: honeydew;
+    cursor: pointer;
+}
+
+.search-result-movie-details {
+    max-width: 30rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.search-result-title{
+    font-size: 1.5rem;
 }
 
 .article-full-movie {
