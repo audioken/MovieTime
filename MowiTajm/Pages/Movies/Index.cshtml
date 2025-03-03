@@ -8,3 +8,29 @@
 	<button type="submit">Sök</button>
 </form>
 
+@if (!string.IsNullOrEmpty(Model.SearchInput))
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Poster</th>
+				<th>Title</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var movie in Model.Movies)
+			{
+				<tr onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
+					<td>
+						<img src="@movie.Poster" style="width: 100px" />
+					</td>
+					<td>
+						@movie.Title <br />
+						(@movie.Year) <br />
+						@movie.Type
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

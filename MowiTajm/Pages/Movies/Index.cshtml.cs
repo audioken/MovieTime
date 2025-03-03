@@ -13,14 +13,17 @@ namespace MowiTajm.Pages.Movies
             _omdbService = omdbService;
         }
 
-        public List<MovieLite> Movies { get; set; } = new List<MovieLite>();
+        public List<MovieLite> Movies { get; set; } = new();
+        public string SearchInput { get; set; }
 
         public async Task OnGetAsync(string searchInput)
         {
+            SearchInput = searchInput;
+
             if (!string.IsNullOrWhiteSpace(searchInput))
             {
                 var result = await _omdbService.SearchMoviesAsync(searchInput);
-                Movies = result.Movies;
+                Movies = result.Search;
             }
         }
     }
