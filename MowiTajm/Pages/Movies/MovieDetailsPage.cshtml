@@ -6,14 +6,14 @@
 
 @if(Model.Movie != null){
 
-    <div class="content-wrapper">
+    <div class="page-content-container">
 
-        <article class="articleFullMovie">
-            <section id="sectionPoster">
+        <article class="article-full-movie">
+            <section id="section-poster">
                 <img src="@Model.Movie.Poster" />
             </section>
 
-            <section id="sectionDetails">
+            <section id="section-details">
                 <p>@Model.Movie.Year | @Model.Movie.Runtime</p>
                 <h1>@Model.Movie.Title</h1>
                 <p>@Model.Movie.Genre</p>
@@ -25,7 +25,7 @@
             </section>
         </article>
 
-        <section class="sectionAllReviews">
+        <section class="section-all-reviews">
             @if (Model.Reviews.Count == 0)
             {
                 <p>Ingen har skrivit en recension än, bli den första!</p>
@@ -33,7 +33,7 @@
             else
             {
                 <header>
-                    <h2 id="titleReviews">Recensioner (@Model.Reviews.Count)</h2>
+                    <h2 id="reviews-title">Recensioner (@Model.Reviews.Count)</h2>
                 </header>
 
                 @foreach (var review in Model.Reviews)
@@ -69,7 +69,7 @@
             }
         </section>
 
-        <section class="reviews-input-form">
+        <section class="review-input-form">
             <form method="post">
                 <input type="hidden" asp-for="Review.ImdbID" />
 

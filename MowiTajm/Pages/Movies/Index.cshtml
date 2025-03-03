@@ -3,34 +3,44 @@
 @{
 }
 
-<form method="get">
-	<input type="text" name="searchInput" placeholder="sök på filmtitel.." />
-	<button type="submit">Sök</button>
-</form>
+<div class="page-content-container">
+	<h1>Sök på filmtitel</h1>
 
-@if (!string.IsNullOrEmpty(Model.SearchInput))
-{
-	<table>
-		<thead>
-			<tr>
-				<th>Poster</th>
-				<th>Title</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var movie in Model.Movies)
-			{
-				<tr onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
-					<td>
-						<img src="@movie.Poster" style="width: 100px" />
-					</td>
-					<td>
-						@movie.Title <br />
-						(@movie.Year) <br />
-						@movie.Type
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-}
+	<form method="get">
+		<input type="text" name="searchInput" placeholder="sök på filmtitel.." />
+		<button type="submit">Sök</button>
+	</form>
+
+	@if (!string.IsNullOrEmpty(Model.SearchInput))
+	{
+		<section class="search-result-head">
+			<h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat</h6>
+		</section>
+
+		<section class="search-result-body">
+			<table>
+				<thead>
+					<tr>
+						<th>Poster</th>
+						<th>Info</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var movie in Model.Movies)
+					{
+						<tr onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
+							<td>
+								<img src="@movie.Poster" style="width: 100px" />
+							</td>
+							<td class="search-result-movie-details">
+								@movie.Title <br />
+								(@movie.Year) <br />
+								@movie.Type
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</section>
+	}
+</div>

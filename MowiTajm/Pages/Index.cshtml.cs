@@ -7,6 +7,7 @@ namespace MowiTajm.Pages
     {
         public IActionResult OnGet()
         {
+            // Redirecta användaren till huvudsidan för sökning på filmtitlar
             return RedirectToPage("/Movies/Index");
         }
     }

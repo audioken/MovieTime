@@ -1,22 +1,228 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    width: 2em;
+    height: 2em;
+}
+
+button:hover {
+    background-color: antiquewhite;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+article {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: 50em;
+    margin: 0 auto;
+}
+
+img {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+tr:hover {
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+.page-content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 0 10px;
+    flex-direction: column;
+}
+
+.section-all-reviews {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    margin-left: 0;
+}
+
+.search-result-row-movie {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.article-full-movie {
+    display: flex;
+}
+
+#section-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#reviews-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+}
+
+/*.buttonsReview {
+    display: flex;
+}*/
+
+.review-full {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.review-head {
+    display: flex; /* Gör section till en flex container */
+    justify-content: space-between; /* Placerar elementen på vardera ände */
+    align-items: center; /* Justera vertikalt (om det behövs) */
+}
+
+.review-meta {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.review-name, .review-stars {
+    font-size: 1.5em;
+}
+
+
+.star {
+    color: gold;
+    font-size: 2.2rem;
+}
+
+.review-footer {
+    display: flex; /* Gör section till en flex container */
+    justify-content: right; /* Placerar elementen på vardera ände */
+    align-items: center; /* Justera vertikalt (om det behövs) */
+}
+
+.review-input-form {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.review-input-name, .review-input-title {
+    width: 15rem;
+    height: 3rem;
+}
+
+.review-input-text {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 40rem;
+    height: 10rem;
+    resize: vertical; /* om du vill att användaren ska kunna ändra höjden */
+    padding: 0.5rem; /* lite padding så att texten inte klistras mot kanten */
+    box-sizing: border-box; /* så padding inte förstör storleken */
+    margin-top: 1.5rem;
+}
+
+.review-input-stars {
+    display: flex;
+    flex-direction: row-reverse; /* Så att första stjärnan är längst till vänster */
+    justify-content: flex-start;
+}
+
+/* Dölj de riktiga radio-knapparna */
+.review-input-stars input {
+    display: none;
+}
+
+/* Style på alla stjärnor (labels) */
+.review-input-stars label {
+    font-size: 5rem;
+    cursor: pointer;
+    color: lightgrey;
+}
+
+/* När en radioknapp är ibockad eller om den har en yngre bror som är ibockad */
+.review-input-stars input:checked ~ label,
+.review-input-stars label:hover,
+.review-input-stars label:hover ~ label {
+    color: gold;
+}
+
+.review-input-head {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+
+.review-input-stars {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+}
+
+.review-input-btn-submit {
+    display: flex;
+    justify-content: right;
+}
+
+/* På små skärmar, gör att de ska ligga på en rad istället */
+@media (max-width: 767px) {
+    .article-full-movie {
+        flex-direction: column;
+        background-color: red;
+    }
+
+    img {
+        width: 100%; /* Gör så att section-poster tar upp hela bredden */
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        min-width: 0;
+        padding: 0; /* Se till att det inte finns någon extra padding som påverkar bredden */
+    }
+
+    #section-details {
+        width: 100%; /* Gör så att sectionDetails också tar upp hela bredden */
+        padding: 10px;
+    }
 }
