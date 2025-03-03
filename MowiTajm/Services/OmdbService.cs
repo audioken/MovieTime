@@ -29,5 +29,18 @@ namespace MowiTajm.Services
             // Returnerar det deserialiserade resultatet
             return result;
         }
+
+        public async Task<MovieFull> GetMovieByIdAsync(string imdbId)
+        {
+            var response = await _httpClient.GetAsync($"http://www.omdbapi.com/?i={imdbId}&apikey=2e1cb575");
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<MovieFull>(content);
+
+            return result;
+        }
     }
 }
