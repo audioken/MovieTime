@@ -19,7 +19,7 @@
         {
             @* Extra sökinfo *@
             <section class="search-result-head">
-                <h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat</h6>
+                <h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat.</h6>
             </section>
 
 			@* Skriv ut alla filmer som hittades *@
@@ -29,7 +29,7 @@
 
                     <div class="search-result-movie-row" onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
                         <div>
-                            <img src="@movie.Poster" />
+                            <img class="movie-lite-poster" src="@movie.Poster" />
                         </div>
                         <div class="search-result-movie-details">
                             <p class="search-result-title">@movie.Title</p>

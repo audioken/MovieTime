@@ -10,7 +10,7 @@
 
         <article class="article-full-movie">
             <section id="section-poster">
-                <img src="@Model.Movie.Poster" />
+                <img class="movie-full-poster"src="@Model.Movie.Poster" />
             </section>
 
             <section id="section-details">
@@ -28,7 +28,7 @@
         <section class="section-all-reviews">
             @if (Model.Reviews.Count == 0)
             {
-                <p>Ingen har skrivit en recension än, bli den första!</p>
+                <p class="text-no-reviews-yet">Ingen har skrivit en recension än, bli den första!</p>
             }
             else
             {
@@ -59,10 +59,12 @@
 
                         <footer class="review-footer">
 							<p>@review.DateTime</p>
-                            <button asp-page="./EditReview" asp-route-id="@review.Id">✏️</button>
-                            <form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-                                <button type="submit">❌</button>
-                            </form>
+                            <div class="review-buttons">
+                                <button asp-page="./EditReview" asp-route-id="@review.Id">✏️</button>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
+                                    <button type="submit">❌</button>
+                                </form>
+                            </div>
                         </footer>
                     </article>
                 }
@@ -75,25 +77,25 @@
 
                 <section class="review-input-head">
                     <div>
-                        <input type="text" class="review-input-name" placeholder="Namn.." asp-for="Review.Username" required /> <br />
-                        <input type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+                        <input class="review-input-name" type="text" class="review-input-name" placeholder="Namn.." asp-for="Review.Username" required /> <br />
+                        <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
                     </div>
 
                     <div class="review-input-stars">
                         <input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
-                        <label for="star5">★ </label>
+                        <label class="star" for="star5">★ </label>
 
                         <input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
-                        <label for="star4">★ </label>
+                        <label class="star" for="star4">★ </label>
 
                         <input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
-                        <label for="star3">★ </label>
+                        <label class="star" for="star3">★ </label>
 
                         <input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
-                        <label for="star2">★ </label>
+                        <label class="star" for="star2">★ </label>
 
                         <input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
-                        <label for="star1">★ </label>
+                        <label class="star" for="star1">★ </label>
                     </div>
                 </section>
 

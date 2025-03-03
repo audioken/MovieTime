@@ -48,9 +48,16 @@ article {
     margin: 0 auto;
 }
 
-img {
+.movie-lite-poster, .movie-full-poster {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+}
+
+.movie-full-poster{
+    max-width: 50rem;
+}
+
+.movie-lite-poster {
     max-width: 8rem;
 }
 
@@ -127,15 +134,16 @@ h2 {
     padding: 1rem;
 }
 
+.text-no-reviews-yet{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 #reviews-title {
     margin-top: 2rem;
     margin-bottom: 1rem;
     margin-left: 0.5rem;
 }
-
-/*.buttonsReview {
-    display: flex;
-}*/
 
 .review-full {
     width: 100%;
@@ -146,9 +154,9 @@ h2 {
 }
 
 .review-head {
-    display: flex; /* Gör section till en flex container */
-    justify-content: space-between; /* Placerar elementen på vardera ände */
-    align-items: center; /* Justera vertikalt (om det behövs) */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
 }
 
 .review-meta {
@@ -161,6 +169,10 @@ h2 {
     font-size: 1.5em;
 }
 
+.review-buttons{
+    display: flex;
+}
+
 
 .star {
     color: gold;
@@ -168,9 +180,9 @@ h2 {
 }
 
 .review-footer {
-    display: flex; /* Gör section till en flex container */
-    justify-content: right; /* Placerar elementen på vardera ände */
-    align-items: center; /* Justera vertikalt (om det behövs) */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
 }
 
 .review-input-form {
@@ -180,11 +192,13 @@ h2 {
     display: flex;
     justify-content: center;
     align-content: center;
+    width:100%;
 }
 
 .review-input-name, .review-input-title {
     width: 15rem;
     height: 3rem;
+    margin-top: 1rem;
 }
 
 .review-input-text {
@@ -192,8 +206,8 @@ h2 {
     border-radius: 10px;
     width: 40rem;
     height: 10rem;
-    resize: vertical; /* om du vill att användaren ska kunna ändra höjden */
-    padding: 0.5rem; /* lite padding så att texten inte klistras mot kanten */
+    resize: vertical; /* gör så att användaren ska kunna ändra höjden */
+    padding: 0.5rem;
     box-sizing: border-box; /* så padding inte förstör storleken */
     margin-top: 1.5rem;
 }
@@ -240,11 +254,11 @@ h2 {
     justify-content: right;
 }
 
-/* På små skärmar, gör att de ska ligga på en rad istället */
 @media (max-width: 767px) {
+
+    /* På små skärmar, gör att de ska ligga på en rad istället */
     .article-full-movie {
         flex-direction: column;
-        background-color: red;
     }
 
     img {
@@ -258,5 +272,49 @@ h2 {
     #section-details {
         width: 100%; /* Gör så att sectionDetails också tar upp hela bredden */
         padding: 10px;
+    }
+
+    .review-input-form {
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+    }
+
+    .review-input-name, .review-input-title {
+        width: 5rem;
+        height: 3rem;
+    }
+
+    .review-input-head{
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .review-input-name, .review-input-title{
+        width: 100%;
+    }
+
+    .review-input-stars{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        width: 100%;
+        margin-top: -1.2rem;
+        
+    }
+
+    .review-input-text {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 100%;
+        height: 10rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        margin-top: 0.5rem;
     }
 }
