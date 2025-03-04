@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MowiTajm.Areas.Identity.Pages.Account
@@ -137,8 +138,20 @@ namespace MowiTajm.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Tilldelar användaren rollen "Admin" direkt efter att kontot skapats <--- Lagt till denna rad.
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    // ---------------------- Tillagd kod ---------------------- //
+
+                    // Kontrollera om detta är den första användaren i systemet
+                    if ((await _userManager.Users.CountAsync()) == 1)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    // Annars tilldelas rollen "User"
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+
+                    // ---------------------------------------------------------- //
 
                     // Skapar en bekräftelselänk för e-postverifiering
                     var userId = await _userManager.GetUserIdAsync(user);
