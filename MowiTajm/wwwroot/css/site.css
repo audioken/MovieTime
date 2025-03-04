@@ -23,9 +23,8 @@ body {
 
 button {
     border: none;
+    padding: 0.8rem, 0.8rem;
     background-color: transparent;
-    width: 2em;
-    height: 2em;
 }
 
 button:hover {
@@ -171,6 +170,7 @@ h2 {
 
 .review-buttons{
     display: flex;
+    gap: 1rem;
 }
 
 
@@ -253,6 +253,20 @@ h2 {
     display: flex;
     justify-content: right;
 }
+
+.btn-design {
+    display: inline-block;
+    padding: 0.8rem 0.8rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-design:hover {
+    background-color: antiquewhite;
+}
+
 
 @media (max-width: 767px) {
 

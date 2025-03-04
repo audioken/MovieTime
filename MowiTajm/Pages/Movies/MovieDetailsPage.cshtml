@@ -60,9 +60,9 @@
                         <footer class="review-footer">
 							<p>@review.DateTime</p>
                             <div class="review-buttons">
-                                <button asp-page="./EditReview" asp-route-id="@review.Id">✏️</button>
+                                <a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
                                 <form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-                                    <button type="submit">❌</button>
+                                    <button class="btn-design" type="submit">❌</button>
                                 </form>
                             </div>
                         </footer>
@@ -102,7 +102,7 @@
                 <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
                 <footer class="review-input-btn-submit">
-                    <button type="submit">➕</button>
+                    <button class="btn-design" type="submit">➕</button>
                 </footer>
             </form>
         </section>
