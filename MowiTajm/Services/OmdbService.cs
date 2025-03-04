@@ -30,9 +30,10 @@ namespace MowiTajm.Services
             return result;
         }
 
-        public async Task<MovieFull> GetMovieByIdAsync(string imdbId)
+        public async Task<MovieFull> GetMovieByIdAsync(string imdbID)
         {
-            var response = await _httpClient.GetAsync($"http://www.omdbapi.com/?i={imdbId}&apikey=2e1cb575");
+            // Anropar OMDB API för att hämta information om en specifik film baserat på IMDB-ID
+            var response = await _httpClient.GetAsync($"http://www.omdbapi.com/?i={imdbID}&apikey=2e1cb575");
 
             response.EnsureSuccessStatusCode();
 

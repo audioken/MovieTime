@@ -2,3 +2,45 @@
 @model MowiTajm.Pages.Movies.EditReviewPageModel
 @{
 }
+
+<div class="page-content-container">
+    <h1>Redigera recension</h1>
+
+    <section class="review-input-form">
+        <form method="post">
+            <input type="hidden" asp-for="Review.Id"/>
+            <input type="hidden" asp-for="Review.ImdbID" />
+
+            <section class="review-input-head">
+                <div>
+                    <input class="review-input-name" type="text" class="review-input-name" placeholder="Namn.." asp-for="Review.Username" required /> <br />
+                    <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+                </div>
+
+                <div class="review-input-stars">
+                    <input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
+                    <label class="star" for="star5">★ </label>
+
+                    <input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
+                    <label class="star" for="star4">★ </label>
+
+                    <input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
+                    <label class="star" for="star3">★ </label>
+
+                    <input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
+                    <label class="star" for="star2">★ </label>
+
+                    <input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
+                    <label class="star" for="star1">★ </label>
+                </div>
+            </section>
+
+            <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+
+            <footer class="review-input-btn-submit">
+                <button class="btn-design" type="submit">✅</button>
+                <a class="btn-design" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">❌</a>
+            </footer>
+        </form>
+    </section>
+</div>
