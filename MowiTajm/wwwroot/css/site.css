@@ -17,7 +17,7 @@ body {
 
 button {
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     background-color: transparent;
     cursor: pointer;
 }
@@ -30,7 +30,6 @@ input {
     border: none;
     border-bottom: 1px solid black;
     padding: 0.5rem;
-    margin-bottom: 1rem;
     width: 100%;
     max-width: 30rem;
     box-sizing: border-box;
@@ -68,6 +67,18 @@ tr:hover {
 
 .search-result-head, .search-input {
     margin-top: 2rem;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+    padding: 0.5rem;
+    height: 4rem;
+}
+
+.search-input input {
+    height: 100%; 
 }
 
 .search-result-movie-row {
@@ -109,6 +120,10 @@ tr:hover {
 .movie-full-poster {
     max-width: 20rem;
     height: 25rem; /* eller ett fast mått om du vill */
+}
+
+.movie-lite-poster{
+    max-width: 10rem;
 }
 
 .movie-lite-poster, .movie-full-poster {
@@ -247,17 +262,11 @@ tr:hover {
     text-decoration: none;
     border-radius: 5px;
     text-align: center;
-    background-color: #258cfb;
 }
 
 .btn-design:hover {
     background-color: antiquewhite;
     color: black;
-}
-
-footer {
-    margin-top: auto;
-    /*background-color:red;*/
 }
 
 @media (max-width: 767px) {
