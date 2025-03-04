@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,16 @@ namespace MowiTajm.Pages.Movies
     {
         private readonly OmdbService _omdbService;
         private readonly ApplicationDbContext _database;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database)
+        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<IdentityUser> signÍnManager)
         {
             _omdbService = omdbService;
             _database = database;
+            _signInManager = signÍnManager;
         }
+
+        public bool IsUserSignedIn => _signInManager.IsSignedIn(User);
 
         public MovieFull Movie { get; set; } = new();
 
