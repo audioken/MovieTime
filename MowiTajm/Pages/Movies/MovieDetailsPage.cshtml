@@ -27,21 +27,21 @@
 
         <form method="post" asp-page-handler="StarFilter">
             <input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-            <div class="review-search-stars">
-                <input class="searchStar" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchStar" for="searchStar5">★ </label>
+            <div class="review-input-stars">
+                <input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
+                <label class="star" for="searchStar5">★ </label>
 
-                <input class="searchStar" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchStar" for="searchStar4">★ </label>
+                <input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
+                <label class="star" for="searchStar4">★ </label>
 
-                <input class="searchStar" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchStar" for="searchStar3">★ </label>
+                <input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
+                <label class="star" for="searchStar3">★ </label>
 
-                <input class="searchStar" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchStar" for="searchStar2">★ </label>
+                <input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
+                <label class="star" for="searchStar2">★ </label>
 
-                <input class="searchStar" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchStar" for="searchStar1">★ </label>
+                <input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
+                <label class="star" for="searchStar1">★ </label>
 
                 <input class="searchAllReview" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
                 <label class="searchAllReview" for="searchAll">Visa alla </label>
@@ -98,7 +98,7 @@
         </section>
 
         <section class="review-input-form">
-            <form method="post">
+            <form method="post" asp-page-handler="AddReview">
                 <input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
 
                 <section class="review-input-head">

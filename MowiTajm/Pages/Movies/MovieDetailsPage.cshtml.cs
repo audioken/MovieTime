@@ -41,7 +41,7 @@ namespace MowiTajm.Pages.Movies
             }
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAddReview()
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,6 @@ namespace MowiTajm.Pages.Movies
         {
             Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
             Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
-            ModelState.Clear();
             return Page();
         }
     }
