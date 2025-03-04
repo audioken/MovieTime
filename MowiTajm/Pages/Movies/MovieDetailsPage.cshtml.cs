@@ -24,6 +24,10 @@ namespace MowiTajm.Pages.Movies
         public Review Review { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
 
+        //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
+        [BindProperty]
+        public int SearchReview { get; set; }
+
         public async Task OnGetAsync(string imdbID)
         {
             if (!string.IsNullOrWhiteSpace(imdbID))
@@ -71,6 +75,14 @@ namespace MowiTajm.Pages.Movies
             }
             // Ladda om sidan och dess innehåll
             return RedirectToPage("MovieDetailsPage", new { imdbId = review.ImdbID });
+        }
+
+        public async Task<IActionResult> OnPostStarFilter()
+        {
+            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
+            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+            ModelState.Clear();
+            return Page();
         }
     }
 }
