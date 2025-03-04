@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MowiTajm;
 using MowiTajm.Data;
 using MowiTajm.Services;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // <--- Lagt till AddRoles.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
@@ -19,6 +21,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient<OmdbService>();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+RoleSeeder.SeedRolesAsync(roleManager).Wait();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MowiTajm.Areas.Identity.Pages.Account
@@ -30,12 +31,16 @@ namespace MowiTajm.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        private readonly RoleManager<IdentityRole> _roleManager; // <--- Lagt till denna rad.
+
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager// <--- Lagt till denna rad.
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +48,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager; // <--- Lagt till denna rad.
         }
 
         /// <summary>
@@ -108,49 +114,81 @@ namespace MowiTajm.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            // Sätter returnUrl till hemsidan ("/") om den inte redan är definierad
             returnUrl ??= Url.Content("~/");
+
+            // Hämtar externa inloggningsmetoder (t.ex. Google, Facebook) och sparar dem i en lista
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            // Kontrollera om formulärdata är giltig
             if (ModelState.IsValid)
             {
+                // Skapar en ny användare
                 var user = CreateUser();
 
+                // Sätter användarnamn och e-postadress för den nya användaren
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                // Försöker skapa användaren i databasen med angivet lösenord
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                // Kontrollera om skapandet lyckades
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    // ---------------------- Tillagd kod ---------------------- //
+
+                    // Kontrollera om detta är den första användaren i systemet
+                    if ((await _userManager.Users.CountAsync()) == 1)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    // Annars tilldelas rollen "User"
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+
+                    // ---------------------------------------------------------- //
+
+                    // Skapar en bekräftelselänk för e-postverifiering
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
                     var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
+                        "/Account/ConfirmEmail", // Sida där användaren bekräftar e-post
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
+                    // Skickar bekräftelsemail till användaren
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    // Om e-postbekräftelse krävs, omdirigera till en sida som säger åt användaren att kolla sin e-post
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
+                        // Om e-postbekräftelse inte krävs, logga in användaren direkt
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
+
+                // Om användarskapandet misslyckades, lägg till felen i ModelState för att visa dem i UI
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            // Om något gick fel, visa registreringssidan igen med felmeddelanden
             return Page();
         }
 
