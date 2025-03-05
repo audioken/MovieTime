@@ -33,6 +33,9 @@ namespace MowiTajm.Pages.Movies
         [BindProperty]
         public int SearchReview { get; set; }
 
+        //Genomsnittlig review för filmen baserat på reviews på MovieTime
+        public double MovieTimeReview { get; set; }
+
         public async Task OnGetAsync(string imdbID)
         {
             if (!string.IsNullOrWhiteSpace(imdbID))
@@ -44,9 +47,20 @@ namespace MowiTajm.Pages.Movies
                 // Spara IMDB-ID för att kunna använda det i formuläret
                 Review.ImdbID = imdbID;
             }
-        }
 
-        public async Task<IActionResult> OnPostAddReview()
+            int AllReviews = 0;
+            foreach (Review review in Reviews)
+            {
+				AllReviews += review.Rating;
+			}
+
+			//MovieTimeReview = Reviews.Count > 0 ? AllReviews / Reviews.Count : 0;
+			MovieTimeReview = Reviews.Count > 0 ? Math.Round((double)AllReviews / Reviews.Count, 2) : 0;
+
+
+		}
+
+		public async Task<IActionResult> OnPostAddReview()
         {
             if (!ModelState.IsValid)
             {
