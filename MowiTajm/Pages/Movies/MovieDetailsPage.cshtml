@@ -91,12 +91,24 @@
 
 						<footer class="review-footer">
 							<p>@review.DateTime</p>
-							<div class="review-buttons">
-								<a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
-								<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-									<button class="btn-design" type="submit">❌</button>
-								</form>
-							</div>
+							@if (Model.IsUserSignedIn && review.Username == Model.DisplayName)
+							{
+								<div class="review-buttons">
+									<a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
+									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
+										<button class="btn-design" type="submit">❌</button>
+									</form>
+								</div>
+							}
+							else if (Model.IsUserSignedIn && Model.IsAdmin)
+							{
+								<!-- Admin får bara Delete-knappen på andras reviews -->
+								<div class="review-buttons">
+									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
+										<button class="btn-design" type="submit">❌</button>
+									</form>
+								</div>
+							}
 						</footer>
 					</article>
 				}

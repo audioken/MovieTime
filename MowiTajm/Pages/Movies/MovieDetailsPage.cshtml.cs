@@ -32,6 +32,7 @@ namespace MowiTajm.Pages.Movies
         public Review Review { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
         public string DisplayName { get; set; }
+        public bool IsAdmin { get; set; }
 
         //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
         [BindProperty]
@@ -47,6 +48,7 @@ namespace MowiTajm.Pages.Movies
 
                 // Hämta användarens DisplayName
                 var user = await _userManager.GetUserAsync(User);
+                IsAdmin = user != null && await _userManager.IsInRoleAsync(user, "Admin");
                 DisplayName = user?.DisplayName;
 
                 // Spara IMDB-ID för att kunna använda det i formuläret
