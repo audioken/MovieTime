@@ -8,24 +8,27 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-        @if (UserManager.GetRolesAsync(await UserManager.FindByNameAsync(User.Identity.Name)).Result.Contains("Admin"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Admin/Index">Admin</a>
-            </li>
-        }
+    var currentUser = await UserManager.GetUserAsync(User); // Hämta hela ApplicationUser
+    var displayName = currentUser?.DisplayName ?? User.Identity?.Name; // Fallback om DisplayName saknas
+
+    @if ((await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Admin/Index">Admin</a>
+        </li>
+    }
+
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @displayName!</a>
     </li>
 
-      
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
-		
 }
+
 else
 {
     <li class="nav-item">
