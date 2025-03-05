@@ -111,7 +111,7 @@
 
 					<section class="review-input-head">
 						<div class="review-input-name-and-title">
-							<input class="review-input-name" type="text" value="@User.Identity.Name" class="review-input-name" asp-for="Review.Username" required readonly /> <br /> @* Ändrade så att den lägger till user direkt *@
+							<input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
 							<input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
 						</div>
 
