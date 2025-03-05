@@ -31,7 +31,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager; // <--- Lagt till denna rad.
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -39,7 +39,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager// <--- Lagt till denna rad.
             )
         {
             _userManager = userManager;
@@ -48,7 +48,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _roleManager = roleManager;
+            _roleManager = roleManager; // <--- Lagt till denna rad.
         }
 
         /// <summary>
@@ -84,15 +84,6 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
-            // ---------------------- Tillagd kod ---------------------- //
-
-            [Required]
-            [StringLength(20, ErrorMessage = "The username must be at least 2 and at max 20 characters long.", MinimumLength = 2)]
-            [Display(Name = "Username")]
-            public string Username { get; set; }
-
-            // ---------------------------------------------------------- //
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -136,7 +127,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 // Sätter användarnamn och e-postadress för den nya användaren
-                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None); // Ändrat från "Input.Email" till "Input.Username"
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 // Försöker skapa användaren i databasen med angivet lösenord
@@ -146,6 +137,8 @@ namespace MowiTajm.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // ---------------------- Tillagd kod ---------------------- //
 
                     // Kontrollera om detta är den första användaren i systemet
                     if ((await _userManager.Users.CountAsync()) == 1)
@@ -157,6 +150,8 @@ namespace MowiTajm.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, "User");
                     }
+
+                    // ---------------------------------------------------------- //
 
                     // Skapar en bekräftelselänk för e-postverifiering
                     var userId = await _userManager.GetUserIdAsync(user);
