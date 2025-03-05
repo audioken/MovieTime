@@ -81,7 +81,17 @@ namespace MowiTajm.Pages.Movies
         {
             Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
             Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+            TempData["ScrollToReviews"] = true; // Sätt flaggan
             return Page();
         }
+
+        //public async Task<IActionResult> OnPostStarFilter()
+        //{
+        //    Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
+        //    Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+        //    // Byt ut "./MovieDetailsPage" mot rätt sidväg om det behövs.
+        //    return Redirect(Url.Page("./MovieDetailsPage", new { id = Review.ImdbID }) + "#reviews-title");
+        //}
+
     }
 }
