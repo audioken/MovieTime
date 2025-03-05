@@ -1,3 +1,10 @@
+*{
+    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
 html {
     font-size: clamp(16px, 2vw, 18px);
     position: relative;
@@ -134,6 +141,7 @@ article {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
 }
 
 .review-full {
