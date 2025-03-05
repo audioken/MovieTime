@@ -3,145 +3,145 @@
 @{
 }
 
-@if(Model.Movie != null){
+@if (Model.Movie != null)
+{
+	<div class="page-content-container">
 
-    <div class="page-content-container">
+		<article class="article-full-movie">
+			<section id="section-poster">
+				<img class="movie-full-poster" src="@Model.Movie.Poster" />
+			</section>
 
-        <article class="article-full-movie">
-            <section id="section-poster">
-                <img class="movie-full-poster"src="@Model.Movie.Poster" />
-            </section>
+			<section id="section-details">
+				<p>@Model.Movie.Year | @Model.Movie.Runtime</p>
+				<h1>@Model.Movie.Title</h1>
+				<p>@Model.Movie.Genre</p>
+				<p>IMDB Rating: @Model.Movie.ImdbRating</p>
+				<p>@Model.Movie.Plot</p>
+				<p>Released: @Model.Movie.Released</p>
+				<p>Director: @Model.Movie.Director</p>
+				<p>Actors: @Model.Movie.Actors</p>
+			</section>
+		</article>
 
-            <section id="section-details">
-                <p>@Model.Movie.Year | @Model.Movie.Runtime</p>
-                <h1>@Model.Movie.Title</h1>
-                <p>@Model.Movie.Genre</p>
-                <p>IMDB Rating: @Model.Movie.ImdbRating</p>
-                <p>@Model.Movie.Plot</p>
-                <p>Released: @Model.Movie.Released</p>
-                <p>Director: @Model.Movie.Director</p>
-                <p>Actors: @Model.Movie.Actors</p>
-            </section>
-        </article>
+		<form method="post" asp-page-handler="StarFilter">
+			<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+			<div class="review-input-stars">
+				<input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="star" for="searchStar5">★ </label>
 
-        <form method="post" asp-page-handler="StarFilter">
-            <input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-            <div class="review-input-stars">
-                <input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="star" for="searchStar5">★ </label>
+				<input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="star" for="searchStar4">★ </label>
 
-                <input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="star" for="searchStar4">★ </label>
+				<input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="star" for="searchStar3">★ </label>
 
-                <input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="star" for="searchStar3">★ </label>
+				<input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="star" for="searchStar2">★ </label>
 
-                <input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="star" for="searchStar2">★ </label>
+				<input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="star" for="searchStar1">★ </label>
 
-                <input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="star" for="searchStar1">★ </label>
+				<input class="searchAllReview" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
+				<label class="searchAllReview" for="searchAll">Visa alla </label>
+			</div>
+		</form>
 
-                <input class="searchAllReview" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
-                <label class="searchAllReview" for="searchAll">Visa alla </label>
-            </div>
-        </form>
+		@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
+		{
+			<script>
+				window.onload = function () {
+					document.getElementById("reviews-title").scrollIntoView();
+				}
+			</script>
+			TempData.Remove("ScrollToReviews");
+		}
 
-        @if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
-        {
-            <script>
-                window.onload = function () {
-                    document.getElementById("reviews-title").scrollIntoView();
-                }
-            </script>
-            TempData.Remove("ScrollToReviews");
-        }
-        
-        <section class="section-all-reviews" id="IdAllReviews">
-            @if (Model.Reviews.Count == 0)
-            {
-                <p class="text-no-reviews-yet">Ingen har skrivit en recension än, bli den första!</p>
-            }
-            else
-            {
-                <header>
-                    <h2 id="reviews-title">Recensioner (@Model.Reviews.Count)</h2>
-                </header>
+		<section class="section-all-reviews" id="IdAllReviews">
+			@if (Model.Reviews.Count == 0)
+			{
+				<p class="text-no-reviews-yet">Ingen har skrivit en recension än, bli den första!</p>
+			}
+			else
+			{
+				<header>
+					<h2 id="reviews-title">Recensioner (@Model.Reviews.Count)</h2>
+				</header>
 
-                @foreach (var review in Model.Reviews.Where(r => Model.SearchReview == 0 || r.Rating == Model.SearchReview))
-                {
+				@foreach (var review in Model.Reviews.Where(r => Model.SearchReview == 0 || r.Rating == Model.SearchReview))
+				{
 
-                    <article class="review-full">
-                        <header class="review-head">
-                            <p class="review-meta" style="font-family: Arial, sans-serif;">
-                                <span class="review-name">@review.Username</span>
-                                <span class="review-stars">
-                                    @for (int i = 0; i < review.Rating; i++)
-                                    {
-                                        <label class="star">★</label>
-                                    }
-                                </span>
-                            </p>
-                        </header>
+					<article class="review-full">
+						<header class="review-head">
+							<p class="review-meta" style="font-family: Arial, sans-serif;">
+								<span class="review-name">@review.Username</span>
+								<span class="review-stars">
+									@for (int i = 0; i < review.Rating; i++)
+									{
+										<label class="star">★</label>
+									}
+								</span>
+							</p>
+						</header>
 
-                        <section class="review-body">
-                            <p>@review.Title</p>
-                            <p>@review.Text</p>
-                        </section>
+						<section class="review-body">
+							<p>@review.Title</p>
+							<p>@review.Text</p>
+						</section>
 
-                        <footer class="review-footer">
+						<footer class="review-footer">
 							<p>@review.DateTime</p>
-                            <div class="review-buttons">
-                                <a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
-                                <form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-                                    <button class="btn-design" type="submit">❌</button>
-                                </form>
-                            </div>
-                        </footer>
-                    </article>
-                }
-            }
-        </section>
+							<div class="review-buttons">
+								<a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
+								<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
+									<button class="btn-design" type="submit">❌</button>
+								</form>
+							</div>
+						</footer>
+					</article>
+				}
+			}
+		</section>
 
-        @if (Model.IsUserSignedIn)
-        {
-          <section class="review-input-container">
-            <form class="review-input-form" method="post">
-              <input type="hidden" asp-for="Review.ImdbID" />
+		@if (Model.IsUserSignedIn)
+		{
+			<section class="review-input-container">
+				<form class="review-input-form" method="post" asp-page-handler="AddReview">
+					<input type="hidden" asp-for="Review.ImdbID" />
 
-              <section class="review-input-head">
-                <div class="review-input-name-and-title">
-                  <input class="review-input-name" type="text" class="review-input-name" placeholder="Namn.." asp-for="Review.Username" required /> <br />
-                  <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
-                </div>
+					<section class="review-input-head">
+						<div class="review-input-name-and-title">
+							<input class="review-input-name" type="text" class="review-input-name" placeholder="Namn.." asp-for="Review.Username" required /> <br />
+							<input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+						</div>
 
-                <div class="review-input-stars">
-                  <input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
-                  <label class="star" for="star5">★ </label>
+						<div class="review-input-stars">
+							<input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
+							<label class="star" for="star5">★ </label>
 
-                  <input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
-                  <label class="star" for="star4">★ </label>
+							<input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
+							<label class="star" for="star4">★ </label>
 
-                  <input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
-                  <label class="star" for="star3">★ </label>
+							<input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
+							<label class="star" for="star3">★ </label>
 
-                  <input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
-                  <label class="star" for="star2">★ </label>
+							<input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
+							<label class="star" for="star2">★ </label>
 
-                  <input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
-                  <label class="star" for="star1">★ </label>
-                </div>
-              </section>
+							<input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
+							<label class="star" for="star1">★ </label>
+						</div>
+					</section>
 
-              <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+					<textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
-              <footer class="review-input-btn-submit">
-                <button class="btn-design" type="submit">➕</button>
-              </footer>
-            </form>
-          </section>
-        }
-    </div>
+					<footer class="review-input-btn-submit">
+						<button class="btn-design" type="submit">➕</button>
+					</footer>
+				</form>
+			</section>
+		}
+	</div>
 }
 else
 {
