@@ -13,12 +13,15 @@ namespace MowiTajm.Pages.Movies
         private readonly OmdbService _omdbService;
         private readonly ApplicationDbContext _database;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<ApplicationUser> signÍnManager)
+
+        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<ApplicationUser> signÍnManager, UserManager<ApplicationUser> userManager)
         {
             _omdbService = omdbService;
             _database = database;
             _signInManager = signÍnManager;
+            _userManager = userManager;
         }
 
         public bool IsUserSignedIn => _signInManager.IsSignedIn(User);
@@ -28,6 +31,7 @@ namespace MowiTajm.Pages.Movies
         [BindProperty]
         public Review Review { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
+        public string DisplayName { get; set; }
 
         //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
         [BindProperty]
@@ -40,6 +44,10 @@ namespace MowiTajm.Pages.Movies
                 // Hämta filmen från API:et och recensionerna från databasen
                 Movie = await _omdbService.GetMovieByIdAsync(imdbID);
                 Reviews = await _database.Reviews.Where(r => r.ImdbID == imdbID).ToListAsync();
+
+                // Hämta användarens DisplayName
+                var user = await _userManager.GetUserAsync(User);
+                DisplayName = user?.DisplayName;
 
                 // Spara IMDB-ID för att kunna använda det i formuläret
                 Review.ImdbID = imdbID;
