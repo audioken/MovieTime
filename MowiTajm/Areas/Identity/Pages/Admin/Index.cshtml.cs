@@ -60,7 +60,7 @@ namespace MowiTajm.Pages.Admin
 
             if (!result.Succeeded)
             {
-                return BadRequest("Error while assigning new role.");
+                return BadRequest("Fel när vi ändrade rollen");
             }
 
             return RedirectToPage();
@@ -75,7 +75,7 @@ namespace MowiTajm.Pages.Admin
 
                 if (!result.Succeeded)
                 {
-                    return BadRequest("Error while deleting user.");
+                    return BadRequest("Fel när vi skulle ta bort användaren.");
                 }
             }
             return RedirectToPage();
