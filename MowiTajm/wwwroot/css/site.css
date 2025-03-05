@@ -1,68 +1,19 @@
-html {
-    font-size: 14px;
+* {
+    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
 
 html {
+    font-size: clamp(16px, 2vw, 18px);
     position: relative;
     min-height: 100%;
 }
 
 body {
-    margin-bottom: 60px;
-}
-
-button {
-    border: none;
-    padding: 0.8rem, 0.8rem;
-    background-color: transparent;
-}
-
-button:hover {
-    background-color: antiquewhite;
-}
-
-input {
-    border: none;
-    border-bottom: 1px solid black;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-article {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 10px;
-    max-width: 50em;
-    margin: 0 auto;
-}
-
-.movie-lite-poster, .movie-full-poster {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.movie-full-poster{
-    max-width: 50rem;
-}
-
-.movie-lite-poster {
-    max-width: 8rem;
-}
-
-tr:hover {
-    background-color: lightgreen;
-    cursor: pointer;
+    margin-bottom: 4rem;
+    line-height: 1.5;
 }
 
 .page-content-container {
@@ -70,39 +21,72 @@ tr:hover {
     justify-content: center;
     align-items: center;
     max-width: 50rem;
+    margin: 4rem auto 0;
+    padding: 0 1rem;
+    flex-direction: column;
+}
+
+.btn-design {
+    border: none;
+    background-color: transparent;
+    display: inline-block;
+    padding: 1rem 1rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-design:hover {
+    background-color: antiquewhite;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0.5rem;
+}
+
+article {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    max-width: 50rem;
     margin: 0 auto;
-    padding: 0 10px;
-    flex-direction: column;
-    margin-top: 4rem;
 }
 
-.section-all-reviews {
+.search-result-title {
+    font-size: 1.5rem;
+}
+
+
+.search-result-head, .search-input {
+    margin-top: 2rem;
+}
+
+.search-input {
     display: flex;
-    flex-direction: column;
+    align-items: center;  
+    justify-content: center;
+    padding: 0.5rem;
+    height: 4rem;
 }
 
-h2 {
-    margin-left: 0;
-}
-
-.search-result-head{
-    margin-top: 2rem;
-    margin-bottom: 0rem;
-}
-
-.search-input{
-    margin-top: 2rem;
+.search-input input {
+    height: 100%; 
 }
 
 .search-result-movie-row {
-    display:flex;
+    display: flex;
     text-align: center;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     margin-bottom: 0.5rem;
+    overflow: hidden;
 }
 
-.search-result-movie-row:hover{
+.search-result-movie-row:hover {
     background-color: honeydew;
     cursor: pointer;
 }
@@ -114,47 +98,64 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: 1rem;
+    box-sizing: border-box;
 }
 
-.search-result-title{
-    font-size: 1.5rem;
-}
 
 .article-full-movie {
     display: flex;
+    gap: 1rem;
+    align-items: stretch;
 }
+
+
+.movie-full-poster {
+    max-width: 20rem;
+    height: 25rem; /* eller ett fast mått om du vill */
+}
+
+.movie-lite-poster{
+    max-width: 10rem;
+}
+
+.movie-lite-poster, .movie-full-poster {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    object-fit: cover;
+}
+
 
 #section-details {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 1rem;
+    justify-content: flex-start;
+    padding: 2rem;
+    box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto; /* Scrollbar när det behövs */
+    max-height: 25rem; /* Tar samma höjd som sin flex-container */
 }
 
-.text-no-reviews-yet{
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-#reviews-title {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    margin-left: 0.5rem;
+.section-all-reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
 }
 
 .review-full {
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     padding: 1rem;
     margin-bottom: 1rem;
+    box-sizing: border-box;
 }
 
 .review-head {
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -165,57 +166,70 @@ h2 {
 }
 
 .review-name, .review-stars {
-    font-size: 1.5em;
+    font-size: 1.25rem;
 }
 
-.review-buttons{
+.review-buttons {
     display: flex;
     gap: 1rem;
 }
 
-
 .star {
     color: gold;
-    font-size: 2.2rem;
+    font-size: 2rem;
 }
 
 .review-footer {
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.review-input-form {
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 1rem;
+.text-no-reviews-yet, #reviews-title {
+    margin: 2rem 0 1rem;
+}
+
+.review-input-container {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+    padding: 3rem;
+    gap: 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    margin-top: 3rem;
+}
+
+.review-input-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
+.review-input-name-and-title{
     width:100%;
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .review-input-name, .review-input-title {
-    width: 15rem;
-    height: 3rem;
-    margin-top: 1rem;
-}
-
-.review-input-text {
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 40rem;
-    height: 10rem;
-    resize: vertical; /* gör så att användaren ska kunna ändra höjden */
-    padding: 0.5rem;
-    box-sizing: border-box; /* så padding inte förstör storleken */
-    margin-top: 1.5rem;
+    width: 100%;
 }
 
 .review-input-stars {
     display: flex;
-    flex-direction: row-reverse; /* Så att första stjärnan är längst till vänster */
-    justify-content: flex-start;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
 }
 
 /* Dölj de riktiga radio-knapparna */
@@ -223,112 +237,97 @@ h2 {
     display: none;
 }
 
-/* Style på alla stjärnor (labels) */
 .review-input-stars label {
-    font-size: 5rem;
+    font-size: 4rem;
     cursor: pointer;
     color: lightgrey;
 }
 
-/* När en radioknapp är ibockad eller om den har en yngre bror som är ibockad */
 .review-input-stars input:checked ~ label,
 .review-input-stars label:hover,
 .review-input-stars label:hover ~ label {
     color: gold;
 }
 
-.review-input-head {
-    display: flex;
-    justify-content: space-between;
-    vertical-align: middle;
-}
-
-.review-input-stars {
-    display: flex;
-    align-items: center;
-    margin-right: 1.5rem;
+.review-input-text {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 10rem;
+    resize: vertical;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .review-input-btn-submit {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
 }
-
-.btn-design {
-    display: inline-block;
-    padding: 0.8rem 0.8rem;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.btn-design:hover {
-    background-color: antiquewhite;
-}
-
 
 @media (max-width: 767px) {
-
-    /* På små skärmar, gör att de ska ligga på en rad istället */
     .article-full-movie {
         flex-direction: column;
     }
 
     img {
-        width: 100%; /* Gör så att section-poster tar upp hela bredden */
-        border-top-right-radius: 10px;
-        border-bottom-left-radius: 0px;
-        min-width: 0;
-        padding: 0; /* Se till att det inte finns någon extra padding som påverkar bredden */
+        width: 100%;
     }
 
     #section-details {
-        width: 100%; /* Gör så att sectionDetails också tar upp hela bredden */
-        padding: 10px;
-    }
-
-    .review-input-form {
-        border: 1px solid black;
-        border-radius: 10px;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        align-content: center;
         width: 100%;
+        padding: 1rem;
     }
 
-    .review-input-name, .review-input-title {
-        width: 5rem;
-        height: 3rem;
+    .movie-full-poster {
+        width: 100%;
+        height: auto;
+        max-height: unset;
+        max-width: 100%;
+        border-top-right-radius: 0.5rem;
+        border-bottom-left-radius: 0rem;
+    }
+
+    .review-input-container{
+        padding: 1rem;
+    }
+
+    .review-input-form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .review-input-name-and-title {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
 
     .review-input-head{
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-    }
-
-    .review-input-name, .review-input-title{
-        width: 100%;
-    }
-
-    .review-input-stars{
-        display: flex;
-        justify-content:center;
         align-items: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .review-input-name, .review-input-title {
         width: 100%;
-        margin-top: -1.2rem;
-        
+    }
+
+    .review-input-stars {
+        width: 100%;
+        margin-bottom: -1rem;
+        justify-content: center;
     }
 
     .review-input-text {
-        border: 1px solid black;
-        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 10rem;
-        padding: 0.5rem;
-        box-sizing: border-box;
-        margin-top: 0.5rem;
     }
 }
