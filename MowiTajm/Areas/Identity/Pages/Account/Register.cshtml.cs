@@ -19,24 +19,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MowiTajm.Models;
 
 namespace MowiTajm.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         private readonly RoleManager<IdentityRole> _roleManager; // <--- Lagt till denna rad.
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager// <--- Lagt till denna rad.
@@ -103,6 +104,14 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            // ---- Tillagd kod ---- //
+
+            [Required]
+            public string DisplayName { get; set; } // --- Lagt till denna rad.
+
+            // --------------------- //
+
         }
 
 
@@ -129,6 +138,15 @@ namespace MowiTajm.Areas.Identity.Pages.Account
                 // Sätter användarnamn och e-postadress för den nya användaren
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                // ---- Tillagd kod ---- //
+
+                if (user is ApplicationUser appUser)
+                {
+                    appUser.DisplayName = Input.DisplayName;
+                }
+
+                // --------------------- //
 
                 // Försöker skapa användaren i databasen med angivet lösenord
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -192,27 +210,34 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<IdentityUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
-        }
+        //private IdentityUser CreateUser()
+        //{
+        //    try
+        //    {
+        //        return Activator.CreateInstance<IdentityUser>();
+        //    }
+        //    catch
+        //    {
+        //        throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
+        //            $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+        //            $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+        //    }
+        //}
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        // ---- Tillagd kod ---- //
+        private ApplicationUser CreateUser() // --- Lagt till denna metoden.
+        {
+            return new ApplicationUser();
+        }
+        // --------------------- //
+
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

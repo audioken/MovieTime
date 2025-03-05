@@ -4,7 +4,7 @@ using MowiTajm.Models;
 
 namespace MowiTajm.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> // Lagt till ApplicationUser.
     {
         public DbSet<Review> Reviews { get; set; }
 

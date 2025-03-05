@@ -12,9 +12,9 @@ namespace MowiTajm.Pages.Movies
     {
         private readonly OmdbService _omdbService;
         private readonly ApplicationDbContext _database;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<IdentityUser> signÍnManager)
+        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<ApplicationUser> signÍnManager)
         {
             _omdbService = omdbService;
             _database = database;
