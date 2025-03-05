@@ -106,7 +106,7 @@
 		@if (Model.IsUserSignedIn)
 		{
 			<section class="review-input-container">
-				<form class="review-input-form" method="post">
+				<form class="review-input-form" method="post" asp-page-handler="AddReview">
 					<input type="hidden" asp-for="Review.ImdbID" />
 
 					<section class="review-input-head">
