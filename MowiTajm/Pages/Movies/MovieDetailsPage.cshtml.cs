@@ -81,6 +81,11 @@ namespace MowiTajm.Pages.Movies
         {
             Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
             Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+
+            //Abdi la till
+            ViewData["ReviewFilter"] = Reviews;
+            ViewData["Movie"] = Movie;
+
             TempData["ScrollToReviews"] = true; // Sätt flaggan
             return Page();
         }
