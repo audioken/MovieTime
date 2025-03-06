@@ -20,6 +20,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient<OmdbService>();
 
+builder.Services.AddSession(); 
+
+
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
