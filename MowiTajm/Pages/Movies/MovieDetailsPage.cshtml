@@ -12,50 +12,20 @@
 				<img class="movie-full-poster" src="@Model.Movie.Poster" />
 			</section>
 
-			<section id="section-details">
-				<p>@Model.Movie.Year | @Model.Movie.Runtime</p>
-				<h1>@Model.Movie.Title</h1>
-				<p>@Model.Movie.Genre</p>
-				<p>IMDB Rating: @Model.Movie.ImdbRating</p>
-				<p>@Model.Movie.Plot</p>
-				<p>Released: @Model.Movie.Released</p>
-				<p>Director: @Model.Movie.Director</p>
-				<p>Actors: @Model.Movie.Actors</p>
-			</section>
+			<div class="section-details-wrapper">
+				<section id="section-details">
+					<p>@Model.Movie.Year | @Model.Movie.Runtime</p>
+					<h1>@Model.Movie.Title</h1>
+					<p>@Model.Movie.Genre</p>
+					<p>IMDB Rating: @Model.Movie.ImdbRating</p>
+					<p>@Model.Movie.Plot</p>
+					<p>Released: @Model.Movie.Released</p>
+					<p>Director: @Model.Movie.Director</p>
+					<p>Actors: @Model.Movie.Actors</p>
+				</section>
+			</div>
 		</article>
 
-		<form method="post" asp-page-handler="StarFilter">
-			<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-			<div class="review-input-stars">
-				<input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="star" for="searchStar5">★ </label>
-
-				<input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="star" for="searchStar4">★ </label>
-
-				<input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="star" for="searchStar3">★ </label>
-
-				<input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="star" for="searchStar2">★ </label>
-
-				<input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="star" for="searchStar1">★ </label>
-
-				<input class="searchAllReview" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
-				<label class="searchAllReview" for="searchAll">Visa alla </label>
-			</div>
-		</form>
-
-		@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
-		{
-			<script>
-				window.onload = function () {
-					document.getElementById("reviews-title").scrollIntoView();
-				}
-			</script>
-			TempData.Remove("ScrollToReviews");
-		}
 
 		<section class="section-all-reviews" id="IdAllReviews">
 			@if (Model.Reviews.Count == 0)
@@ -64,9 +34,46 @@
 			}
 			else
 			{
-				<header>
+
+				<header class="reviews-header">
 					<h2 id="reviews-title">Recensioner (@Model.Reviews.Count)</h2>
+
+					<div class="stars-filter-wrapper">
+						<label class="stars-filter-clear-label btn-design btn-clear" for="searchAll" title="Rensa filtret för att se alla recensioner">Rensa Filter </label>
+						<form method="post" asp-page-handler="StarFilter">
+							<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+							<div class="stars-filter-stars review-input-stars">
+								<input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
+								<label class="star" for="searchStar5">★ </label>
+
+								<input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
+								<label class="star" for="searchStar4">★ </label>
+
+								<input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
+								<label class="star" for="searchStar3">★ </label>
+
+								<input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
+								<label class="star" for="searchStar2">★ </label>
+
+								<input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
+								<label class="star" for="searchStar1">★ </label>
+
+								<input class="stars-filter-clear-input" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
+							</div>
+						</form>
+					</div>
 				</header>
+
+
+				@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
+				{
+					<script>
+						window.onload = function () {
+							document.getElementById("reviews-title").scrollIntoView();
+						}
+					</script>
+					TempData.Remove("ScrollToReviews");
+				}
 
 				@foreach (var review in Model.Reviews.Where(r => Model.SearchReview == 0 || r.Rating == Model.SearchReview))
 				{
@@ -96,7 +103,7 @@
 								<div class="review-buttons">
 									<a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-										<button class="btn-design" type="submit">❌</button>
+										<button class="btn-design btn-delete" type="submit" title="Ta bort recensionen">❌</button>
 									</form>
 								</div>
 							}
@@ -105,7 +112,7 @@
 								<!-- Admin får bara Delete-knappen på andras reviews -->
 								<div class="review-buttons">
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-										<button class="btn-design" type="submit">❌</button>
+										<button class="btn-design btn-delete" type="submit" title="Ta bort recensionen">❌</button>
 									</form>
 								</div>
 							}
@@ -117,38 +124,37 @@
 
 		@if (Model.IsUserSignedIn)
 		{
+			<h2 id="text-write-a-review">Skriv en recension</h2>
+
 			<section class="review-input-container">
 				<form class="review-input-form" method="post" asp-page-handler="AddReview">
 					<input type="hidden" asp-for="Review.ImdbID" />
 
 					<section class="review-input-head">
-						<div class="review-input-name-and-title">
 							<input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
-							<input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
-						</div>
+							<div class="review-input-stars">
+								<input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
+								<label class="star" for="star5">★ </label>
 
-						<div class="review-input-stars">
-							<input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
-							<label class="star" for="star5">★ </label>
+								<input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
+								<label class="star" for="star4">★ </label>
 
-							<input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
-							<label class="star" for="star4">★ </label>
+								<input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
+								<label class="star" for="star3">★ </label>
 
-							<input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
-							<label class="star" for="star3">★ </label>
+								<input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
+								<label class="star" for="star2">★ </label>
 
-							<input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
-							<label class="star" for="star2">★ </label>
-
-							<input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
-							<label class="star" for="star1">★ </label>
-						</div>
+								<input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
+								<label class="star" for="star1">★ </label>
+							</div>
 					</section>
 
+					<input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
 					<textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
 					<footer class="review-input-btn-submit">
-						<button class="btn-design" type="submit">➕</button>
+						<button class="btn-design btn-send" type="submit">ᯓ➤</button>
 					</footer>
 				</form>
 			</section>
