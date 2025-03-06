@@ -116,6 +116,13 @@ article {
     height: 100%; 
 }
 
+.search-result-container {
+    max-height: 40rem; /* Eller en annan höjd som passar dig */
+    overflow-y: auto; /* Aktiverar vertikal scrollning om innehållet är större än max-höjd */
+    padding-right: 1rem; /* Lägger till lite utrymme för scrollbars (om nödvändigt) */
+}
+
+
 .search-result-movie-row {
     display: flex;
     text-align: center;
