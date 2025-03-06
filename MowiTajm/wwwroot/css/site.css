@@ -63,6 +63,10 @@ body {
     background-color: lightgreen;
     margin-right: 1rem;
 }
+.btn-search{
+    background-color: lightgreen;
+    margin-left: 1rem;
+}
 
 input {
     border: none;
