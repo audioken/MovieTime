@@ -22,7 +22,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
+
+                        @* --- Tillagd kod | Sökfält på navbaren --- *@
+                        <form method="get" asp-page="/Movies/Index" class="navbar-search">
+                            <input type="text" name="searchInput" id="navbarSearch" value="@Context.Request.Query["searchInput"]" placeholder="sök på filmtitel.." />
+                            <button type="submit">🔍</button>
+                        </form>
+                        @* ------------------------------------------*@
                     </ul>
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
