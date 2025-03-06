@@ -7,19 +7,17 @@
 }
 
 <div class="page-content-container">
-    <h1>Redigera recension</h1>
+    <h1 class="edit-review-title">Redigera recension</h1>
 
     <section class="review-input-container">
         <form class="review-input-form" method="post">
             <input type="hidden" asp-for="Review.Id"/>
             <input type="hidden" asp-for="Review.ImdbID" />
 
-            <section class="review-input-head">
-                <div class="review-input-name-and-title">
-                    <input class="review-input-name" type="text" value="@User.Identity.Name" class="review-input-name" asp-for="Review.Username" required readonly /> <br />  @* Ändrade så att den lägger till user direkt *@
-                    <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
-                </div>
+            <input type="hidden" asp-for="Review.ImdbID" />
 
+            <section class="review-input-head">
+                <input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
                 <div class="review-input-stars">
                     <input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
                     <label class="star" for="star5">★ </label>
@@ -38,11 +36,12 @@
                 </div>
             </section>
 
+            <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
             <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
             <footer class="review-input-btn-submit">
-                <button class="btn-design" type="submit">✅</button>
-                <a class="btn-design" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">❌</a>
+                <button class="btn-design btn-save-changes" type="submit">✓</button>
+                <a class="btn-design btn-delete" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">❌</a>
             </footer>
         </form>
     </section>
