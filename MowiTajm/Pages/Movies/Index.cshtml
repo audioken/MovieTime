@@ -6,9 +6,9 @@
 <div class="page-content-container">
 	<h1>Sök på filmtitel</h1>
 
-	<form class="search-input" method="get">
-		<input type="text" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required/> @* <--- Lagt till value för att söktermen visas även på sökfältet på Index-sidan.*@
-        <button class="btn-design btn-search" type="submit">⌕</button>
+    <form class="search-input" method="get">
+        <input type="text" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required /> @* <--- Lagt till value för att söktermen visas även på sökfältet på Index-sidan.*@
+        <button class="btn btn-primary btn-search" type="submit">⌕</button>
 	</form>
 
     @* Kolla så söksträngen har ett värde *@
@@ -25,17 +25,21 @@
 			@* Skriv ut alla filmer som hittades *@
             <section>
                 @foreach (var movie in Model.Movies)
-                {   
+                {
 
                     <div class="search-result-movie-row" onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
-                        <div>
+                        <div class="movie-lite-poster-container">
                             <img class="movie-lite-poster" src="@movie.Poster" />
                         </div>
                         <div class="search-result-movie-details">
-                            <p class="search-result-title">@movie.Title</p>
-                            <p class="search-result-year">@movie.Type (@movie.Year)</p>
+                            <div class="background-blur" style="background-image: url('@movie.Poster')"></div>
+                            <div class="details-content">
+                                <p class="search-result-title">@movie.Title</p>
+                                <p class="search-result-year">@movie.Type (@movie.Year)</p>
+                            </div>
                         </div>
                     </div>
+
                 }
             </section>
         }

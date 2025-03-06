@@ -42,6 +42,15 @@ body {
     background-color: antiquewhite;
 }
 
+.btn-primary{
+    border-color: mediumseagreen;
+}
+
+.btn-primary:hover{
+    background-color: black;
+    color: white;
+}
+
 .btn-send{
     background-color: lightgreen;
     margin-top:0.5rem;
@@ -65,6 +74,7 @@ body {
 }
 .btn-search{
     background-color: lightgreen;
+    border-color: mediumseagreen;
     margin-left: 1rem;
 }
 
@@ -120,7 +130,7 @@ article {
     cursor: pointer;
 }
 
-.search-result-movie-details {
+/*.search-result-movie-details {
     max-width: 30rem;
     width: 100%;
     display: flex;
@@ -129,7 +139,65 @@ article {
     align-items: flex-start;
     padding: 1rem;
     box-sizing: border-box;
+}*/
+
+.search-result-movie-details {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
+
+/* Text och innehåll, som ska ligga ovanpå */
+.details-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Ger extra läsbarhet */
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.5); /* Lägg en diskret mörk bakgrund */
+    border-radius: 5rem;
+    backdrop-filter: blur(5px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrerar vertikalt */
+    align-items: center; /* Centrerar horisontellt, om du vill det också */
+    text-align: center; /* Säkerställer att texten själv blir centrerad */
+}
+
+/* Själva bakgrunden */
+.background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    opacity: 0.6; /* Justera så du får bra effekt */
+    z-index: 0;
+}
+
+
+/* Finjusteringar för text */
+.search-result-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.search-result-year {
+    margin: 0;
+    font-size: 1rem;
+}
+
+
 
 
 .article-full-movie {
@@ -142,7 +210,7 @@ article {
 
 .movie-full-poster {
     max-width: 20rem;
-    height: 25rem; /* eller ett fast mått om du vill */
+    height: 25rem;
 }
 
 .movie-lite-poster{
@@ -344,6 +412,15 @@ article {
 }
 
 @media (max-width: 767px) {
+
+    .search-result-title{
+        font-size: 0.7rem;
+    }
+
+    .search-result-year{
+        font-size: 0.5rem;
+    }
+
     .article-full-movie {
         flex-direction: column;
         overflow: hidden;

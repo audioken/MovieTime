@@ -46,3 +46,30 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-search input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+.btn-primary {
+    border-color: mediumseagreen;
+    background-color: lightgreen;
+}
+
+.btn-primary:hover {
+    background-color: black;
+    color: white;
+}
+
+.btn-search {
+    border-color: mediumseagreen;
+    margin-left: 1rem;
+}
