@@ -20,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 50rem;
+    max-width: 70rem;
     margin: 4rem auto 0;
     padding: 0 1rem;
     flex-direction: column;
@@ -94,7 +94,7 @@ article {
     border-radius: 1.2rem;
     border-bottom-left-radius:5rem;
     border-top-left-radius: 5rem;
-    max-width: 50rem;
+    max-width: 70rem;
     margin: 0 auto;
 }
 
@@ -233,6 +233,20 @@ article {
     overflow: auto;
     flex: 1;
     max-height: 25rem;
+}
+
+.section-details-wrapper{
+    width:100%;
+}
+
+.bolder{
+    font-weight: bolder;
+}
+
+.orientation-row{
+    display:flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 /* HEADER RECENSIONER */
@@ -526,13 +540,18 @@ article {
         display: flex;
         align-items: center; /* Detta centrerar vertikalt */
         justify-content: space-between;
-        height: 4rem; /* Eller vad som passar */
+        height: 3rem; /* Eller vad som passar */
     }
 
     .stars-filter-clear-label, .review-input-stars {
         margin: 0; /* Nollställ gamla marginaler */
         display: flex;
         align-items: center; /* Om det är fler saker inne i dessa */
+    }
+
+    .btn-clear{
+        font-size: 0.8rem;
+        text-align:center;
     }
 
     #reviews-title{
