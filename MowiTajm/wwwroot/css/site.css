@@ -28,7 +28,6 @@ body {
 
 .btn-design {
     border: none;
-    background-color: transparent;
     display: inline-block;
     padding: 1rem 1rem;
     text-decoration: none;
@@ -41,17 +40,32 @@ body {
     background-color: antiquewhite;
 }
 
+.btn-send{
+    background-color: lightgreen;
+    margin-top:0.5rem;
+}
+
+.btn-delete{
+    background-color: lightpink;
+}
+
+.btn-clear{
+    background-color: lightyellow;
+}
+
 input {
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ccc;
     padding: 0.5rem;
 }
 
 article {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 1.2rem;
+    border-bottom-left-radius:5rem;
+    border-top-left-radius: 5rem;
     max-width: 50rem;
     margin: 0 auto;
 }
@@ -80,7 +94,7 @@ article {
 .search-result-movie-row {
     display: flex;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid #ccc;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
     overflow: hidden;
@@ -107,6 +121,7 @@ article {
     display: flex;
     gap: 1rem;
     align-items: stretch;
+    margin-bottom: 2rem;
 }
 
 
@@ -120,11 +135,10 @@ article {
 }
 
 .movie-lite-poster, .movie-full-poster {
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
+    border-top-left-radius: 5rem;
+    border-bottom-left-radius: 5rem;
     object-fit: cover;
 }
-
 
 #section-details {
     display: flex;
@@ -132,9 +146,42 @@ article {
     justify-content: flex-start;
     padding: 2rem;
     box-sizing: border-box;
+    overflow: auto;
     flex: 1;
-    overflow-y: auto; /* Scrollbar när det behövs */
-    max-height: 25rem; /* Tar samma höjd som sin flex-container */
+    max-height: 25rem;
+}
+
+.reviews-header{
+    display: inline-flex;
+    justify-content:space-between;
+    gap: 2rem;
+}
+
+
+.review-input-stars{
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    align-items: center;
+}
+
+.review-input-stars label{
+    margin-top: -1.5rem;
+    margin-bottom: -0.8rem;
+}
+
+.stars-filter-wrapper{
+    display:flex;
+    flex-direction: row-reverse;
+    align-items:center;
+    margin-top: 1.5rem;
+}
+
+.stars-filter-clear-label {
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+    text-align: right;
+    background-color: lightgreen;
 }
 
 .section-all-reviews {
@@ -144,11 +191,14 @@ article {
     width: 100%;
 }
 
+
 .review-full {
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 1rem;
+    border-radius: 5rem;
+    border-bottom-left-radius: 1.2rem;
+    border-top-left-radius: 1.2rem;
+    padding: 5rem;
     margin-bottom: 1rem;
     box-sizing: border-box;
 }
@@ -189,17 +239,23 @@ article {
     margin: 2rem 0 1rem;
 }
 
+#text-write-a-review {
+    width: 100%;
+    margin: 2rem 0 1rem;
+}
+
 .review-input-container {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     width: 100%;
-    padding: 3rem;
+    padding: 5rem;
     gap: 1rem;
-    border: 1px solid black;
-    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5rem;
+    border-bottom-left-radius: 1.2rem;
+    border-top-left-radius: 1.2rem;
     box-sizing: border-box;
-    margin-top: 3rem;
 }
 
 .review-input-head {
@@ -212,15 +268,18 @@ article {
     margin-bottom: 3rem;
 }
 
-.review-input-name-and-title{
-    width:100%;
-    display:flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 .review-input-name, .review-input-title {
     width: 100%;
+}
+
+.review-input-name{
+    border: none;
+    font-size: 2.8rem;
+}
+
+.review-input-title{
+    margin-bottom: 1rem;
+    width: 50%
 }
 
 .review-input-stars {
@@ -238,7 +297,7 @@ article {
 }
 
 .review-input-stars label {
-    font-size: 4rem;
+    font-size: 3.6rem;
     cursor: pointer;
     color: lightgrey;
 }
@@ -250,7 +309,7 @@ article {
 }
 
 .review-input-text {
-    border: 1px solid black;
+    border: 1px solid #ccc;
     border-radius: 0.5rem;
     width: 100%;
     height: 10rem;
@@ -267,6 +326,7 @@ article {
 @media (max-width: 767px) {
     .article-full-movie {
         flex-direction: column;
+        overflow: hidden;
     }
 
     img {
@@ -285,6 +345,28 @@ article {
         max-width: 100%;
         border-top-right-radius: 0.5rem;
         border-bottom-left-radius: 0rem;
+    }
+
+    .review-meta{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .reviews-header{
+        flex-direction:column;
+        /*background-color:blue;*/
+    }
+
+
+    .stars-filter-clear-label{
+    }
+
+    .review-stars{
+        display:flex;
+    }
+
+    .review-full{
+        padding: 3rem;
     }
 
     .review-input-container{
@@ -307,6 +389,7 @@ article {
         flex-wrap: wrap;
     }
 
+
     .review-input-head{
         align-items: center;
         margin-top: 2rem;
@@ -317,10 +400,19 @@ article {
         width: 100%;
     }
 
+    .review-input-name{
+        font-size: 2.4rem;
+    }
+
     .review-input-stars {
         width: 100%;
-        margin-bottom: -1rem;
-        justify-content: center;
+        margin-top: -3rem;
+        margin-bottom: -2rem;
+        justify-content: left;
+    }
+
+    .review-input-stars label{
+        font-size: 3.5rem;
     }
 
     .review-input-text {
@@ -330,4 +422,22 @@ article {
         width: 100%;
         height: 10rem;
     }
+
+    .stars-filter-wrapper {
+        display: flex;
+        align-items: center; /* Detta centrerar vertikalt */
+        justify-content: space-between;
+        height: 4rem; /* Eller vad som passar */
+    }
+
+    .stars-filter-clear-label, .review-input-stars {
+        margin: 0; /* Nollställ gamla marginaler */
+        display: flex;
+        align-items: center; /* Om det är fler saker inne i dessa */
+    }
+
+    #reviews-title{
+        margin-bottom: -2rem;
+    }
+
 }
