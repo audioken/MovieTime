@@ -26,6 +26,9 @@ body {
     flex-direction: column;
 }
 
+/*----------------------------------------
+                BUTTONS
+----------------------------------------*/
 .btn-design {
     border: none;
     display: inline-block;
@@ -95,10 +98,12 @@ article {
     margin: 0 auto;
 }
 
+/*----------------------------------------
+                 SÖKSIDAN
+----------------------------------------*/
 .search-result-title {
     font-size: 1.5rem;
 }
-
 
 .search-result-head, .search-input {
     margin-top: 2rem;
@@ -117,11 +122,10 @@ article {
 }
 
 .search-result-container {
-    max-height: 40rem; /* Eller en annan höjd som passar dig */
-    overflow-y: auto; /* Aktiverar vertikal scrollning om innehållet är större än max-höjd */
-    padding-right: 1rem; /* Lägger till lite utrymme för scrollbars (om nödvändigt) */
+    max-height: 40rem; 
+    overflow-y: auto; 
+    padding-right: 1rem;
 }
-
 
 .search-result-movie-row {
     display: flex;
@@ -136,17 +140,6 @@ article {
     background-color: antiquewhite;
     cursor: pointer;
 }
-
-/*.search-result-movie-details {
-    max-width: 30rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 1rem;
-    box-sizing: border-box;
-}*/
 
 .search-result-movie-details {
     position: relative;
@@ -164,17 +157,17 @@ article {
     position: relative;
     z-index: 1;
     color: white;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Ger extra läsbarhet */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.5); /* Lägg en diskret mörk bakgrund */
+    background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 5rem;
     backdrop-filter: blur(5px);
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrerar vertikalt */
-    align-items: center; /* Centrerar horisontellt, om du vill det också */
-    text-align: center; /* Säkerställer att texten själv blir centrerad */
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
 }
 
 /* Själva bakgrunden */
@@ -187,10 +180,9 @@ article {
     background-size: cover;
     background-position: center;
     filter: blur(15px);
-    opacity: 0.6; /* Justera så du får bra effekt */
+    opacity: 0.6;
     z-index: 0;
 }
-
 
 /* Finjusteringar för text */
 .search-result-title {
@@ -205,15 +197,17 @@ article {
 }
 
 
+/*----------------------------------------
+                FILMSIDAN
+----------------------------------------*/
 
-
+/* FILMPRESENTATION */
 .article-full-movie {
     display: flex;
     gap: 1rem;
     align-items: stretch;
     margin-bottom: 2rem;
 }
-
 
 .movie-full-poster {
     max-width: 20rem;
@@ -241,25 +235,14 @@ article {
     max-height: 25rem;
 }
 
+/* HEADER RECENSIONER */
 .reviews-header{
     display: inline-flex;
     justify-content:space-between;
     gap: 2rem;
 }
 
-
-.review-input-stars{
-    display:flex;
-    justify-content:center;
-    align-content: center;
-    align-items: center;
-}
-
-.review-input-stars label{
-    margin-top: -1.5rem;
-    margin-bottom: -0.8rem;
-}
-
+/* FILTER */
 .stars-filter-wrapper{
     display:flex;
     flex-direction: row-reverse;
@@ -274,13 +257,13 @@ article {
     background-color: lightgreen;
 }
 
+/* RECENSIONER */
 .section-all-reviews {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
 }
-
 
 .review-full {
     width: 100%;
@@ -325,6 +308,7 @@ article {
     align-items: center;
 }
 
+/* TEXTURSKRIFTER */
 .text-no-reviews-yet, #reviews-title {
     margin: 2rem 0 1rem;
 }
@@ -338,6 +322,7 @@ article {
     width: 100%;
 }
 
+/* SKRIV EN RECENSION */ 
 .review-input-container {
     display: flex;
     flex-direction: column;
@@ -376,6 +361,7 @@ article {
     width: 50%
 }
 
+/***** Stjärnbetyg *****/
 .review-input-stars {
     display: flex;
     flex-direction: row-reverse;
@@ -384,24 +370,32 @@ article {
     gap: 0.25rem;
     width: 100%;
 }
-
-/* Dölj de riktiga radio-knapparna */
 .review-input-stars input {
     display: none;
 }
-
 .review-input-stars label {
     font-size: 3.6rem;
     cursor: pointer;
     color: lightgrey;
 }
-
+.review-input-stars {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.review-input-stars label {
+    margin-top: -1.5rem;
+    margin-bottom: -0.8rem;
+}
 .review-input-stars input:checked ~ label,
 .review-input-stars label:hover,
 .review-input-stars label:hover ~ label {
     color: gold;
 }
+/**********************/
 
+/* Skriv en recension fortsättning.. */
 .review-input-text {
     border: 1px solid #ccc;
     border-radius: 0.5rem;
@@ -418,6 +412,7 @@ article {
     margin-top: 1rem;
 }
 
+/* MOBILANPASSAD CSS */
 @media (max-width: 767px) {
 
     .search-result-title{
