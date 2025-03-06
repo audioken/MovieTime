@@ -47,6 +47,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [Display(Name ="E-post")]
             public string Email { get; set; }
         }
 
