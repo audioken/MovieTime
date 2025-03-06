@@ -30,6 +30,8 @@ body {
     border: none;
     display: inline-block;
     padding: 1rem 1rem;
+    min-height: 3.5rem;
+    min-width: 3.5rem;
     text-decoration: none;
     border-radius: 0.5rem;
     text-align: center;
@@ -51,6 +53,15 @@ body {
 
 .btn-clear{
     background-color: lightyellow;
+}
+
+.btn-edit{
+    background-color: powderblue;
+}
+
+.btn-save-changes {
+    background-color: lightgreen;
+    margin-right: 1rem;
 }
 
 input {
@@ -244,6 +255,10 @@ article {
     margin: 2rem 0 1rem;
 }
 
+.edit-review-title{
+    width: 100%;
+}
+
 .review-input-container {
     display: flex;
     flex-direction: column;
@@ -321,6 +336,7 @@ article {
 .review-input-btn-submit {
     display: flex;
     justify-content: flex-end;
+    margin-top: 1rem;
 }
 
 @media (max-width: 767px) {

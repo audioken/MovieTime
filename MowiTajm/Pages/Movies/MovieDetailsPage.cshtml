@@ -101,7 +101,7 @@
 							@if (Model.IsUserSignedIn && review.Username == Model.DisplayName)
 							{
 								<div class="review-buttons">
-									<a class="btn-design" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
+									<a class="btn-design btn-edit" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
 										<button class="btn-design btn-delete" type="submit" title="Ta bort recensionen">❌</button>
 									</form>
