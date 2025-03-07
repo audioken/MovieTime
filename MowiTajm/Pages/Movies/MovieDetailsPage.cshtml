@@ -1,6 +1,20 @@
 @page
 @model MowiTajm.Pages.Movies.MovieDetailsPageModel
 @{
+	var filteredReviews = Model.Reviews;
+
+	if (Model.SearchReview >= 1 && Model.SearchReview <= 5)
+	{
+		filteredReviews = filteredReviews.Where(r => r.Rating == Model.SearchReview).ToList();
+	}
+	else if (Model.SearchReview == 6)
+	{
+		filteredReviews = filteredReviews.OrderByDescending(r => r.DateTime).ToList();
+	}
+	else if (Model.SearchReview == 7)
+	{
+		filteredReviews = filteredReviews.OrderBy(r => r.DateTime).ToList();
+	}
 }
 
 @if (Model.Movie != null)
@@ -21,6 +35,8 @@
 						<p class="bolder">IMDB Rating:</p>
 						<p>@Model.Movie.ImdbRating</p>
 					</div>
+					<p>Movie Time Rating: @ViewData["MovieTimeReview"] stjärnor av 5</p> @* !! *@
+					<p>SearchReview = @Model.SearchReview</p> @* !! *@
 					<p>@Model.Movie.Plot</p>
 					<div class="orientation-row">
 						<p class="bolder">Director:</p>
@@ -44,14 +60,14 @@
 
 
 		<section class="section-all-reviews" id="IdAllReviews">
-			@if (Model.Reviews.Count == 0)
+			@if (!filteredReviews.Any())
 			{
 				<p class="text-no-reviews-yet">Ingen har skrivit en recension än, bli den första!</p>
 			}
 			else
 			{
 				<header class="reviews-header">
-					<h2 id="reviews-title">Recensioner (@Model.Reviews.Count)</h2>
+					<h2 id="reviews-title">Recensioner (@filteredReviews.Count())</h2>
 
 					<div class="stars-filter-wrapper">
 						<label class="stars-filter-clear-label btn-design btn-clear" for="searchAll" title="Rensa filtret för att se alla recensioner">Rensa Filter </label>
@@ -79,6 +95,10 @@
 					</div>
 				</header>
 
+				<form method="post" asp-page-handler="DateFilter">
+					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+					<button type="submit" id="submitButton" class="submitButtonId">Date</button>
+				</form>
 
 				@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
 				{
@@ -90,7 +110,8 @@
 					TempData.Remove("ScrollToReviews");
 				}
 
-				@foreach (var review in Model.Reviews.Where(r => Model.SearchReview == 0 || r.Rating == Model.SearchReview))
+
+				@foreach (var review in filteredReviews)
 				{
 
 					<article class="review-full">

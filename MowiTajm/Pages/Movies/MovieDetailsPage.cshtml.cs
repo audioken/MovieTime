@@ -38,6 +38,9 @@ namespace MowiTajm.Pages.Movies
         [BindProperty]
         public int SearchReview { get; set; }
 
+        //Genomsnittlig review för filmen baserat på reviews på MovieTime
+        public double MovieTimeReview { get; set; }
+
         public async Task OnGetAsync(string imdbID)
         {
             if (!string.IsNullOrWhiteSpace(imdbID))
@@ -54,6 +57,12 @@ namespace MowiTajm.Pages.Movies
                 // Spara IMDB-ID för att kunna använda det i formuläret
                 Review.ImdbID = imdbID;
             }
+
+            // Beräkna MovieTimeReview baserat på alla recensioner (inte filtrerade recensioner)
+            MovieTimeReview = Reviews.Count > 0 ? Math.Round(Reviews.Average(r => r.Rating), 2) : 0;
+
+            // Spara MovieTimeReview i ViewData för att användas på sidan
+            ViewData["MovieTimeReview"] = MovieTimeReview;
         }
 
         public async Task<IActionResult> OnPostAddReview()
@@ -86,9 +95,49 @@ namespace MowiTajm.Pages.Movies
             IsAdmin = user != null && await _userManager.IsInRoleAsync(user, "Admin");
             DisplayName = user?.DisplayName; // Fyll i DisplayName
 
-            //Abdi la till
+            // Filtrera recensionerna baserat på stjärnorna
+            if (SearchReview >= 1 && SearchReview <= 5)
+            {
+                Reviews = Reviews.Where(r => r.Rating == SearchReview).ToList();
+            }
+
+            // Spara de filtrerade recensionerna
             ViewData["ReviewFilter"] = Reviews;
             ViewData["Movie"] = Movie;
+
+            // Återgå till sidan med uppdaterad information
+            TempData["ScrollToReviews"] = true;
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDateFilter()
+        {
+            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
+            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+
+            // Läs in föregående SearchReview om det finns
+            if (TempData["SearchReview"] is int prevSearchReview)
+            {
+                SearchReview = prevSearchReview;
+            }
+
+            // Om SearchReview är mindre än 6, sätt den till 6
+            if (SearchReview < 6)
+            {
+                SearchReview = 6;
+            }
+            else if (SearchReview == 6)
+            {
+                SearchReview = 7;
+            }
+            else if (SearchReview == 7)
+            {
+                SearchReview = 6;
+            }
+
+            // Spara SearchReview i TempData för att behålla värdet
+            TempData["SearchReview"] = SearchReview;
+            //TempData["MovieTimeReview"] = MovieTimeReview; // Spara värdet i TempData
 
             TempData["ScrollToReviews"] = true; // Sätt flaggan
             return Page();
