@@ -17,11 +17,27 @@
 					<p>@Model.Movie.Year | @Model.Movie.Runtime</p>
 					<h1>@Model.Movie.Title</h1>
 					<p>@Model.Movie.Genre</p>
-					<p>IMDB Rating: @Model.Movie.ImdbRating</p>
+					<div class="orientation-row">
+						<p class="bolder">IMDB Rating:</p>
+						<p>@Model.Movie.ImdbRating</p>
+					</div>
 					<p>@Model.Movie.Plot</p>
-					<p>Released: @Model.Movie.Released</p>
-					<p>Director: @Model.Movie.Director</p>
-					<p>Actors: @Model.Movie.Actors</p>
+					<div class="orientation-row">
+						<p class="bolder">Director:</p>
+						<p>@Model.Movie.Director</p>
+					</div>
+					<div class="orientation-row">
+						<p class="bolder">Writers:</p>
+						<p>@Model.Movie.Writer</p>
+					</div>
+					<div class="orientation-row">
+						<p class="bolder">Actors:</p>
+						<p>@Model.Movie.Actors</p>
+					</div>
+					<div class="orientation-row">
+						<p class="bolder">Awards:</p>
+						<p>@Model.Movie.Awards</p>
+					</div>
 				</section>
 			</div>
 		</article>

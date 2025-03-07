@@ -20,12 +20,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 50rem;
+    max-width: 70rem;
     margin: 4rem auto 0;
     padding: 0 1rem;
     flex-direction: column;
 }
 
+/*----------------------------------------
+                BUTTONS
+----------------------------------------*/
 .btn-design {
     border: none;
     display: inline-block;
@@ -40,6 +43,15 @@ body {
 
 .btn-design:hover {
     background-color: antiquewhite;
+}
+
+.btn-primary{
+    border-color: mediumseagreen;
+}
+
+.btn-primary:hover{
+    background-color: black;
+    color: white;
 }
 
 .btn-send{
@@ -65,6 +77,7 @@ body {
 }
 .btn-search{
     background-color: lightgreen;
+    border-color: mediumseagreen;
     margin-left: 1rem;
 }
 
@@ -81,14 +94,16 @@ article {
     border-radius: 1.2rem;
     border-bottom-left-radius:5rem;
     border-top-left-radius: 5rem;
-    max-width: 50rem;
+    max-width: 70rem;
     margin: 0 auto;
 }
 
+/*----------------------------------------
+                 SÖKSIDAN
+----------------------------------------*/
 .search-result-title {
     font-size: 1.5rem;
 }
-
 
 .search-result-head, .search-input {
     margin-top: 2rem;
@@ -106,6 +121,12 @@ article {
     height: 100%; 
 }
 
+.search-result-container {
+    max-height: 40rem; 
+    overflow-y: auto; 
+    padding-right: 1rem;
+}
+
 .search-result-movie-row {
     display: flex;
     text-align: center;
@@ -121,17 +142,66 @@ article {
 }
 
 .search-result-movie-details {
-    max-width: 30rem;
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
     padding: 1rem;
     box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Text och innehåll, som ska ligga ovanpå */
+.details-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 5rem;
+    backdrop-filter: blur(5px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+}
+
+/* Själva bakgrunden */
+.background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    opacity: 0.6;
+    z-index: 0;
+}
+
+/* Finjusteringar för text */
+.search-result-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.search-result-year {
+    margin: 0;
+    font-size: 1rem;
 }
 
 
+/*----------------------------------------
+                FILMSIDAN
+----------------------------------------*/
+
+/* FILMPRESENTATION */
 .article-full-movie {
     display: flex;
     gap: 1rem;
@@ -139,10 +209,9 @@ article {
     margin-bottom: 2rem;
 }
 
-
 .movie-full-poster {
     max-width: 20rem;
-    height: 25rem; /* eller ett fast mått om du vill */
+    height: 25rem;
 }
 
 .movie-lite-poster{
@@ -166,25 +235,28 @@ article {
     max-height: 25rem;
 }
 
+.section-details-wrapper{
+    width:100%;
+}
+
+.bolder{
+    font-weight: bolder;
+}
+
+.orientation-row{
+    display:flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+/* HEADER RECENSIONER */
 .reviews-header{
     display: inline-flex;
     justify-content:space-between;
     gap: 2rem;
 }
 
-
-.review-input-stars{
-    display:flex;
-    justify-content:center;
-    align-content: center;
-    align-items: center;
-}
-
-.review-input-stars label{
-    margin-top: -1.5rem;
-    margin-bottom: -0.8rem;
-}
-
+/* FILTER */
 .stars-filter-wrapper{
     display:flex;
     flex-direction: row-reverse;
@@ -199,13 +271,13 @@ article {
     background-color: lightgreen;
 }
 
+/* RECENSIONER */
 .section-all-reviews {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
 }
-
 
 .review-full {
     width: 100%;
@@ -250,6 +322,7 @@ article {
     align-items: center;
 }
 
+/* TEXTURSKRIFTER */
 .text-no-reviews-yet, #reviews-title {
     margin: 2rem 0 1rem;
 }
@@ -263,6 +336,7 @@ article {
     width: 100%;
 }
 
+/* SKRIV EN RECENSION */ 
 .review-input-container {
     display: flex;
     flex-direction: column;
@@ -301,6 +375,7 @@ article {
     width: 50%
 }
 
+/***** Stjärnbetyg *****/
 .review-input-stars {
     display: flex;
     flex-direction: row-reverse;
@@ -309,24 +384,32 @@ article {
     gap: 0.25rem;
     width: 100%;
 }
-
-/* Dölj de riktiga radio-knapparna */
 .review-input-stars input {
     display: none;
 }
-
 .review-input-stars label {
     font-size: 3.6rem;
     cursor: pointer;
     color: lightgrey;
 }
-
+.review-input-stars {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.review-input-stars label {
+    margin-top: -1.5rem;
+    margin-bottom: -0.8rem;
+}
 .review-input-stars input:checked ~ label,
 .review-input-stars label:hover,
 .review-input-stars label:hover ~ label {
     color: gold;
 }
+/**********************/
 
+/* Skriv en recension fortsättning.. */
 .review-input-text {
     border: 1px solid #ccc;
     border-radius: 0.5rem;
@@ -343,7 +426,17 @@ article {
     margin-top: 1rem;
 }
 
+/* MOBILANPASSAD CSS */
 @media (max-width: 767px) {
+
+    .search-result-title{
+        font-size: 0.7rem;
+    }
+
+    .search-result-year{
+        font-size: 0.5rem;
+    }
+
     .article-full-movie {
         flex-direction: column;
         overflow: hidden;
@@ -447,13 +540,18 @@ article {
         display: flex;
         align-items: center; /* Detta centrerar vertikalt */
         justify-content: space-between;
-        height: 4rem; /* Eller vad som passar */
+        height: 3rem; /* Eller vad som passar */
     }
 
     .stars-filter-clear-label, .review-input-stars {
         margin: 0; /* Nollställ gamla marginaler */
         display: flex;
         align-items: center; /* Om det är fler saker inne i dessa */
+    }
+
+    .btn-clear{
+        font-size: 0.8rem;
+        text-align:center;
     }
 
     #reviews-title{
