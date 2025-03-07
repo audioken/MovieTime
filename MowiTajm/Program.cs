@@ -17,6 +17,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>() // <--- Lagt till AddRoles.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddScoped<IUserService, UserService>(); // <--- Lagt till UserService.
+
+builder.Services.AddScoped<MovieService>(); // <--- Lagt till MovieService
+
+builder.Services.AddScoped<ReviewService>(); // <--- Lagt till ReviewService
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient<OmdbService>();
