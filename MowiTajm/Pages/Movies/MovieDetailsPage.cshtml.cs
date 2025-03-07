@@ -28,6 +28,7 @@ namespace MowiTajm.Pages.Movies
         public int FilterValue { get; set; }                            // Nummer som kontrollerer vilket filter som används
         public double MowiTajmRating { get; set; }                      // Genomsnittlig review för filmen baserat på reviews på MowiTajm
         public bool IsUserSignedIn => User.Identity.IsAuthenticated;    // True om användaren är inloggad, annars false
+        public string DateSortText = "";
 
         public async Task OnGetAsync(string imdbID)
         {
@@ -37,7 +38,10 @@ namespace MowiTajm.Pages.Movies
                 UserContext = await _userService.GetUserContextAsync(User);                             // Hämta användardata från service               
                 (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(imdbID);    // Hämta filmen, recensioner och genomsnittlig rating från service
                 ViewData["MowiTajmRating"] = MowiTajmRating;                                            // Spara MowiTajmRating i ViewData för att användas på sidan
-                Review.ImdbID = imdbID;                                                                 // Spara IMDB-ID för att kunna använda det i formuläret               
+                Review.ImdbID = imdbID;                                                                 // Spara IMDB-ID för att kunna använda det i formuläret                                                                 // Anropa metoden för att filtrera recensioner baserat på datum
+                FilterValue = 6; // Standard: Senaste
+                DateSortText = "Senaste";
+                Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
             }
             else
             {
@@ -70,6 +74,10 @@ namespace MowiTajm.Pages.Movies
                 Reviews = Reviews.Where(r => r.Rating == FilterValue).ToList();
             }
 
+            // Sätt standardvärde för DateSortText och sortera recensionerna
+            DateSortText = "Senaste";
+            Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
+
             // Spara de filtrerade recensionerna
             ViewData["ReviewFilter"] = Reviews;
             ViewData["Movie"] = Movie;
@@ -84,20 +92,26 @@ namespace MowiTajm.Pages.Movies
             UserContext = await _userService.GetUserContextAsync(User);
             (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
 
-            // Läs in föregående SearchReview om det finns
-            if (TempData["SearchReview"] is int prevSearchReview)
+            // Läs in föregående FilterValue om det finns, annars sätt ett defaultvärde (6 = "Senaste")
+            if (TempData["FilterValue"] is int prevFilterValue)
             {
-                FilterValue = prevSearchReview;
+                FilterValue = prevFilterValue;
+            }
+            else
+            {
+                FilterValue = 6;
             }
 
-            // Kontroll för datumfiltret
-            if (FilterValue < 6) { FilterValue = 6; } // Byt till datumfiltret
-            else if (FilterValue == 6) { FilterValue = 7; } // Byt till motsatt datumfiltret
-            else if (FilterValue == 7) { FilterValue = 6; } // Byt till datumfiltret
+            // Toggla FilterValue: om den är 6 (nyaste) blir den 7 (äldsta), annars blir den 6
+            FilterValue = (FilterValue == 6) ? 7 : 6;
 
-            // Spara SearchReview i TempData för att behålla värdet
-            TempData["SearchReview"] = FilterValue;
-            TempData["ScrollToReviews"] = true; // Sätt flaggan
+            // Sätt DateSortText baserat på den nya FilterValue
+            DateSortText = (FilterValue == 6) ? "Senaste" : "Äldsta";
+
+            // Spara värdena i TempData för nästa anrop
+            TempData["FilterValue"] = FilterValue;
+            TempData["DateSortOrder"] = DateSortText;
+            TempData["ScrollToReviews"] = true; // Sätt flaggan för scroll
 
             return Page();
         }

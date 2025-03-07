@@ -42,7 +42,8 @@ body {
 }
 
 .btn-design:hover {
-    background-color: antiquewhite;
+    background-color: lightgreen;
+    color:white;
 }
 
 .btn-primary{
@@ -50,35 +51,68 @@ body {
 }
 
 .btn-primary:hover{
-    background-color: black;
+    background-color: lightgreen;
+    border-color: lightgreen;
     color: white;
 }
 
 .btn-send{
-    background-color: lightgreen;
+    background-color: black;
     margin-top:0.5rem;
+    color: white;
+}
+
+.btn-send:hover{
+    background-color:lightgreen;
 }
 
 .btn-delete{
     background-color: lightpink;
 }
 
+.btn-delete:hover{
+    background-color: darkred;
+}
+
 .btn-clear{
-    background-color: lightyellow;
+    background-color:white;
+    border: 1px solid black;
+    color: black;
+    opacity: 0.8;
+}
+
+.btn-clear:hover{
+    border-color: lightgreen;
 }
 
 .btn-edit{
-    background-color: powderblue;
+    background-color: wheat;
 }
 
 .btn-save-changes {
-    background-color: lightgreen;
+    background-color: palegreen;
+    color: white;
     margin-right: 1rem;
 }
+
+.btn-save-changes:hover{
+    border-color: greenyellow;
+}
+
 .btn-search{
-    background-color: lightgreen;
-    border-color: mediumseagreen;
+    background-color: black;
+    border-color: black;
     margin-left: 1rem;
+}
+
+.btn-sort{
+    background-color:white;
+    border: 1px solid black;
+    color: black;
+}
+
+.btn-sort:hover{
+    border-color: lightgreen;
 }
 
 input {
@@ -254,7 +288,11 @@ article {
 .reviews-header{
     display: inline-flex;
     justify-content: space-between;
+    align-items:center;
     gap: 2rem;
+    width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 /* FILTER */
@@ -262,14 +300,13 @@ article {
     display:flex;
     flex-direction: row-reverse;
     align-items:center;
-    margin-top: 1.5rem;
+    /*margin-top: 1.5rem;*/
 }
 
 .stars-filter-clear-label {
     margin-right: 1rem;
     margin-left: 0.5rem;
-    text-align: right;
-    background-color: lightgreen;
+    /*text-align: right;*/
 }
 
 /* RECENSIONER */
@@ -324,8 +361,12 @@ article {
 }
 
 /* TEXTURSKRIFTER */
-.text-no-reviews-yet, #reviews-title {
+.text-no-reviews-yet{
     margin: 2rem 0 1rem;
+}
+
+#reviews-title {
+    margin: 0rem;
 }
 
 #text-write-a-review {
@@ -468,7 +509,6 @@ article {
 
     .reviews-header{
         flex-direction:column;
-        /*background-color:blue;*/
     }
 
     .stars-filter-clear-label{

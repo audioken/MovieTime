@@ -60,16 +60,16 @@ button.accept-policy {
 }
 
 .btn-primary {
-    border-color: mediumseagreen;
-    background-color: lightgreen;
+    border-color: black;
+    background-color: black;
 }
 
 .btn-primary:hover {
-    background-color: black;
+    background-color: lightgreen;
+    border-color: lightgreen;
     color: white;
 }
 
 .btn-search {
-    border-color: mediumseagreen;
     margin-left: 1rem;
 }

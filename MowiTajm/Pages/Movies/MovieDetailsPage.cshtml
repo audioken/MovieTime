@@ -33,9 +33,12 @@
 					<p>@Model.Movie.Genre</p>
 					<div class="orientation-row">
 						<p class="bolder">IMDB Rating:</p>
-						<p>@Model.Movie.ImdbRating</p>
+						<p>@Model.Movie.ImdbRating /10</p>
 					</div>
-					<p>MowiTajm Rating: @ViewData["MowiTajmRating"] av 5 ★</p> @* !! *@
+					<div class="orientation-row">
+						<p class="bolder">MowiTajm Rating:</p>
+						<p>@ViewData["MowiTajmRating"] /5</p>
+					</div>
 					<p>@Model.Movie.Plot</p>
 					<div class="orientation-row">
 						<p class="bolder">Director:</p>
@@ -60,8 +63,15 @@
 		<header class="reviews-header">
 			<h2 id="reviews-title">Recensioner (@filteredReviews.Count())</h2>
 
+			<form method="post" asp-page-handler="DateFilter">
+				<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+				<button type="submit" class="btn-design btn-sort">
+					@Model.DateSortText
+				</button>
+			</form>
+
 			<div class="stars-filter-wrapper">
-				<label class="stars-filter-clear-label btn-design btn-clear" for="searchAll" title="Rensa filtret för att se alla recensioner">Rensa Filter </label>
+				<label class="stars-filter-clear-label btn-design btn-clear" for="searchAll" title="Återställ filtret för att se alla recensioner">Återställ </label>
 				<form method="post" asp-page-handler="StarFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
 					<div class="stars-filter-stars review-input-stars">
@@ -85,10 +95,7 @@
 				</form>
 			</div>
 
-			<form method="post" asp-page-handler="DateFilter">
-				<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-				<button type="submit" id="submitButton" class="submitButtonId">Date</button>
-			</form>
+
 		</header>
 
 
