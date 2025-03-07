@@ -3,15 +3,15 @@
 @{
 	var filteredReviews = Model.Reviews;
 
-	if (Model.SearchReview >= 1 && Model.SearchReview <= 5)
+	if (Model.FilterValue >= 1 && Model.FilterValue <= 5)
 	{
-		filteredReviews = filteredReviews.Where(r => r.Rating == Model.SearchReview).ToList();
+		filteredReviews = filteredReviews.Where(r => r.Rating == Model.FilterValue).ToList();
 	}
-	else if (Model.SearchReview == 6)
+	else if (Model.FilterValue == 6)
 	{
 		filteredReviews = filteredReviews.OrderByDescending(r => r.DateTime).ToList();
 	}
-	else if (Model.SearchReview == 7)
+	else if (Model.FilterValue == 7)
 	{
 		filteredReviews = filteredReviews.OrderBy(r => r.DateTime).ToList();
 	}
@@ -36,7 +36,7 @@
 						<p>@Model.Movie.ImdbRating</p>
 					</div>
 					<p>MowiTajm Rating: @ViewData["MowiTajmRating"] stjärnor av 5</p> @* !! *@
-					<p>SearchReview = @Model.SearchReview</p> @* !! *@
+					<p>FilterValue = @Model.FilterValue</p> @* !! *@
 					<p>@Model.Movie.Plot</p>
 					<div class="orientation-row">
 						<p class="bolder">Director:</p>
@@ -66,22 +66,22 @@
 				<form method="post" asp-page-handler="StarFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
 					<div class="stars-filter-stars review-input-stars">
-						<input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="star" type="radio" id="searchStar5" value="5" asp-for="FilterValue" onchange="this.form.submit();">
 						<label class="star" for="searchStar5">★ </label>
 
-						<input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="star" type="radio" id="searchStar4" value="4" asp-for="FilterValue" onchange="this.form.submit();">
 						<label class="star" for="searchStar4">★ </label>
 
-						<input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="star" type="radio" id="searchStar3" value="3" asp-for="FilterValue" onchange="this.form.submit();">
 						<label class="star" for="searchStar3">★ </label>
 
-						<input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="star" type="radio" id="searchStar2" value="2" asp-for="FilterValue" onchange="this.form.submit();">
 						<label class="star" for="searchStar2">★ </label>
 
-						<input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="star" type="radio" id="searchStar1" value="1" asp-for="FilterValue" onchange="this.form.submit();">
 						<label class="star" for="searchStar1">★ </label>
 
-						<input class="stars-filter-clear-input" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
+						<input class="stars-filter-clear-input" type="radio" id="searchAll" value="0" asp-for="FilterValue" onchange="this.form.submit();">
 					</div>
 				</form>
 			</div>

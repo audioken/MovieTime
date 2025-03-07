@@ -10,7 +10,6 @@ namespace MowiTajm.Pages.Movies
         private readonly IUserService _userService;
         private readonly ReviewService _reviewService;
 
-
         public MovieDetailsPageModel(MovieService movieService, IUserService userService, ReviewService reviewService)
         {
             _movieService = movieService;
@@ -18,20 +17,17 @@ namespace MowiTajm.Pages.Movies
             _reviewService = reviewService;
         }
 
-        public MovieFull Movie { get; set; } = new();
-        public List<Review> Reviews { get; set; } = new();
-        public double MowiTajmRating { get; set; } //Genomsnittlig review för filmen baserat på reviews på MovieTime
         public UserContext UserContext { get; set; }
+        public MovieFull Movie { get; set; } = new();
+
         [BindProperty]
         public Review Review { get; set; } = new();
+        public List<Review> Reviews { get; set; } = new();
 
-        // True om användaren är inloggad, annars false
-        public bool IsUserSignedIn => User.Identity.IsAuthenticated;
-
-        //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
         [BindProperty]
-        public int SearchReview { get; set; }
-
+        public int FilterValue { get; set; }                            // Nummer som kontrollerer vilket filter som används
+        public double MowiTajmRating { get; set; }                      // Genomsnittlig review för filmen baserat på reviews på MowiTajm
+        public bool IsUserSignedIn => User.Identity.IsAuthenticated;    // True om användaren är inloggad, annars false
 
         public async Task OnGetAsync(string imdbID)
         {
@@ -49,7 +45,6 @@ namespace MowiTajm.Pages.Movies
             }
         }
 
-
         public async Task<IActionResult> OnPostAddReview()
         {
             if (!ModelState.IsValid)
@@ -59,27 +54,20 @@ namespace MowiTajm.Pages.Movies
                 return Page();
             }
 
-            // Spara aktuellt datum och tid
-            Review.DateTime = DateTime.Now;
-
-            // Använd ReviewService för att lägga till recensionen
-            await _reviewService.AddReviewAsync(Review);
-
-            // Ladda om sidan och dess innehåll
-            return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });
+            Review.DateTime = DateTime.Now;                                                 // Spara aktuellt datum och tid
+            await _reviewService.AddReviewAsync(Review);                                    // Använd ReviewService för att lägga till recensionen
+            return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });      // Ladda om sidan och dess innehåll
         }
 
         public async Task<IActionResult> OnPostStarFilter()
         {
+            UserContext = await _userService.GetUserContextAsync(User);
             (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
 
-            // Hämta användarkontexten via IUserService
-            UserContext = await _userService.GetUserContextAsync(User);
-
             // Filtrera recensionerna baserat på stjärnorna
-            if (SearchReview >= 1 && SearchReview <= 5)
+            if (FilterValue >= 1 && FilterValue <= 5)
             {
-                Reviews = Reviews.Where(r => r.Rating == SearchReview).ToList();
+                Reviews = Reviews.Where(r => r.Rating == FilterValue).ToList();
             }
 
             // Spara de filtrerade recensionerna
@@ -93,35 +81,24 @@ namespace MowiTajm.Pages.Movies
 
         public async Task<IActionResult> OnPostDateFilter()
         {
-            (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
-
             UserContext = await _userService.GetUserContextAsync(User);
+            (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
 
             // Läs in föregående SearchReview om det finns
             if (TempData["SearchReview"] is int prevSearchReview)
             {
-                SearchReview = prevSearchReview;
+                FilterValue = prevSearchReview;
             }
 
-            // Om SearchReview är mindre än 6, sätt den till 6
-            if (SearchReview < 6)
-            {
-                SearchReview = 6;
-            }
-            else if (SearchReview == 6)
-            {
-                SearchReview = 7;
-            }
-            else if (SearchReview == 7)
-            {
-                SearchReview = 6;
-            }
+            // Kontroll för datumfiltret
+            if (FilterValue < 6) { FilterValue = 6; } // Byt till datumfiltret
+            else if (FilterValue == 6) { FilterValue = 7; } // Byt till motsatt datumfiltret
+            else if (FilterValue == 7) { FilterValue = 6; } // Byt till datumfiltret
 
             // Spara SearchReview i TempData för att behålla värdet
-            TempData["SearchReview"] = SearchReview;
-            //TempData["MovieTimeReview"] = MovieTimeReview; // Spara värdet i TempData
-
+            TempData["SearchReview"] = FilterValue;
             TempData["ScrollToReviews"] = true; // Sätt flaggan
+
             return Page();
         }
 
