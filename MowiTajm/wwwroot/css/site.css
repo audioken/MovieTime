@@ -196,7 +196,6 @@ article {
     font-size: 1rem;
 }
 
-
 /*----------------------------------------
                 FILMSIDAN
 ----------------------------------------*/
@@ -210,8 +209,8 @@ article {
 }
 
 .movie-full-poster {
-    max-width: 20rem;
-    height: 25rem;
+    max-width: 25rem;
+    height: 35rem;
 }
 
 .movie-lite-poster{
@@ -232,11 +231,13 @@ article {
     box-sizing: border-box;
     overflow: auto;
     flex: 1;
-    max-height: 25rem;
+    max-height: 35rem;
 }
 
 .section-details-wrapper{
     width:100%;
+    display: flex;
+    align-items: center;
 }
 
 .bolder{
@@ -252,7 +253,7 @@ article {
 /* HEADER RECENSIONER */
 .reviews-header{
     display: inline-flex;
-    justify-content:space-between;
+    justify-content: space-between;
     gap: 2rem;
 }
 
@@ -470,7 +471,6 @@ article {
         /*background-color:blue;*/
     }
 
-
     .stars-filter-clear-label{
     }
 
@@ -501,7 +501,6 @@ article {
         gap: 1rem;
         flex-wrap: wrap;
     }
-
 
     .review-input-head{
         align-items: center;
@@ -557,5 +556,4 @@ article {
     #reviews-title{
         margin-bottom: -2rem;
     }
-
 }
