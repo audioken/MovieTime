@@ -15,7 +15,6 @@ namespace MowiTajm.Pages.Movies
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-
         public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<ApplicationUser> signÍnManager, UserManager<ApplicationUser> userManager)
         {
             _omdbService = omdbService;
@@ -24,15 +23,16 @@ namespace MowiTajm.Pages.Movies
             _userManager = userManager;
         }
 
+        // True om användaren är inloggad, annars false
         public bool IsUserSignedIn => _signInManager.IsSignedIn(User);
+        public bool IsAdmin { get; set; }
+        public string DisplayName { get; set; }
 
         public MovieFull Movie { get; set; } = new();
 
         [BindProperty]
         public Review Review { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
-        public string DisplayName { get; set; }
-        public bool IsAdmin { get; set; }
 
         //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
         [BindProperty]
@@ -77,6 +77,23 @@ namespace MowiTajm.Pages.Movies
             return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });
         }
 
+        public async Task<IActionResult> OnPostStarFilter()
+        {
+            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
+            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+
+            var user = await _userManager.GetUserAsync(User); // Hämta användare
+            IsAdmin = user != null && await _userManager.IsInRoleAsync(user, "Admin");
+            DisplayName = user?.DisplayName; // Fyll i DisplayName
+
+            //Abdi la till
+            ViewData["ReviewFilter"] = Reviews;
+            ViewData["Movie"] = Movie;
+
+            TempData["ScrollToReviews"] = true; // Sätt flaggan
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             // Hämta recensionen från databasen
@@ -90,19 +107,6 @@ namespace MowiTajm.Pages.Movies
             }
             // Ladda om sidan och dess innehåll
             return RedirectToPage("MovieDetailsPage", new { imdbId = review.ImdbID });
-        }
-
-        public async Task<IActionResult> OnPostStarFilter()
-        {
-            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
-            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
-
-            //Abdi la till
-            ViewData["ReviewFilter"] = Reviews;
-            ViewData["Movie"] = Movie;
-
-            TempData["ScrollToReviews"] = true; // Sätt flaggan
-            return Page();
         }
     }
 }
