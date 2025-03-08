@@ -39,9 +39,9 @@
             <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
             <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
-            <footer class="review-input-btn-submit">
-                <button class="btn-design btn-save-changes" type="submit">✓</button>
-                <a class="btn-design btn-delete" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">❌</a>
+            <footer class="review-edit-footer">
+                <button class="btn-design btn-black" title="Spara ändringarna." type="submit">✓</button>
+                <a class="btn-design btn-red" title="Avbryt redigering." asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">🛇</a>
             </footer>
         </form>
     </section>

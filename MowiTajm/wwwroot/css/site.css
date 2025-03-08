@@ -26,95 +26,6 @@ body {
     flex-direction: column;
 }
 
-/*----------------------------------------
-                BUTTONS
-----------------------------------------*/
-.btn-design {
-    border: none;
-    display: inline-block;
-    padding: 1rem 1rem;
-    min-height: 3.5rem;
-    min-width: 3.5rem;
-    text-decoration: none;
-    border-radius: 0.5rem;
-    text-align: center;
-    cursor: pointer;
-}
-
-.btn-design:hover {
-    background-color: lightgreen;
-    color:white;
-}
-
-.btn-primary{
-    border-color: mediumseagreen;
-}
-
-.btn-primary:hover{
-    background-color: lightgreen;
-    border-color: lightgreen;
-    color: white;
-}
-
-.btn-send{
-    background-color: black;
-    margin-top:0.5rem;
-    color: white;
-}
-
-.btn-send:hover{
-    background-color:lightgreen;
-}
-
-.btn-delete{
-    background-color: lightpink;
-}
-
-.btn-delete:hover{
-    background-color: darkred;
-}
-
-.btn-clear{
-    background-color:white;
-    border: 1px solid black;
-    color: black;
-    opacity: 0.8;
-}
-
-.btn-clear:hover{
-    border-color: lightgreen;
-}
-
-.btn-edit{
-    background-color: wheat;
-}
-
-.btn-save-changes {
-    background-color: palegreen;
-    color: white;
-    margin-right: 1rem;
-}
-
-.btn-save-changes:hover{
-    border-color: greenyellow;
-}
-
-.btn-search{
-    background-color: black;
-    border-color: black;
-    margin-left: 1rem;
-}
-
-.btn-sort{
-    background-color:white;
-    border: 1px solid black;
-    color: black;
-}
-
-.btn-sort:hover{
-    border-color: lightgreen;
-}
-
 input {
     border: none;
     border-bottom: 1px solid #ccc;
@@ -133,6 +44,58 @@ article {
 }
 
 /*----------------------------------------
+                BUTTONS
+----------------------------------------*/
+.btn-design {
+    border: none;
+    display: inline-block;
+    padding: 1rem 1rem;
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-black{
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+
+.btn-black:hover {
+    background-color: lightgreen;
+    color: white;
+    border-color: lightgreen;
+}
+
+.btn-red {
+    background-color: pink;
+    color: red;
+    border: 1px solid pink;
+}
+
+.btn-red:hover{
+    background-color: darkred;
+    color: red;
+    border-color: darkred;
+}
+
+.btn-white{
+    background-color:white;
+    color: black;
+    border: 1px solid black;
+}
+
+.btn-white:hover{
+    background-color:lightgreen;
+    color: white;
+    border-color: lightgreen;
+}
+
+
+/*----------------------------------------
                  SÖKSIDAN
 ----------------------------------------*/
 .search-result-title {
@@ -149,6 +112,7 @@ article {
     justify-content: center;
     padding: 0.5rem;
     height: 4rem;
+    gap: 1rem;
 }
 
 .search-input input {
@@ -293,20 +257,58 @@ article {
     width: 100%;
     margin-top: 3rem;
     margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem;
 }
 
 /* FILTER */
+.date-filter-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+    gap: 1rem; 
+    height: 100%; 
+    width:100%;
+}
+
 .stars-filter-wrapper{
     display:flex;
     flex-direction: row-reverse;
     align-items:center;
-    /*margin-top: 1.5rem;*/
+    gap: 1rem;
+}
+.stars-filter-stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
 }
 
-.stars-filter-clear-label {
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-    /*text-align: right;*/
+.stars-filter-star {
+    display: inline-flex; /* Ser till att den beter sig som en textbaserad komponent */
+    align-items: center; /* Vertikal centrering */
+    justify-content: center; /* Horisontell centrering */
+    font-size: 3rem;
+    cursor: pointer;
+    color: lightgrey;
+    line-height: 1; /* Förhindrar att fonten skapar extra utrymme */
+    padding: 0.2rem 0; /* Justera om det fortfarande känns osymmetriskt */
+    margin-bottom: 0.5rem;
+}
+
+
+
+.stars-filter-hidden-star {
+    display: none;
+}
+
+.stars-filter-hidden-star:checked ~ label,
+.stars-filter-star:hover,
+.stars-filter-star:hover ~ label {
+    color: gold;
 }
 
 /* RECENSIONER */
@@ -340,7 +342,7 @@ article {
     width: 100%;
 }
 
-.review-name, .review-stars {
+.review-name {
     font-size: 1.25rem;
 }
 
@@ -358,7 +360,19 @@ article {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: auto;
+    gap: 0.5rem;
 }
+
+.date-time-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    margin-bottom: 0rem;
+}
+
 
 /* TEXTURSKRIFTER */
 .text-no-reviews-yet{
@@ -372,10 +386,15 @@ article {
 #text-write-a-review {
     width: 100%;
     margin: 2rem 0 1rem;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem;
 }
 
-.edit-review-title{
+.edit-review-title {
     width: 100%;
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem;
 }
 
 /* SKRIV EN RECENSION */ 
@@ -417,41 +436,32 @@ article {
     width: 50%
 }
 
-/***** Stjärnbetyg *****/
 .review-input-stars {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
+    align-content: center;
     align-items: center;
     gap: 0.25rem;
     width: 100%;
 }
-.review-input-stars input {
+
+.review-input-hidden-star {
     display: none;
 }
-.review-input-stars label {
+
+.review-input-star {
     font-size: 3.6rem;
     cursor: pointer;
     color: lightgrey;
 }
-.review-input-stars {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
-.review-input-stars label {
-    margin-top: -1.5rem;
-    margin-bottom: -0.8rem;
-}
-.review-input-stars input:checked ~ label,
-.review-input-stars label:hover,
-.review-input-stars label:hover ~ label {
-    color: gold;
-}
-/**********************/
 
-/* Skriv en recension fortsättning.. */
+.review-input-hidden-star:checked ~ label,
+.review-input-star:hover,
+.review-input-star:hover ~ label {
+        color: gold;
+}
+
 .review-input-text {
     border: 1px solid #ccc;
     border-radius: 0.5rem;
@@ -466,6 +476,13 @@ article {
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+}
+
+.review-edit-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 1rem;
 }
 
 /* MOBILANPASSAD CSS */
@@ -508,10 +525,10 @@ article {
     }
 
     .reviews-header{
-        flex-direction:column;
-    }
-
-    .stars-filter-clear-label{
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.1rem;
+        padding: 0.5rem;
     }
 
     .review-stars{
@@ -520,6 +537,10 @@ article {
 
     .review-full{
         padding: 3rem;
+    }
+
+    .stars-filter-star{
+        font-size: 2.5rem;
     }
 
     .review-input-container{
@@ -558,7 +579,7 @@ article {
 
     .review-input-stars {
         width: 100%;
-        margin-top: -3rem;
+        margin-top: -2rem;
         margin-bottom: -2rem;
         justify-content: left;
     }
@@ -575,25 +596,41 @@ article {
         height: 10rem;
     }
 
-    .stars-filter-wrapper {
-        display: flex;
-        align-items: center; /* Detta centrerar vertikalt */
+    .stars-filter-wrapper{
         justify-content: space-between;
-        height: 3rem; /* Eller vad som passar */
+        width: 100%;
     }
 
-    .stars-filter-clear-label, .review-input-stars {
-        margin: 0; /* Nollställ gamla marginaler */
+    .date-filter-wrapper{
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+    }
+
+    .review-input-stars {
+        margin: 0; 
         display: flex;
-        align-items: center; /* Om det är fler saker inne i dessa */
+        align-items: center;
     }
 
-    .btn-clear{
+    .btn-design {
+        padding: 0.5rem;
+        min-height: 2rem;
+        min-width: 2rem;
+    }
+
+    .btn-red{
         font-size: 0.8rem;
         text-align:center;
     }
 
-    #reviews-title{
-        margin-bottom: -2rem;
+    .btn-black {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .btn-white {
+        font-size: 0.8rem;
+        text-align: center;
     }
 }
