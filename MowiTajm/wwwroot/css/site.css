@@ -485,6 +485,22 @@ article {
     gap: 1rem;
 }
 
+.navbar-nav {
+    display: flex;
+    align-items: center; /* Centrerar alla items vertikalt */
+    gap: 1rem; /* Mellanrum mellan elementen */
+}
+
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center; /* Se till att varje item är centrerat */
+}
+
+.navbar-nav form {
+    margin: 0; /* Tar bort extra marginaler som kan skapa snedställning */
+}
+
+
 /* MOBILANPASSAD CSS */
 @media (max-width: 767px) {
 

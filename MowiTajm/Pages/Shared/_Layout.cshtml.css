@@ -70,6 +70,16 @@ button.accept-policy {
     color: white;
 }
 
+.navbar-center-vertical{
+    background-color:red;
+}
+
+.testtest{
+    background-color:red;
+    color: red;
+}
+
+
 /*.btn-search {
     margin-left: 1rem;
 }*/
