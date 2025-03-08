@@ -32,16 +32,6 @@ input {
     padding: 0.5rem;
 }
 
-article {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 1.2rem;
-    border-bottom-left-radius:5rem;
-    border-top-left-radius: 5rem;
-    max-width: 70rem;
-    margin: 0 auto;
-}
 
 .center-stuff{
     display:flex;
@@ -221,6 +211,17 @@ article {
 ----------------------------------------*/
 
 /* FILMPRESENTATION */
+.article-full-movie, .review-full {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 1.2rem;
+    border-bottom-left-radius:5rem;
+    border-top-left-radius: 5rem;
+    max-width: 70rem;
+    margin: 0 auto;
+}
+
 .article-full-movie {
     display: flex;
     gap: 1rem;

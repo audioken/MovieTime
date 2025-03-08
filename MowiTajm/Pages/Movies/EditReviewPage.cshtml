@@ -9,18 +9,21 @@
 <div class="page-content-container">
     <h1 class="edit-review-title">Redigera recension</h1>
 
+    @* Formulär för att redigera sin recension *@
     <section class="review-input-container">
         <form class="review-input-form" method="post">
+
+			@* Dolda fält för att skicka med recensionens ID och filmens ID *@
             <input type="hidden" asp-for="Review.Id"/>
             <input type="hidden" asp-for="Review.ImdbID" />
 
-            <input type="hidden" asp-for="Review.ImdbID" />
-
             <fieldset class="review-input-head">
-                <legend>Välj antal stjärnor att ge filmen i betyg. 1 till 5.</legend>
+				<legend>Välj antal stjärnor att ge filmen i betyg. 1 till 5.</legend> @* Döljs visuellt *@
 
-                <input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
+				@* Hämtar användarnamn som readonly för att användaren inte ska kunna ändra det. *@
+                <input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br />
                 
+				@* Stjärnval för betyg *@
                 <div class="review-input-stars" title="Välj antal stjärnor att ge i betyg">
                     <input class="review-input-hidden-star" type="radio" id="star5" value="5" asp-for="Review.Rating">
                     <label class="review-input-star" for="star5">★ </label>
@@ -39,9 +42,13 @@
                 </div>
             </fieldset>
 
+			@* Rubrik *@
             <input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+
+			@* Textarea för recension *@
             <textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
+            @* Spara eller avrbyt redigeringen *@
             <footer class="review-edit-footer">
                 <button class="btn-design btn-black" title="Spara dina ändringar" aria-label="Spara dina ändringar"type="submit">✓</button>
                 <a class="btn-design btn-red" title="Avbryt redigering." aria-label="Avbryt redigering och återgå till förra sidan" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">🛇</a>
