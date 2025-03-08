@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MowiTajm.Data;
@@ -9,18 +8,15 @@ namespace MowiTajm.Pages.Movies
     public class EditReviewPageModel : PageModel
     {
         private readonly ApplicationDbContext _database;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService _userService;
 
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public EditReviewPageModel(ApplicationDbContext database, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public EditReviewPageModel(ApplicationDbContext database, IUserService userService)
         {
             _database = database;
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _userService = userService;
         }
 
-        public bool IsUserSignedIn => _signInManager.IsSignedIn(User);
+        public bool IsUserSignedIn => User.Identity.IsAuthenticated;
         public string DisplayName { get; set; }
 
 
@@ -29,10 +25,12 @@ namespace MowiTajm.Pages.Movies
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            // Hämta recension från databasen
             Review = await _database.Reviews.FindAsync(id);
-            var user = await _userManager.GetUserAsync(User);
-            DisplayName = user?.DisplayName;
 
+            // Använd UserService för att hämta användarkontext
+            var userContext = await _userService.GetUserContextAsync(User);
+            DisplayName = userContext.DisplayName;
 
             if (Review == null)
             {
