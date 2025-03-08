@@ -1,105 +1,82 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using MowiTajm.Data;
 using MowiTajm.Models;
-using MowiTajm.Services;
 
 namespace MowiTajm.Pages.Movies
 {
     public class MovieDetailsPageModel : PageModel
     {
-        private readonly OmdbService _omdbService;
-        private readonly ApplicationDbContext _database;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly MovieService _movieService;
+        private readonly IUserService _userService;
+        private readonly ReviewService _reviewService;
 
-        public MovieDetailsPageModel(OmdbService omdbService, ApplicationDbContext database, SignInManager<ApplicationUser> signÍnManager, UserManager<ApplicationUser> userManager)
+        public MovieDetailsPageModel(MovieService movieService, IUserService userService, ReviewService reviewService)
         {
-            _omdbService = omdbService;
-            _database = database;
-            _signInManager = signÍnManager;
-            _userManager = userManager;
+            _movieService = movieService;
+            _userService = userService;
+            _reviewService = reviewService;
         }
 
-        // True om användaren är inloggad, annars false
-        public bool IsUserSignedIn => _signInManager.IsSignedIn(User);
-        public bool IsAdmin { get; set; }
-        public string DisplayName { get; set; }
-
+        public UserContext UserContext { get; set; }
         public MovieFull Movie { get; set; } = new();
 
         [BindProperty]
         public Review Review { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
 
-        //En INT vi använder för att sortera reviews baserat på hur många stjärnor den har
         [BindProperty]
-        public int SearchReview { get; set; }
-
-        //Genomsnittlig review för filmen baserat på reviews på MovieTime
-        public double MovieTimeReview { get; set; }
+        public int FilterValue { get; set; }                            // Nummer som kontrollerer vilket filter som används
+        public double MowiTajmRating { get; set; }                      // Genomsnittlig review för filmen baserat på reviews på MowiTajm
+        public bool IsUserSignedIn => User.Identity.IsAuthenticated;    // True om användaren är inloggad, annars false
+        public string DateSortText = "";
 
         public async Task OnGetAsync(string imdbID)
         {
+            // Kontrollera att imdbID inte är null eller tomt innan vi fortsätter
             if (!string.IsNullOrWhiteSpace(imdbID))
             {
-                // Hämta filmen från API:et och recensionerna från databasen
-                Movie = await _omdbService.GetMovieByIdAsync(imdbID);
-                Reviews = await _database.Reviews.Where(r => r.ImdbID == imdbID).ToListAsync();
-
-                // Hämta användarens DisplayName
-                var user = await _userManager.GetUserAsync(User);
-                IsAdmin = user != null && await _userManager.IsInRoleAsync(user, "Admin");
-                DisplayName = user?.DisplayName;
-
-                // Spara IMDB-ID för att kunna använda det i formuläret
-                Review.ImdbID = imdbID;
+                UserContext = await _userService.GetUserContextAsync(User);                             // Hämta användardata från service               
+                (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(imdbID);    // Hämta filmen, recensioner och genomsnittlig rating från service
+                ViewData["MowiTajmRating"] = MowiTajmRating;                                            // Spara MowiTajmRating i ViewData för att användas på sidan
+                Review.ImdbID = imdbID;                                                                 // Spara IMDB-ID för att kunna använda det i formuläret                                                                 // Anropa metoden för att filtrera recensioner baserat på datum
+                FilterValue = 6; // Standard: Senaste
+                DateSortText = "Senaste";
+                Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
             }
-
-            // Beräkna MovieTimeReview baserat på alla recensioner (inte filtrerade recensioner)
-            MovieTimeReview = Reviews.Count > 0 ? Math.Round(Reviews.Average(r => r.Rating), 2) : 0;
-
-            // Spara MovieTimeReview i ViewData för att användas på sidan
-            ViewData["MovieTimeReview"] = MovieTimeReview;
+            else
+            {
+                ViewData["ErrorMessage"] = "Filmens ID saknas eller är ogiltigt.";
+            }
         }
 
         public async Task<IActionResult> OnPostAddReview()
         {
             if (!ModelState.IsValid)
             {
-                // Ladda om sidan och dess innehåll om valideringen misslyckas
-                Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
-                Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+                // Hämta filmdetaljer och recensioner igen om valideringen misslyckas
+                (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
                 return Page();
             }
 
-            // Spara aktuellt datum och tid
-            Review.DateTime = DateTime.Now;
-
-            // Lägg till recensionen i databasen och spara ändringarna
-            _database.Reviews.Add(Review);
-            await _database.SaveChangesAsync();
-
-            // Ladda om sidan och dess innehåll
-            return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });
+            Review.DateTime = DateTime.Now;                                                 // Spara aktuellt datum och tid
+            await _reviewService.AddReviewAsync(Review);                                    // Använd ReviewService för att lägga till recensionen
+            return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });      // Ladda om sidan och dess innehåll
         }
 
         public async Task<IActionResult> OnPostStarFilter()
         {
-            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
-            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
-
-            var user = await _userManager.GetUserAsync(User); // Hämta användare
-            IsAdmin = user != null && await _userManager.IsInRoleAsync(user, "Admin");
-            DisplayName = user?.DisplayName; // Fyll i DisplayName
+            UserContext = await _userService.GetUserContextAsync(User);
+            (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
 
             // Filtrera recensionerna baserat på stjärnorna
-            if (SearchReview >= 1 && SearchReview <= 5)
+            if (FilterValue >= 1 && FilterValue <= 5)
             {
-                Reviews = Reviews.Where(r => r.Rating == SearchReview).ToList();
+                Reviews = Reviews.Where(r => r.Rating == FilterValue).ToList();
             }
+
+            // Sätt standardvärde för DateSortText och sortera recensionerna
+            DateSortText = "Senaste";
+            Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
 
             // Spara de filtrerade recensionerna
             ViewData["ReviewFilter"] = Reviews;
@@ -112,50 +89,43 @@ namespace MowiTajm.Pages.Movies
 
         public async Task<IActionResult> OnPostDateFilter()
         {
-            Movie = await _omdbService.GetMovieByIdAsync(Review.ImdbID);
-            Reviews = await _database.Reviews.Where(r => r.ImdbID == Review.ImdbID).ToListAsync();
+            UserContext = await _userService.GetUserContextAsync(User);
+            (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
 
-            // Läs in föregående SearchReview om det finns
-            if (TempData["SearchReview"] is int prevSearchReview)
+            // Läs in föregående FilterValue om det finns, annars sätt ett defaultvärde (6 = "Senaste")
+            if (TempData["FilterValue"] is int prevFilterValue)
             {
-                SearchReview = prevSearchReview;
+                FilterValue = prevFilterValue;
+            }
+            else
+            {
+                FilterValue = 6;
             }
 
-            // Om SearchReview är mindre än 6, sätt den till 6
-            if (SearchReview < 6)
-            {
-                SearchReview = 6;
-            }
-            else if (SearchReview == 6)
-            {
-                SearchReview = 7;
-            }
-            else if (SearchReview == 7)
-            {
-                SearchReview = 6;
-            }
+            // Toggla FilterValue: om den är 6 (nyaste) blir den 7 (äldsta), annars blir den 6
+            FilterValue = (FilterValue == 6) ? 7 : 6;
 
-            // Spara SearchReview i TempData för att behålla värdet
-            TempData["SearchReview"] = SearchReview;
-            //TempData["MovieTimeReview"] = MovieTimeReview; // Spara värdet i TempData
+            // Sätt DateSortText baserat på den nya FilterValue
+            DateSortText = (FilterValue == 6) ? "Senaste" : "Äldsta";
 
-            TempData["ScrollToReviews"] = true; // Sätt flaggan
+            // Spara värdena i TempData för nästa anrop
+            TempData["FilterValue"] = FilterValue;
+            TempData["DateSortOrder"] = DateSortText;
+            TempData["ScrollToReviews"] = true; // Sätt flaggan för scroll
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            // Hämta recensionen från databasen
-            var review = await _database.Reviews.FindAsync(id);
+            // Använd ReviewService för att ta bort recensionen
+            await _reviewService.DeleteReviewAsync(id);
 
-            if (review != null)
-            {
-                // Ta bort recensionen från databasen och spara ändringarna
-                _database.Reviews.Remove(review);
-                await _database.SaveChangesAsync();
-            }
+            // Ladda om filmdata inklusive recensioner
+            (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
+
             // Ladda om sidan och dess innehåll
-            return RedirectToPage("MovieDetailsPage", new { imdbId = review.ImdbID });
+            return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });
         }
     }
 }

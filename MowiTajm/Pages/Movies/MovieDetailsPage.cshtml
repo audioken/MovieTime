@@ -3,15 +3,15 @@
 @{
 	var filteredReviews = Model.Reviews;
 
-	if (Model.SearchReview >= 1 && Model.SearchReview <= 5)
+	if (Model.FilterValue >= 1 && Model.FilterValue <= 5)
 	{
-		filteredReviews = filteredReviews.Where(r => r.Rating == Model.SearchReview).ToList();
+		filteredReviews = filteredReviews.Where(r => r.Rating == Model.FilterValue).ToList();
 	}
-	else if (Model.SearchReview == 6)
+	else if (Model.FilterValue == 6)
 	{
 		filteredReviews = filteredReviews.OrderByDescending(r => r.DateTime).ToList();
 	}
-	else if (Model.SearchReview == 7)
+	else if (Model.FilterValue == 7)
 	{
 		filteredReviews = filteredReviews.OrderBy(r => r.DateTime).ToList();
 	}
@@ -33,10 +33,16 @@
 					<p>@Model.Movie.Genre</p>
 					<div class="orientation-row">
 						<p class="bolder">IMDB Rating:</p>
-						<p>@Model.Movie.ImdbRating</p>
+						<p>@Model.Movie.ImdbRating / 10</p>
 					</div>
-					<p>Movie Time Rating: @ViewData["MovieTimeReview"] stjärnor av 5</p> @* !! *@
-					<p>SearchReview = @Model.SearchReview</p> @* !! *@
+					<div class="orientation-row">
+						<p class="bolder">MowiTajm Rating:</p>
+						@if (Model.Reviews.Count != 0){
+							<p>@ViewData["MowiTajmRating"] / 5</p>
+						} else {
+							<p>Betyg saknas</p>
+						}
+					</div>
 					<p>@Model.Movie.Plot</p>
 					<div class="orientation-row">
 						<p class="bolder">Director:</p>
@@ -58,6 +64,55 @@
 			</div>
 		</article>
 
+		<header class="reviews-header">
+			<div class="date-filter-wrapper">
+				<h2 id="reviews-title">Recensioner (@filteredReviews.Count())</h2>
+
+				<form method="post" asp-page-handler="DateFilter">
+					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+					<button type="submit" class="btn-design btn-white">
+						@Model.DateSortText
+					</button>
+				</form>
+			</div>
+			<div class="stars-filter-wrapper">
+				<label class="stars-filter-clear-label btn-design btn-white" for="searchAll" title="Återställ filtret för att se alla recensioner">Återställ </label>
+				<form method="post" asp-page-handler="StarFilter">
+					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
+					<div class="stars-filter-stars">
+						<input class="stars-filter-hidden-star" type="radio" id="searchStar5" value="5" asp-for="FilterValue" onchange="this.form.submit();">
+						<label class="stars-filter-star" for="searchStar5">★ </label>
+
+						<input class="stars-filter-hidden-star" type="radio" id="searchStar4" value="4" asp-for="FilterValue" onchange="this.form.submit();">
+						<label class="stars-filter-star" for="searchStar4">★ </label>
+
+						<input class="stars-filter-hidden-star" type="radio" id="searchStar3" value="3" asp-for="FilterValue" onchange="this.form.submit();">
+						<label class="stars-filter-star" for="searchStar3">★ </label>
+
+						<input class="stars-filter-hidden-star" type="radio" id="searchStar2" value="2" asp-for="FilterValue" onchange="this.form.submit();">
+						<label class="stars-filter-star" for="searchStar2">★ </label>
+
+						<input class="stars-filter-hidden-star" type="radio" id="searchStar1" value="1" asp-for="FilterValue" onchange="this.form.submit();">
+						<label class="stars-filter-star" for="searchStar1">★ </label>
+
+						<input class="stars-filter-hidden-star" type="radio" id="searchAll" value="0" asp-for="FilterValue" onchange="this.form.submit();">
+					</div>
+				</form>
+			</div>
+
+
+		</header>
+
+
+		@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
+		{
+			<script>
+				window.onload = function () {
+					document.getElementById("reviews-title").scrollIntoView();
+				}
+			</script>
+			TempData.Remove("ScrollToReviews");
+		}
 
 		<section class="section-all-reviews" id="IdAllReviews">
 			@if (!filteredReviews.Any())
@@ -66,51 +121,6 @@
 			}
 			else
 			{
-				<header class="reviews-header">
-					<h2 id="reviews-title">Recensioner (@filteredReviews.Count())</h2>
-
-					<div class="stars-filter-wrapper">
-						<label class="stars-filter-clear-label btn-design btn-clear" for="searchAll" title="Rensa filtret för att se alla recensioner">Rensa Filter </label>
-						<form method="post" asp-page-handler="StarFilter">
-							<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-							<div class="stars-filter-stars review-input-stars">
-								<input class="star" type="radio" id="searchStar5" value="5" asp-for="SearchReview" onchange="this.form.submit();">
-								<label class="star" for="searchStar5">★ </label>
-
-								<input class="star" type="radio" id="searchStar4" value="4" asp-for="SearchReview" onchange="this.form.submit();">
-								<label class="star" for="searchStar4">★ </label>
-
-								<input class="star" type="radio" id="searchStar3" value="3" asp-for="SearchReview" onchange="this.form.submit();">
-								<label class="star" for="searchStar3">★ </label>
-
-								<input class="star" type="radio" id="searchStar2" value="2" asp-for="SearchReview" onchange="this.form.submit();">
-								<label class="star" for="searchStar2">★ </label>
-
-								<input class="star" type="radio" id="searchStar1" value="1" asp-for="SearchReview" onchange="this.form.submit();">
-								<label class="star" for="searchStar1">★ </label>
-
-								<input class="stars-filter-clear-input" type="radio" id="searchAll" value="0" asp-for="SearchReview" onchange="this.form.submit();">
-							</div>
-						</form>
-					</div>
-				</header>
-
-				<form method="post" asp-page-handler="DateFilter">
-					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
-					<button type="submit" id="submitButton" class="submitButtonId">Date</button>
-				</form>
-
-				@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
-				{
-					<script>
-						window.onload = function () {
-							document.getElementById("reviews-title").scrollIntoView();
-						}
-					</script>
-					TempData.Remove("ScrollToReviews");
-				}
-
-
 				@foreach (var review in filteredReviews)
 				{
 
@@ -133,22 +143,24 @@
 						</section>
 
 						<footer class="review-footer">
-							<p>@review.DateTime</p>
-							@if (Model.IsUserSignedIn && review.Username == Model.DisplayName)
+							<p class="date-time-text">@review.DateTime</p>
+							@if (Model.IsUserSignedIn && review.Username == Model.UserContext.DisplayName)
 							{
 								<div class="review-buttons">
-									<a class="btn-design btn-edit" asp-page="EditReviewPage" asp-route-id="@review.Id">✏️</a>
+									<a class="btn-design btn-black" asp-page="EditReviewPage" asp-route-id="@review.Id">✎ᝰ.</a>
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-										<button class="btn-design btn-delete" type="submit" title="Ta bort recensionen">❌</button>
+										<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID" />
+										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen">⛌</button>
 									</form>
 								</div>
 							}
-							else if (Model.IsUserSignedIn && Model.IsAdmin)
+							else if (Model.IsUserSignedIn && Model.UserContext.IsAdmin)
 							{
 								<!-- Admin får bara Delete-knappen på andras reviews -->
 								<div class="review-buttons">
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
-										<button class="btn-design btn-delete" type="submit" title="Ta bort recensionen">❌</button>
+										<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID" />
+										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen">⛌</button>
 									</form>
 								</div>
 							}
@@ -164,33 +176,34 @@
 
 			<section class="review-input-container">
 				<form class="review-input-form" method="post" asp-page-handler="AddReview">
-					<input type="hidden" asp-for="Review.ImdbID" />
+					<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID"/>
+
 
 					<section class="review-input-head">
-							<input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
+							<input class="review-input-name" type="text" value="@Model.UserContext.DisplayName" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
 							<div class="review-input-stars">
-								<input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
-								<label class="star" for="star5">★ </label>
+								<input class="review-input-hidden-star" type="radio" id="star5" value="5" asp-for="Review.Rating">
+								<label class="review-input-star" for="star5">★ </label>
 
-								<input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
-								<label class="star" for="star4">★ </label>
+								<input class="review-input-hidden-star" type="radio" id="star4" value="4" asp-for="Review.Rating">
+								<label class="review-input-star" for="star4">★ </label>
 
-								<input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
-								<label class="star" for="star3">★ </label>
+								<input class="review-input-hidden-star" type="radio" id="star3" value="3" asp-for="Review.Rating">
+								<label class="review-input-star" for="star3">★ </label>
 
-								<input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
-								<label class="star" for="star2">★ </label>
+								<input class="review-input-hidden-star" type="radio" id="star2" value="2" asp-for="Review.Rating">
+								<label class="review-input-star" for="star2">★ </label>
 
-								<input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
-								<label class="star" for="star1">★ </label>
+								<input class="review-input-hidden-star" type="radio" id="star1" value="1" asp-for="Review.Rating">
+								<label class="review-input-star" for="star1">★ </label>
 							</div>
 					</section>
 
-					<input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
-					<textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+					<textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
 					<footer class="review-input-btn-submit">
-						<button class="btn-design btn-send" type="submit">ᯓ➤</button>
+						<button class="btn-design btn-black" type="submit">ᯓ➤</button>
 					</footer>
 				</form>
 			</section>

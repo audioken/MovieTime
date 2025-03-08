@@ -19,29 +19,29 @@
             <section class="review-input-head">
                 <input class="review-input-name" type="text" value="@Model.DisplayName" class="review-input-name" asp-for="Review.Username" required readonly /><br /> @* Ändrade så att den lägger till user direkt *@
                 <div class="review-input-stars">
-                    <input class="star" type="radio" id="star5" value="5" asp-for="Review.Rating">
-                    <label class="star" for="star5">★ </label>
+                    <input class="review-input-hidden-star" type="radio" id="star5" value="5" asp-for="Review.Rating">
+                    <label class="review-input-star" for="star5">★ </label>
 
-                    <input class="star" type="radio" id="star4" value="4" asp-for="Review.Rating">
-                    <label class="star" for="star4">★ </label>
+                    <input class="review-input-hidden-star" type="radio" id="star4" value="4" asp-for="Review.Rating">
+                    <label class="review-input-star" for="star4">★ </label>
 
-                    <input class="star" type="radio" id="star3" value="3" asp-for="Review.Rating">
-                    <label class="star" for="star3">★ </label>
+                    <input class="review-input-hidden-star" type="radio" id="star3" value="3" asp-for="Review.Rating">
+                    <label class="review-input-star" for="star3">★ </label>
 
-                    <input class="star" type="radio" id="star2" value="2" asp-for="Review.Rating">
-                    <label class="star" for="star2">★ </label>
+                    <input class="review-input-hidden-star" type="radio" id="star2" value="2" asp-for="Review.Rating">
+                    <label class="review-input-star" for="star2">★ </label>
 
-                    <input class="star" type="radio" id="star1" value="1" asp-for="Review.Rating">
-                    <label class="star" for="star1">★ </label>
+                    <input class="review-input-hidden-star" type="radio" id="star1" value="1" asp-for="Review.Rating">
+                    <label class="review-input-star" for="star1">★ </label>
                 </div>
             </section>
 
-            <input class="review-input-title" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
-            <textarea class="review-input-text" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+            <input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+            <textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
-            <footer class="review-input-btn-submit">
-                <button class="btn-design btn-save-changes" type="submit">✓</button>
-                <a class="btn-design btn-delete" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">❌</a>
+            <footer class="review-edit-footer">
+                <button class="btn-design btn-black" title="Spara ändringarna." type="submit">✓</button>
+                <a class="btn-design btn-red" title="Avbryt redigering." asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">🛇</a>
             </footer>
         </form>
     </section>

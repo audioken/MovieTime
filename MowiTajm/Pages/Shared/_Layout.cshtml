@@ -20,6 +20,7 @@
                     </a>
 
                     @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase)){
+
                         @* Sök på filmer.. *@
                         <form method="get" asp-page="/Movies/Index" class="navbar-search mx-auto d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"

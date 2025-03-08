@@ -19,23 +19,13 @@ namespace MowiTajm.Pages.Movies
 
         public async Task OnGetAsync(string searchInput)
         {
-            // Spara söksträngen för att kunna använda den i vyn
-            if (!string.IsNullOrWhiteSpace(searchInput))
-            {
-                SearchInput = searchInput;
-            }
-
             // Om söksträngen inte är tom, sök efter filmer
             if (!string.IsNullOrWhiteSpace(searchInput))
             {
-                // Anropa API:et för att söka efter filmer och hämta resultatet
-                var result = await _omdbService.SearchMoviesAsync(searchInput);
-
-                // Hämta filmer, men använd en tom lista om inga resultat hittades
-                Movies = result.Search ?? new List<MovieLite>();
-
-                // Spara totala antalet resultat för att kunna visa det i vyn
-                TotalResults = result.TotalResults;
+                SearchInput = searchInput;                                      // Spara söksträngen för att kunna använda den i vyn
+                var result = await _omdbService.SearchMoviesAsync(searchInput); // Anropa API:et för att söka efter filmer och hämta resultatet              
+                Movies = result.Search ?? new List<MovieLite>();                // Hämta filmer, men använd en tom lista om inga resultat hittades              
+                TotalResults = result.TotalResults;                             // Spara totala antalet resultat för att kunna visa det i vyn
             }
         }
     }
