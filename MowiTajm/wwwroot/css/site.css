@@ -43,6 +43,19 @@ article {
     margin: 0 auto;
 }
 
+.center-stuff{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-main-buttons{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
 /*----------------------------------------
                 BUTTONS
 ----------------------------------------*/
@@ -58,28 +71,14 @@ article {
     cursor: pointer;
 }
 
+.btn-navbar {
+    white-space: nowrap;
+}
+
 .btn-black{
     background-color: black;
     color: white;
     border: 1px solid black;
-}
-
-.btn-black:hover {
-    background-color: lightgreen;
-    color: white;
-    border-color: lightgreen;
-}
-
-.btn-red {
-    background-color: pink;
-    color: red;
-    border: 1px solid pink;
-}
-
-.btn-red:hover{
-    background-color: darkred;
-    color: red;
-    border-color: darkred;
 }
 
 .btn-white{
@@ -88,12 +87,35 @@ article {
     border: 1px solid black;
 }
 
-.btn-white:hover{
-    background-color:lightgreen;
+.btn-purple{
+    background-color: purple;
+    color: white;
+    border: 1px solid purple;
+}
+
+.btn-purple:hover{
+    background-color: mediumpurple;
+    color: white;
+    border-color: mediumpurple;
+}
+
+.btn-red {
+    background-color: indianred;
+    color: white;
+    border: 1px solid indianred;
+}
+
+.btn-black:hover, .btn-white:hover, .btn-blue:hover {
+    background-color: lightgreen;
     color: white;
     border-color: lightgreen;
 }
 
+.btn-red:hover{
+    background-color: red;
+    color: white;
+    border-color: red;
+}
 
 /*----------------------------------------
                  SÖKSIDAN
@@ -485,6 +507,7 @@ article {
     gap: 1rem;
 }
 
+/*KNAPPARNA i NAVBAR*/
 .navbar-nav {
     display: flex;
     align-items: center; /* Centrerar alla items vertikalt */
@@ -646,6 +669,11 @@ article {
     }
 
     .btn-white {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .btn-purple{
         font-size: 0.8rem;
         text-align: center;
     }

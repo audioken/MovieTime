@@ -1,84 +1,87 @@
 ﻿@page
 @model IndexModel
 
-<h2>Admin</h2>
+<div class="page-content-container">
 
-<!-- Två knappar för att hantera användare eller recensioner -->
-<form method="post">
-    <button type="submit" asp-page-handler="LoadUsers" class="btn btn-primary">
-        Hantera användare
-    </button>
-    <button type="submit" asp-page-handler="LoadReviews" class="btn btn-primary">
-        Hantera recensioner
-    </button>
-</form>
+    <h2>Admin</h2>
 
-@if (!Model.ShowReviews)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Användarnamn</th>
-                <th>Roll</th>
-                <th>Hantera</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model.Users)
-            {
-                var userRole = Model.UserRoles.ContainsKey(user.Id) ? Model.UserRoles[user.Id] : "Ingen roll";
+    <!-- Två knappar för att hantera användare eller recensioner -->
+    <form class="admin-main-buttons" method="post">
+        <button type="submit" asp-page-handler="LoadUsers" class="btn-design btn-black">
+            Hantera användare
+        </button>
+        <button type="submit" asp-page-handler="LoadReviews" class="btn-design btn-black">
+            Hantera recensioner
+        </button>
+    </form>
 
+    @if (!Model.ShowReviews)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@user.UserName</td>
-                    <td>@userRole</td>
-                    <td>
-                        <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                            <button type="submit" class="btn btn-primary">
-                                Ändra till @((userRole == "Admin") ? "User" : "Admin")
-                            </button>
-                        </form>
-                        <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
-                                Ta bort
-                            </button>
-                        </form>
-                    </td>
+                    <th>Användarnamn</th>
+                    <th>Roll</th>
+                    <th class="center-stuff">Hantera</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Titel</th>
-                <th>Recension</th>
-                <th>Betyg</th>
-                <th>Användare</th>
-                <th>Datum</th>
-                <th>Hantera</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var review in Model.Reviews)
-            {
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    var userRole = Model.UserRoles.ContainsKey(user.Id) ? Model.UserRoles[user.Id] : "Ingen roll";
+
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@userRole</td>
+                        <td class="orientation-row center-stuff">
+                            <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
+                                <button type="submit" class="btn-design btn-purple">
+                                    Ändra till @((userRole == "Admin") ? "User" : "Admin")
+                                </button>
+                            </form>
+                            <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
+                                <button type="submit" class="btn-design btn-red" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                    ⛌
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@review.Title</td>
-                    <td>@review.Text</td>
-                    <td>@review.Rating / 5</td>
-                    <td>@review.Username</td>
-                    <td>@review.DateTime.ToShortDateString()</td>
-                    <td>
-                        <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
-                                Ta bort
-                            </button>
-                        </form>
-                    </td>
+                    <th>Titel</th>
+                    <th>Recension</th>
+                    <th>Betyg</th>
+                    <th>Användare</th>
+                    <th>Datum</th>
+                    <th>Hantera</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var review in Model.Reviews)
+                {
+                    <tr>
+                        <td>@review.Title</td>
+                        <td>@review.Text</td>
+                        <td>@review.Rating / 5</td>
+                        <td>@review.Username</td>
+                        <td>@review.DateTime.ToShortDateString()</td>
+                        <td>
+                            <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
+                                <button type="submit" class="btn-design btn-red" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                    ⛌
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
