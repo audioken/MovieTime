@@ -40,7 +40,7 @@
                                 </button>
                             </form>
                             <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                <button type="submit" class="btn-design btn-red" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                <button type="submit" class="btn-design btn-red" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
                                     ⛌
                                 </button>
                             </form>
@@ -74,7 +74,7 @@
                         <td>@review.DateTime.ToShortDateString()</td>
                         <td>
                             <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                <button type="submit" class="btn-design btn-red" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
                                     ⛌
                                 </button>
                             </form>
