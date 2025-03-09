@@ -25,7 +25,7 @@
                         <form method="get" asp-page="/Movies/Index" class="navbar-search mx-auto d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"
                                    value="@Context.Request.Query["searchInput"]" placeholder="sök på filmtitel..">
-                            <button class="btn btn-primary" type="submit">⌕</button>
+                            <button class="btn btn-primary" title="Sök" aria-label="Sök" type="submit">⌕</button>
                         </form>
                     }
 

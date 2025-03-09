@@ -6,31 +6,34 @@
 <div class="page-content-container">
 	<h1>Sök på filmtitel</h1>
 
+    @* Sökfunktionen *@
     <form class="search-input" method="get">
-        <input type="text" class="form-control me-2" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required /> @* <--- Lagt till value för att söktermen visas även på sökfältet på Index-sidan.*@
-        <button class="btn btn-primary btn-search btn-black" type="submit">⌕</button>
+        <input type="text" class="form-control me-2" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required />
+        <button class="btn btn-primary btn-search btn-black" type="submit" title="Sök" aria-label="Sök">⌕</button>
 	</form>
 
-    @* Kolla så söksträngen har ett värde *@
     @if (!string.IsNullOrEmpty(Model.SearchInput))
     {
-		@* Kolla så det finns filmer att visa *@
         if (Model.Movies.Count > 0)
         {
             @* Extra sökinfo *@
             <section class="search-result-head">
-                <h6>Visar @Model.Movies.Count av @Model.TotalResults sökresultat.</h6>
+                <p>Visar @Model.Movies.Count av @Model.TotalResults sökresultat.</p>
             </section>
 
 			@* Skriv ut alla filmer som hittades *@
             <section class="search-result-container">
                 @foreach (var movie in Model.Movies)
                 {
-
-                    <div class="search-result-movie-row" onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
+					@* Redirecta användaren till MovieDetailsPage när de klickar på en film. *@
+                    <article class="search-result-movie-row" onclick="window.location='/Movies/MovieDetailsPage?imdbID=@movie.ImdbID'">
+						
+                        @* Filmposter *@
                         <div class="movie-lite-poster-container">
-                            <img class="movie-lite-poster" src="@movie.Poster" />
+                            <img class="movie-lite-poster" src="@movie.Poster" alt="Filmposter för @movie.Title"/>
                         </div>
+
+						@* Filminformation *@
                         <div class="search-result-movie-details">
                             <div class="background-blur" style="background-image: url('@movie.Poster')"></div>
                             <div class="details-content">
@@ -38,7 +41,7 @@
                                 <p class="search-result-year">@movie.Type (@movie.Year)</p>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
                 }
             </section>
