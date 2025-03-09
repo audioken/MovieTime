@@ -90,8 +90,6 @@
 
 			@* Stjärnfilter *@
 			<div class="stars-filter-wrapper">
-				<input class="stars-filter-hidden-star" type="radio" id="searchAll" value="0" asp-for="FilterValue" onchange="this.form.submit();">
-				<label class="btn-design btn-white" for="searchAll" title="Återställ filtret" aria-label="Återställ filtret">Återställ </label>
 				<form method="post" asp-page-handler="StarFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
 
@@ -99,6 +97,9 @@
 						<legend>Filtrera recensioner efter betyg</legend> @* Döljs visuellt *@
 
 						 <div class="stars-filter-stars" title="Filtrera på antal stjärnor">
+							<input class="stars-filter-hidden-star" type="radio" id="searchAll" value="0" asp-for="FilterValue" onchange="this.form.submit();">
+							<label class="btn-design btn-white" for="searchAll" title="Återställ filtret" aria-label="Återställ filtret">Återställ </label>
+
 							<input class="stars-filter-hidden-star" type="radio" id="searchStar5" value="5" asp-for="FilterValue" onchange="this.form.submit();">
 							<label class="stars-filter-star" for="searchStar5">★ </label>
 

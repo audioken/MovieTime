@@ -32,7 +32,6 @@ input {
     padding: 0.5rem;
 }
 
-
 .center-stuff{
     display:flex;
     justify-content: center;
@@ -337,10 +336,14 @@ legend {
     display: none;
 }
 
-.stars-filter-hidden-star:checked ~ label,
+.stars-filter-hidden-star:checked ~ .stars-filter-star,
 .stars-filter-star:hover,
-.stars-filter-star:hover ~ label {
+.stars-filter-star:hover ~ .stars-filter-star {
     color: gold;
+}
+
+#searchAll:checked ~ .stars-filter-star {
+    color: lightgrey;
 }
 
 /* RECENSIONER */
