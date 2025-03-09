@@ -1,6 +1,8 @@
 @page
 @model MowiTajm.Pages.Movies.MovieDetailsPageModel
 @{
+	ViewData["Title"] = Model.Movie.Title;
+
 	// Filterhantering
 	var filteredReviews = Model.Reviews;
 
@@ -170,10 +172,12 @@
 							{
 								@* Användaren får edit- och delete-knapp på sina egna recensioner *@
 								<div class="review-buttons">
-									<a class="btn-design btn-black" title="Redigera recensionen" aria-label="Redigera recensionen" asp-page="EditReviewPage" asp-route-id="@review.Id">✎ᝰ.</a>
+									<a class="btn-design btn-black" title="Redigera recensionen" aria-label="Redigera recensionen" asp-page="EditReviewPage" asp-route-id="@review.Id"
+									   onclick="return confirm('Vill du redigera ditt inlägg?')">✎ᝰ.</a>
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
 										<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID" />
-										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen" aria-label="Ta bort recensionen">⛌</button>
+										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen" aria-label="Ta bort recensionen" 
+											onclick="return confirm('Är du säker på att du vill ta bort recensionen?')">⛌</button>
 									</form>
 								</div>
 							}
@@ -183,7 +187,8 @@
 								<div class="review-buttons">
 									<form method="post" asp-page-handler="Delete" asp-route-id="@review.Id">
 										<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID" />
-										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen" aria-label="Ta bort recensionen">⛌</button>
+										<button class="btn-design btn-red" type="submit" title="Ta bort recensionen" aria-label="Ta bort recensionen"
+												onclick="return confirm('Är du säker på att du vill ta bort recensionen?')">⛌</button>
 									</form>
 								</div>
 							}
@@ -236,7 +241,8 @@
 					<textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
 
 					<footer class="review-input-btn-submit">
-						<button class="btn-design btn-black" title="Publicera recension" aria-label="Publicera recension" type="submit">ᯓ➤</button>
+						<button class="btn-design btn-black" title="Publicera recension" aria-label="Publicera recension" type="submit"
+								onclick="return confirm('Vill du publicera din recension?')">➤</button>
 					</footer>
 				</form>
 			</section>

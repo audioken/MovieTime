@@ -22,7 +22,7 @@
 
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button type="submit" class="btn-design btn-black btn-navbar">Logga ut</button>
+                <button type="submit" class="btn-design btn-black btn-navbar" onclick="return confirm('Vill du logga ut?')">Logga ut</button>
         </form>
     </li>
 }

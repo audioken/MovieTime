@@ -4,6 +4,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
+    ViewData["Title"] = "Redigera Recension";
 }
 
 <div class="page-content-container">
@@ -50,8 +51,10 @@
 
             @* Spara eller avrbyt redigeringen *@
             <footer class="review-edit-footer">
-                <button class="btn-design btn-black" title="Spara dina ändringar" aria-label="Spara dina ändringar"type="submit">✓</button>
-                <a class="btn-design btn-red" title="Avbryt redigering." aria-label="Avbryt redigering och återgå till förra sidan" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID">🛇</a>
+                <button class="btn-design btn-black" title="Spara dina ändringar" aria-label="Spara dina ändringar" type="submit" 
+                    onclick="return confirm('Vill du spara och publicera dina ändringar?')">✓</button>
+                <a class="btn-design btn-red" title="Avbryt redigering." aria-label="Avbryt redigering och återgå till förra sidan" asp-page="MovieDetailsPage" asp-route-imdbID="@Model.Review.ImdbID" 
+                    onclick="return confirm('Vill du avbryta redigering och återgå till förra sidan?')">🛇</a>
             </footer>
         </form>
     </section>

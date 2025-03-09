@@ -4,7 +4,6 @@
     padding: 0;
 }
 
-
 html {
     font-size: clamp(16px, 2vw, 18px);
     position: relative;
