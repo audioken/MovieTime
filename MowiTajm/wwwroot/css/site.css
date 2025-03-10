@@ -149,10 +149,20 @@ input {
     display: flex;
     text-align: center;
     border: 1px solid #ccc;
-    border-radius: 5rem;
+    border-radius: 2rem;
     margin-bottom: 0.5rem;
     overflow: hidden;
     min-width: 50rem;
+}
+
+.movie-lite-poster {
+    max-width: 10rem;
+}
+
+.movie-lite-poster {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    object-fit: cover;
 }
 
 .search-result-movie-row:hover {
@@ -244,11 +254,7 @@ input {
     height: 35rem;
 }
 
-.movie-lite-poster{
-    max-width: 10rem;
-}
-
-.movie-lite-poster, .movie-full-poster {
+.movie-full-poster {
     border-top-left-radius: 5rem;
     border-bottom-left-radius: 5rem;
     object-fit: cover;
