@@ -127,8 +127,8 @@ namespace MowiTajm.Pages.Movies
                 Reviews = Reviews.OrderBy(r => r.DateTime).ToList();
             }
 
-                // Spara värdena i TempData för nästa anrop
-                TempData["FilterValue"] = FilterValue;
+            // Spara värdena i TempData för nästa anrop
+            TempData["FilterValue"] = FilterValue;
             TempData["DateSortOrder"] = DateSortText;
             TempData["ScrollToReviews"] = true; // Sätt flaggan för scroll
 
