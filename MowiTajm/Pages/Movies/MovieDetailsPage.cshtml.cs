@@ -118,8 +118,17 @@ namespace MowiTajm.Pages.Movies
             // Sätt DateSortText baserat på den nya FilterValue
             DateSortText = (FilterValue == 6) ? "Senaste" : "Äldsta";
 
-            // Spara värdena i TempData för nästa anrop
-            TempData["FilterValue"] = FilterValue;
+            if (FilterValue == 6)
+            {
+                Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
+            }
+            else
+            {
+                Reviews = Reviews.OrderBy(r => r.DateTime).ToList();
+            }
+
+                // Spara värdena i TempData för nästa anrop
+                TempData["FilterValue"] = FilterValue;
             TempData["DateSortOrder"] = DateSortText;
             TempData["ScrollToReviews"] = true; // Sätt flaggan för scroll
 
