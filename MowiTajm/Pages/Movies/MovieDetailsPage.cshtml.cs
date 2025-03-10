@@ -29,6 +29,9 @@ namespace MowiTajm.Pages.Movies
         public double MowiTajmRating { get; set; }                      // Genomsnittlig review för filmen baserat på reviews på MowiTajm
         public bool IsUserSignedIn => User.Identity.IsAuthenticated;    // True om användaren är inloggad, annars false
         public string DateSortText = "";
+        public List<Review> FilteredReviews { get; set; } = new();
+        public bool IsStarFilterActive { get; set; } = false;
+
 
         public async Task OnGetAsync(string imdbID)
         {
@@ -67,20 +70,26 @@ namespace MowiTajm.Pages.Movies
         {
             UserContext = await _userService.GetUserContextAsync(User);
             (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
+            ViewData["MowiTajmRating"] = MowiTajmRating;
+
+            // Rensa listan med filtrerade recensioner
+            FilteredReviews.Clear();
 
             // Filtrera recensionerna baserat på stjärnorna
             if (FilterValue >= 1 && FilterValue <= 5)
             {
-                Reviews = Reviews.Where(r => r.Rating == FilterValue).ToList();
+                FilteredReviews = Reviews.Where(r => r.Rating == FilterValue).ToList();
+                IsStarFilterActive = true;
+            }
+            else
+            {
+                IsStarFilterActive = false;
             }
 
             // Sätt standardvärde för DateSortText och sortera recensionerna
             DateSortText = "Senaste";
-            Reviews = Reviews.OrderByDescending(r => r.DateTime).ToList();
+            FilteredReviews = FilteredReviews.OrderByDescending(r => r.DateTime).ToList();
 
-            // Spara de filtrerade recensionerna
-            ViewData["ReviewFilter"] = Reviews;
-            ViewData["Movie"] = Movie;
 
             // Återgå till sidan med uppdaterad information
             TempData["ScrollToReviews"] = true;
@@ -91,6 +100,7 @@ namespace MowiTajm.Pages.Movies
         {
             UserContext = await _userService.GetUserContextAsync(User);
             (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
+            ViewData["MowiTajmRating"] = MowiTajmRating;
 
             // Läs in föregående FilterValue om det finns, annars sätt ett defaultvärde (6 = "Senaste")
             if (TempData["FilterValue"] is int prevFilterValue)
