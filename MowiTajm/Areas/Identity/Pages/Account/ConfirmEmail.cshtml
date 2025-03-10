@@ -1,8 +1,29 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+	ViewData["Title"] = "Bekräfta e-post";
 }
 
-<h1>Bekräfta e-post</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+@* <partial name="_StatusMessage" model="Model.StatusMessage" /> *@
+
+<div class="alert alert-success" role="alert">
+	@Model.StatusMessage
+</div>
+
+@* // --- Tillagd kod --- // *@
+
+@if (Model.StatusMessage == "Tack för att du bekräftade din e-post.")
+{
+	<button id="okButton" class="btn btn-primary btn-design btn-black">Ok</button>
+}
+
+@* Sektion för att inkludera JavaScript-kod *@
+@section Scripts {
+	<script type="text/javascript">
+		document.getElementById("okButton").addEventListener("click", function () {
+			window.location.href = '/Identity/Account/Login';
+		});
+	</script>
+}
+
+@* // ----------------- // *@

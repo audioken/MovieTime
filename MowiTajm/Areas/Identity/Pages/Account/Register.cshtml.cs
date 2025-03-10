@@ -91,7 +91,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} måste vara minst {2} och högst {1} tecken långt.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Lösenord")]
             public string Password { get; set; }
@@ -102,12 +102,13 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Konfirmera ditt lösenord")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Lösenordet och bekräftelselösenordet matchar inte.")]
             public string ConfirmPassword { get; set; }
 
             // ---- Tillagd kod ---- //
 
             [Required]
+            [StringLength(15, ErrorMessage = "Användarnamnet får vara högst {1} tecken långt.")]
             [Display(Name = "Användarnamn")]
             public string DisplayName { get; set; } // --- Lagt till denna rad.
 

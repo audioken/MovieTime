@@ -17,7 +17,7 @@
 
 				@* ---- Tillagd kod ---- *@
 				<div class="form-floating mb-3">
-					<input asp-for="Input.DisplayName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+					<input asp-for="Input.DisplayName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" maxlength="100" />
 					<label asp-for="Input.DisplayName">Användarnamn</label>
 					<span asp-validation-for="Input.DisplayName" class="text-danger"></span>
 				</div>
@@ -41,7 +41,7 @@
 				<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-black">Registrera konto</button>
 			</form>
 		</div>
-@* 		<div class="col-md-6 col-md-offset-2">
+		@* <div class="col-md-6 col-md-offset-2">
 			<section>
 				<h3>use another service to register.</h3>
 				<hr />

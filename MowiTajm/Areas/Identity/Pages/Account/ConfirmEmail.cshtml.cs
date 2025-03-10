@@ -26,6 +26,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
             if (userId == null || code == null)
@@ -42,6 +43,7 @@ namespace MowiTajm.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Tack för att du bekräftade din e-post." : "Error vid bekräftelse av e-post.";
+
             return Page();
         }
     }
