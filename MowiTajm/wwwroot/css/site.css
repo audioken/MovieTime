@@ -4,7 +4,6 @@
     padding: 0;
 }
 
-
 html {
     font-size: clamp(16px, 2vw, 18px);
     position: relative;
@@ -43,6 +42,16 @@ input {
     margin-bottom: 2rem;
     display: flex;
     gap: 1rem;
+}
+
+.account-form-wrapper{
+    display: flex;
+    justify-content:center;
+    width: 100%;
+}
+
+.account-title{
+    margin-bottom: 2rem;
 }
 
 /*----------------------------------------
@@ -689,5 +698,9 @@ legend {
     .btn-purple{
         font-size: 0.8rem;
         text-align: center;
+    }
+
+    .login-wrapper{
+        
     }
 }
