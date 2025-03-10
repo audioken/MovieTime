@@ -3,21 +3,8 @@
 @{
 	ViewData["Title"] = Model.Movie.Title;
 
-	// Filterhantering
-	var filteredReviews = Model.Reviews;
-
-	if (Model.FilterValue >= 1 && Model.FilterValue <= 5)
-	{
-		filteredReviews = filteredReviews.Where(r => r.Rating == Model.FilterValue).ToList();
-	}
-	else if (Model.FilterValue == 6)
-	{
-		filteredReviews = filteredReviews.OrderByDescending(r => r.DateTime).ToList();
-	}
-	else if (Model.FilterValue == 7)
-	{
-		filteredReviews = filteredReviews.OrderBy(r => r.DateTime).ToList();
-	}
+	// Hämtar rätt recensioner att visa beroende på om stjärnfilter är aktivt eller inte.
+	var reviewsToDisplay = Model.IsStarFilterActive ? Model.FilteredReviews : Model.Reviews;
 }
 
 @if (Model.Movie != null)
@@ -56,7 +43,6 @@
 						}
 					</div>
 
-
 					<p>@Model.Movie.Plot</p>
 					<div class="orientation-row">
 						<p class="bolder">Director:</p>
@@ -83,7 +69,7 @@
 			<div class="date-filter-wrapper">
 
 				@* Titel med antal recensioner *@
-				<h2 id="reviews-title">Recensioner (@filteredReviews.Count())</h2>
+				<h2 id="reviews-title">Recensioner (@reviewsToDisplay.Count())</h2>
 
 				@* Datumfilter *@
 				<form method="post" asp-page-handler="DateFilter">
@@ -139,13 +125,13 @@
 
 		@* Alla filmrecensioner *@
 		<section class="section-all-reviews" id="IdAllReviews">
-			@if (!filteredReviews.Any())
+			@if (!reviewsToDisplay.Any())
 			{
 				<p class="text-no-reviews-yet">Ingen har skrivit en recension än, bli den första!</p>
 			}
 			else
 			{
-				@foreach (var review in filteredReviews)
+				@foreach (var review in reviewsToDisplay)
 				{
 					@* Filmrecensionen *@
 					<article class="review-full">

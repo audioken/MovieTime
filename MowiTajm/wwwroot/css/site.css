@@ -149,9 +149,20 @@ input {
     display: flex;
     text-align: center;
     border: 1px solid #ccc;
-    border-radius: 5rem;
+    border-radius: 2rem;
     margin-bottom: 0.5rem;
     overflow: hidden;
+    min-width: 50rem;
+}
+
+.movie-lite-poster {
+    max-width: 10rem;
+}
+
+.movie-lite-poster {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    object-fit: cover;
 }
 
 .search-result-movie-row:hover {
@@ -235,6 +246,7 @@ input {
     gap: 1rem;
     align-items: stretch;
     margin-bottom: 2rem;
+    border: none;
 }
 
 .movie-full-poster {
@@ -242,11 +254,7 @@ input {
     height: 35rem;
 }
 
-.movie-lite-poster{
-    max-width: 10rem;
-}
-
-.movie-lite-poster, .movie-full-poster {
+.movie-full-poster {
     border-top-left-radius: 5rem;
     border-bottom-left-radius: 5rem;
     object-fit: cover;
@@ -256,7 +264,7 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 2rem;
+    padding: 4rem;
     box-sizing: border-box;
     overflow: auto;
     flex: 1;
