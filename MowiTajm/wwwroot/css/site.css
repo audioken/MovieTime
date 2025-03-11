@@ -10,6 +10,16 @@ html {
     min-height: 100%;
 }
 
+.logotyp img {
+    max-width: 100%;
+    height: auto;
+}
+
+logotyp {
+    display: flex;
+    justify-content: center;
+}
+
 body {
     margin-bottom: 4rem;
     line-height: 1.5;
@@ -552,14 +562,48 @@ legend {
     margin: 0; /* Tar bort extra marginaler som kan skapa snedställning */
 }
 
-/* MOBILANPASSAD CSS */
-@media (max-width: 767px) {
+/* ======== Grundläggande standardinställningar ======== */
+#navbar {
+    display: flex;
+    gap: 1rem;
+}
 
-    .search-result-title{
+#navbar ul {
+    display: flex;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    margin: 1rem;
+}
+
+.navbar {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-toggler {
+    order: 2;
+}
+
+.navbar-brand {
+    order: 1;
+}
+
+.navbar-collapse {
+    order: 3;
+}
+
+/* ======== Mobile-first: Små skärmar först (max 767px) ======== */
+@media (max-width: 767px) {
+    .search-result-title {
         font-size: 0.7rem;
     }
 
-    .search-result-year{
+    .search-result-year {
         font-size: 0.5rem;
     }
 
@@ -580,41 +624,40 @@ legend {
     .movie-full-poster {
         width: 100%;
         height: auto;
-        max-height: unset;
         max-width: 100%;
         border-top-right-radius: 0.5rem;
         border-bottom-left-radius: 0rem;
     }
 
-    .review-meta{
-        display:flex;
+    .review-meta {
+        display: flex;
         flex-direction: column;
     }
 
-    .reviews-header{
+    .reviews-header {
         flex-direction: column;
         justify-content: space-between;
         gap: 0.1rem;
         padding: 0.5rem;
     }
 
-    .review-stars{
-        display:flex;
+    .review-stars {
+        display: flex;
     }
 
-    .review-full{
+    .review-full {
         padding: 3rem;
     }
 
-    .stars-filter-star{
+    .stars-filter-star {
         font-size: 2.5rem;
     }
 
-    .review-input-container{
+    .review-input-container {
         padding: 1rem;
     }
 
-    .review-input-form{
+    .review-input-form {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -630,28 +673,30 @@ legend {
         flex-wrap: wrap;
     }
 
-    .review-input-head{
+    .review-input-head {
         align-items: center;
         margin-top: 2rem;
         flex-wrap: wrap;
     }
 
-    .review-input-name, .review-input-title {
+    .review-input-name,
+    .review-input-title {
         width: 100%;
     }
 
-    .review-input-name{
+    .review-input-name {
         font-size: 2.4rem;
     }
 
     .review-input-stars {
         width: 100%;
-        margin-top: -2rem;
-        margin-bottom: -2rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
         justify-content: left;
     }
 
-    .review-input-stars label{
+    .review-input-stars label {
         font-size: 3.5rem;
     }
 
@@ -663,21 +708,14 @@ legend {
         height: 10rem;
     }
 
-    .stars-filter-wrapper{
+    .stars-filter-wrapper,
+    .date-filter-wrapper {
         justify-content: space-between;
         width: 100%;
     }
 
-    .date-filter-wrapper{
-        justify-content: space-between;
-        width: 100%;
+    .date-filter-wrapper {
         padding: 0;
-    }
-
-    .review-input-stars {
-        margin: 0; 
-        display: flex;
-        align-items: center;
     }
 
     .btn-design {
@@ -686,48 +724,44 @@ legend {
         min-width: 2rem;
     }
 
-    .btn-red{
-        font-size: 0.8rem;
-        text-align:center;
-    }
-
-    .btn-black {
+    .btn-red,
+    .btn-black,
+    .btn-white,
+    .btn-purple {
         font-size: 0.8rem;
         text-align: center;
     }
 
-    .btn-white {
-        font-size: 0.8rem;
-        text-align: center;
-    }
-
-    .btn-purple{
-        font-size: 0.8rem;
-        text-align: center;
+    #navbarSearch{
+        width: 50%;
     }
 }
 
-/* Standardinställningar */
-#navbar {
-    display: flex;
-    gap: 1rem;
+/* ======== Mellanstora skärmar (max 991px) ======== */
+@media (max-width: 991px) {
+    .navbar .container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .navbar-toggler {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+        text-align: center;
+    }
 }
 
-#navbar ul {
-    display: flex;
-}
-
-.menu-toggle {
-    display: none; /* Dold som standard */
-    font-size: 2rem;
-    cursor: pointer;
-    margin: 1rem;
-}
-
-/* Mobilvy: Anpassa navbar och visa hamburgermenyn */
+/* ======== Större mobiler och surfplattor (max 1200px) ======== */
 @media (max-width: 1200px) {
+    .logotyp-start {
+        max-width: 60%;
+    }
 
-    /* Dölj menyn på små skärmar */
+    /* Dölj navbaren och justera menyikonen */
     #navbar {
         display: none;
         flex-direction: column;
@@ -746,40 +780,30 @@ legend {
         width: 100%;
     }
 
-    /* Visa hamburgermenyn */
     .menu-toggle {
         display: block;
         position: absolute;
-        top: 0px;
-        right: 0px;
+        top: 0;
+        right: 5px;
         font-size: 1rem;
     }
 
-    /* Centrera menyalternativ */
     .nav-item {
         text-align: center;
     }
 
-    /* Visa menyn när klassen .show läggs till */
     #navbar.show {
         display: flex;
     }
 
-    .logotyp img {
-        max-width: 50%;
-        height: auto;
+    .logotyp {
+        max-width: 30%;
     }
 }
 
-/* Desktopvy: Dölj hamburgermenyn */
-@media (min-width: 1200px) {
-    .menu-toggle {
-        display: none;
-    }
-}
-
+/* ======== Stora skärmar (max 1400px) ======== */
 @media (max-width: 1400px) {
-    .btn-navbar{
+    .btn-navbar {
         font-size: 14px;
         padding: 0.5rem;
         display: flex;
@@ -788,14 +812,23 @@ legend {
         height: 2rem;
     }
 
-    .logotyp img {
-        max-width: 70%;
-        height: auto;
+    .logotyp {
+        width: 40%;
     }
 }
 
-@media (max-width: 767px){
-    .logotyp {
+/* ======== Större mobiler och surfplattor (min 1200px) ======== */
+@media (min-width: 1200px) {
+    .menu-toggle {
         display: none;
     }
+}
+
+.navbar .container-fluid {
+    justify-content: flex-start !important; /* Se till att allt ligger till vänster */
+    padding-left: 1rem; /* Justera om det behövs */
+}
+
+.navbar-search {
+    margin-left: 1rem; /* Lägger till lite mellanrum mellan logotyp och sökruta */
 }
