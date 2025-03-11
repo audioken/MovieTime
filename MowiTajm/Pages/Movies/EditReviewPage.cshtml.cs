@@ -17,7 +17,7 @@ namespace MowiTajm.Pages.Movies
         }
 
         public bool IsUserSignedIn => User.Identity.IsAuthenticated;
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
 
 
         [BindProperty]

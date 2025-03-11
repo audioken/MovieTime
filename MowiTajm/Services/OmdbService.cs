@@ -26,6 +26,12 @@ namespace MowiTajm.Services
             // Deserialiserar JSON-strängen till ett C#-objekt av typen SearchResult
             var result = JsonConvert.DeserializeObject<SearchResult>(content);
 
+            // Kastar ett InvalidOperationException för att indikera att ett kritiskt fel inträffade vid deserialiseringen
+            if (result is null)
+            {
+                throw new InvalidOperationException("Kunde inte deserialisera svaret till ett SearchResult-objekt.");
+            }
+
             // Returnerar det deserialiserade resultatet
             return result;
         }
@@ -40,6 +46,12 @@ namespace MowiTajm.Services
             var content = await response.Content.ReadAsStringAsync();
 
             var result = JsonConvert.DeserializeObject<MovieFull>(content);
+
+            // Kastar ett InvalidOperationException för att indikera att ett kritiskt fel inträffade vid deserialiseringen.
+            if (result is null)
+            {
+                throw new InvalidOperationException("Kunde inte deserialisera svaret till ett SearchResult-objekt.");
+            }
 
             return result;
         }
