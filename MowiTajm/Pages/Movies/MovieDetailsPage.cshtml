@@ -195,7 +195,13 @@
 		@* Lägger till texten längst ner om användaren inte är inloggad *@
 		@if (!Model.IsUserSignedIn)
 		{
-			<p>Logga in eller registrera dig om du vill skriva en recension.</p>
+			<p>
+				@* Länk till inloggningssidan. Vi använder asp-area="Identity" om Identity-området används *@
+				<a asp-area="Identity" asp-page="/Account/Login">Logga in</a> eller
+
+				@* Länk till registreringssidan. Även här används asp-area="Identity" för att peka rätt *@
+				<a asp-area="Identity" asp-page="/Account/Register">registrera dig</a> om du vill skriva en recension.
+			</p>
 		}
 
 		@if (Model.IsUserSignedIn)
