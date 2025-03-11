@@ -10,32 +10,41 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <div class="navbar-collapse collapse d-sm-flex justify-content-between align-items-center">
+        <nav class="navbar navbar-expand-xl navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container d-flex justify-content-between align-items-center">
 
-                    @* MowiTajm logotyp *@
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">
-                        <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
-                    </a>
+                @* Logotyp *@
+                <a class="navbar-brand logotyp" asp-area="" asp-page="/Index">
+                    <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
+                </a>
 
-                    @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase)){
+                @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase)){
 
-                        @* Sök på filmer.. *@
-                        <form method="get" asp-page="/Movies/Index" class="navbar-search mx-auto d-flex align-items-center">
+                    @* Sökfält *@
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <form method="get" asp-page="/Movies/Index" class="navbar-search d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"
-                                   value="@Context.Request.Query["searchInput"]" placeholder="sök på filmtitel..">
+                                   value="@Context.Request.Query["searchInput"]" placeholder="Sök på filmtitel..">
                             <button class="btn btn-primary" title="Sök" aria-label="Sök" type="submit">⌕</button>
                         </form>
-                    }
+                    </div>
+                }
 
-                    @* Identity för "Välkommen xxx" och utloggningsknapp *@
+                @* Hamburgermenyn *@
+                <button class="navbar-toggler menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @* <!-- Menyknapper som registrera, logga in etc --> *@
+                <div id="navbarNav" class="navbar-collapse collapse justify-content-end">
                     <partial name="_LoginPartial" />
-
                 </div>
+
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

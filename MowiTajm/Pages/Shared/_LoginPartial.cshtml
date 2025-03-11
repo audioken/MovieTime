@@ -3,44 +3,48 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    var currentUser = await UserManager.GetUserAsync(User); // Hämta hela ApplicationUser
-    var displayName = currentUser?.DisplayName ?? User.Identity?.Name; // Fallback om DisplayName saknas
+@* <div class="menu-toggle" id="menuToggle">
+    &#9776; <!-- Hamburger-symbol -->
+</div> *@
 
-    @if ((User.Identity.IsAuthenticated))
+<ul class="navbar-nav" id="navbar">
+    @if (SignInManager.IsSignedIn(User))
     {
-         <li class="nav-item">
-                <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/User/Index">Mina Recensioner</a>
-         </li>
-    }
+        var currentUser = await UserManager.GetUserAsync(User); // Hämta hela ApplicationUser
+        var displayName = currentUser?.DisplayName ?? User.Identity?.Name; // Fallback om DisplayName saknas
 
-    @if ((await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
-    {
+        @if ((User.Identity.IsAuthenticated))
+        {
+             <li class="nav-item">
+                    <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/User/Index">Mina Recensioner</a>
+             </li>
+        }
+
+        @if ((await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
+        {
+            <li class="nav-item">
+                <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/Admin/Index">Admin</a>
+            </li>
+        }
+
         <li class="nav-item">
-            <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/Admin/Index">Admin</a>
+            <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Manage/Index" title="Hantera konto" aria-label="Hantera konto">Hej @displayName! ⛯</a>
+        </li>
+
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                    <button type="submit" class="btn-design btn-black btn-navbar" onclick="return confirm('Vill du logga ut?')">Logga ut</button>
+            </form>
         </li>
     }
 
-    <li class="nav-item">
-        <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Manage/Index" title="Hantera konto" aria-label="Hantera konto">Hej @displayName! ⛯</a>
-    </li>
-
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button type="submit" class="btn-design btn-black btn-navbar" onclick="return confirm('Vill du logga ut?')">Logga ut</button>
-        </form>
-    </li>
-}
-
-else
-{
-    <li class="nav-item">
-        <a class="btn-design btn-black" asp-area="Identity" asp-page="/Account/Register">Registrera konto</a>
-    </li>
-    <li class="nav-item">
-        <a class="btn-design btn-black" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
-    </li>
-}
+    else
+    {
+        <li class="nav-item">
+            <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Register">Registrera konto</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+        </li>
+    }
 </ul>
