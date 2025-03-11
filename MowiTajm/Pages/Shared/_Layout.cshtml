@@ -11,24 +11,31 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-xl navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container d-flex justify-content-between align-items-center">
+            <div class="container-fluid d-flex align-items-center">
 
-                @* Logotyp *@
-                <a class="navbar-brand logotyp" asp-area="" asp-page="/Index">
-                    <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
-                </a>
+                @* Logotyp + sökruta tillsammans *@
+                <div class="d-flex align-items-center">
 
-                @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase)){
+                    @if (Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <a class="logotyp-start" asp-area="" asp-page="/Index">
+                            <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
+                        </a>
+                    }else{
+                        <a class="logotyp" asp-area="" asp-page="/Index">
+                            <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
+                        </a>
+                    }
 
-                    @* Sökfält *@
-                    <div class="d-flex flex-grow-1 justify-content-center">
+                    @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase))
+                    {
                         <form method="get" asp-page="/Movies/Index" class="navbar-search d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"
                                    value="@Context.Request.Query["searchInput"]" placeholder="Sök på filmtitel..">
                             <button class="btn btn-primary" title="Sök" aria-label="Sök" type="submit">⌕</button>
                         </form>
-                    </div>
-                }
+                    }
+                </div>
 
                 @* Hamburgermenyn *@
                 <button class="navbar-toggler menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -36,7 +43,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                @* <!-- Menyknapper som registrera, logga in etc --> *@
+                @* Menyknappar *@
                 <div id="navbarNav" class="navbar-collapse collapse justify-content-end">
                     <partial name="_LoginPartial" />
                 </div>
@@ -44,6 +51,7 @@
             </div>
         </nav>
     </header>
+
 
     <div class="container">
         <main role="main" class="pb-3">
