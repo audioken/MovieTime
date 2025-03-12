@@ -130,6 +130,22 @@ input {
 
 }
 
+.btn-profile {
+    color: black !important;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+}
+
+.btn-profile.active,
+.btn-profile[aria-current="page"] {
+    background-color: black !important;
+    color: white !important;
+}
+
 /*----------------------------------------
                  SÖKSIDAN
 ----------------------------------------*/
@@ -671,6 +687,11 @@ legend {
         flex-direction: column;
         width: 100%;
         padding: 1rem;
+        padding-top: 0rem;
+    }
+
+    .review-input-movie-title{
+        margin-top: 1rem;
     }
 
     .review-input-name-and-title {

@@ -17,12 +17,14 @@
                     Om du tar bort denna data kommer du att ta bort ditt konto och detta går inte att återställa!
             </strong>
         </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">Ladda ner</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Ta bort</a>
-        </p>
+        <div class="orientation-row justify-content-center">
+            <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                <button class="btn btn-primary btn-black" type="submit">Ladda ner</button>
+            </form>
+            <p>
+                <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger btn-red">Ta bort</a>
+            </p>
+        </div>
     </div>
 </div>
 

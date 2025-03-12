@@ -13,12 +13,13 @@
     @* Formulär för att redigera sin recension *@
     <section class="review-input-container">
 
-        <p>@Model.Review.MovieTitle</p>
+        <h2 class="center-stuff review-input-movie-title">@Model.Review.MovieTitle</h2>
         <form class="review-input-form" method="post">
 
 			@* Dolda fält för att skicka med recensionens ID och filmens ID *@
             <input type="hidden" asp-for="Review.Id"/>
-            <input type="hidden" asp-for="Review.ImdbID" />
+            <input type="hidden" asp-for="Review.ImdbID"/>
+            <input type="hidden" asp-for="Review.MovieTitle"/>
 
             <fieldset class="review-input-head">
 				<legend>Välj antal stjärnor att ge filmen i betyg. 1 till 5.</legend> @* Döljs visuellt *@
