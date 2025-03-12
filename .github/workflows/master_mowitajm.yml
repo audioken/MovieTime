@@ -65,4 +65,3 @@ jobs:
           app-name: 'mowitajm'
           slot-name: 'Production'
           package: .
-          

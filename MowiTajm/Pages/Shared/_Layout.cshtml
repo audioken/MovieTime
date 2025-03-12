@@ -16,7 +16,7 @@
                 @* Logotyp + sökruta tillsammans *@
                 <div class="d-flex align-items-center">
 
-                    @if (Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase))
+                    @if (Context?.Request?.Path.Value?.Equals("/Movies", StringComparison.OrdinalIgnoreCase) ?? false)
                     {
                         <a class="logotyp-start" asp-area="" asp-page="/Index">
                             <img src="~/images/MowiTajmLogo.png" alt="MowiTajm">
@@ -27,11 +27,11 @@
                         </a>
                     }
 
-                    @if (!Context.Request.Path.Value.Equals("/Movies", StringComparison.OrdinalIgnoreCase))
+                    @if (!Context?.Request?.Path.Value?.Equals("/Movies", StringComparison.OrdinalIgnoreCase) ?? false)
                     {
                         <form method="get" asp-page="/Movies/Index" class="navbar-search d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"
-                                   value="@Context.Request.Query["searchInput"]" placeholder="Sök på filmtitel..">
+                                   value="@Context?.Request.Query["searchInput"]" placeholder="Sök på filmtitel..">
                             <button class="btn btn-primary" title="Sök" aria-label="Sök" type="submit">⌕</button>
                         </form>
                     }

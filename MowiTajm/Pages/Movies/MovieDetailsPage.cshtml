@@ -113,7 +113,7 @@
 		</header>
 
 		@* Skrollposition efter filtrering *@
-		@if (TempData["ScrollToReviews"] != null && (bool)TempData["ScrollToReviews"])
+		@if (TempData["ScrollToReviews"] as bool? == true)
 		{
 			<script>
 				window.onload = function () {

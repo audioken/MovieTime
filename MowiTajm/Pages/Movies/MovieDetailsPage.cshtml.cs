@@ -17,7 +17,7 @@ namespace MowiTajm.Pages.Movies
             _reviewService = reviewService;
         }
 
-        public UserContext UserContext { get; set; }
+        public UserContext? UserContext { get; set; }
         public MovieFull Movie { get; set; } = new();
 
         [BindProperty]
@@ -25,9 +25,9 @@ namespace MowiTajm.Pages.Movies
         public List<Review> Reviews { get; set; } = new();
 
         [BindProperty]
-        public int FilterValue { get; set; }                            // Nummer som kontrollerer vilket filter som används
-        public double MowiTajmRating { get; set; }                      // Genomsnittlig review för filmen baserat på reviews på MowiTajm
-        public bool IsUserSignedIn => User.Identity.IsAuthenticated;    // True om användaren är inloggad, annars false
+        public int FilterValue { get; set; }                                    // Nummer som kontrollerer vilket filter som används
+        public double MowiTajmRating { get; set; }                              // Genomsnittlig review för filmen baserat på reviews på MowiTajm
+        public bool IsUserSignedIn => User.Identity?.IsAuthenticated ?? false;  // True om användaren är inloggad, annars false
         public string DateSortText = "";
         public List<Review> FilteredReviews { get; set; } = new();
         public bool IsStarFilterActive { get; set; } = false;
@@ -60,7 +60,7 @@ namespace MowiTajm.Pages.Movies
                 (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
                 return Page();
             }
-                                                                                            // Spara filmens titel i recensionen
+            // Spara filmens titel i recensionen
             Review.DateTime = DateTime.Now;                                                 // Spara aktuellt datum och tid
             await _reviewService.AddReviewAsync(Review);                                    // Använd ReviewService för att lägga till recensionen
             return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });      // Ladda om sidan och dess innehåll
@@ -86,7 +86,7 @@ namespace MowiTajm.Pages.Movies
                 IsStarFilterActive = false;
             }
 
-            // Sätt standardvärde för DateSortText och sortera recensionerna
+            // Sortera de filtrerade recensionerna baserat på datum
             DateSortText = "Senaste";
             FilteredReviews = FilteredReviews.OrderByDescending(r => r.DateTime).ToList();
 
