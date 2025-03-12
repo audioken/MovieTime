@@ -23,6 +23,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>E-Post</th>
                     <th>Användarnamn</th>
                     <th>Roll</th>
                     <th class="center-stuff">Hantera</th>
@@ -35,6 +36,7 @@
 
                     <tr>
                         <td>@user.UserName</td>
+						<td>@user.DisplayName</td>
                         <td>@userRole</td>
                         <td class="orientation-row center-stuff">
                             <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
