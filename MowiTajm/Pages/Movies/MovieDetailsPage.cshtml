@@ -154,10 +154,21 @@
 						</header>
 
 						@* Rubrik och recension *@
-						<section class="review-body">
+@* 						<section class="review-body">
 							<p>@review.Title</p>
 							<p>@review.Text</p>
+						</section> *@
+
+						<section class="review-body">
+							<p>@review.Title</p>
+							<a class="btn btn-link btn-black" data-bs-toggle="collapse" href="#reviewText-@review.Id" role="button">
+								Visa recensionen..
+							</a>
+							<div class="collapse" id="reviewText-@review.Id">
+								<p>@review.Text</p>
+							</div>
 						</section>
+
 
 						@* Datum och knappar *@
 						<footer class="review-footer">
