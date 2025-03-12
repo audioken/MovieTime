@@ -9,6 +9,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Film</th>
                 <th>Titel</th>
                 <th>Recension</th>
                 <th>Betyg</th>
@@ -21,6 +22,7 @@
             @foreach (var review in Model.Reviews)
             {
                 <tr>
+					<td>@review.MovieTitle</td>
                     <td>@review.Title</td>
                     <td>@review.Text</td>
                     <td>@review.Rating / 5</td>

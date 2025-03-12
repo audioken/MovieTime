@@ -143,7 +143,7 @@
 						@* Namn och betyg *@
 						<header class="review-head">
 							<p class="review-meta" style="font-family: Arial, sans-serif;">
-								<span class="review-name">@review.Username</span>
+								<span class="review-name bolder">@review.Username</span>
 								<span class="review-stars" aria-label="Betyg: @review.Rating av 5 stjärnor">
 									@for (int i = 0; i < review.Rating; i++)
 									{
@@ -155,9 +155,30 @@
 
 						@* Rubrik och recension *@
 						<section class="review-body">
-							<p>@review.Title</p>
-							<p>@review.Text</p>
+							<p class="less-bolder">@review.Title</p>
+							<button class="btn btn-link btn-white btn-read-more text-decoration-none" data-bs-toggle="collapse" data-bs-target="#reviewText-@review.Id"
+									aria-expanded="false">
+								Läs mer..
+							</button>
+							<div class="collapse" id="reviewText-@review.Id">
+								<p>@review.Text</p>
+							</div>
 						</section>
+
+						<script>
+							document.addEventListener("DOMContentLoaded", function () {
+								var collapseElement = document.getElementById("reviewText-@review.Id");
+								var button = document.querySelector(`[data-bs-target="#reviewText-@review.Id"]`);
+
+								collapseElement.addEventListener("show.bs.collapse", function () {
+									button.textContent = "Läs mindre..";
+								});
+
+								collapseElement.addEventListener("hide.bs.collapse", function () {
+									button.textContent = "Läs mer..";
+								});
+							});
+						</script>
 
 						@* Datum och knappar *@
 						<footer class="review-footer">
@@ -210,10 +231,14 @@
 
 			@* Formulär för att skriva en recension *@
 			<section class="review-input-container">
+
+				@* Filmtitel *@
+				<h2 class="center-stuff review-input-movie-title"> @Model.Movie.Title</h2> 
 				<form class="review-input-form" method="post" asp-page-handler="AddReview">
 
 					@* Dold filmreferens *@
 					<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID"/>
+					<input type="hidden" asp-for="Review.MovieTitle" value="@Model.Movie.Title"/>
 
 					<fieldset class="review-input-head">
 						<legend>Filtrera recensioner genom att välja antal stjärnor. 1 är lägst och 5 är högst.</legend> @* Döljs visuellt *@
@@ -240,11 +265,13 @@
 						</div>
 					</fieldset>
 
+					
+
 					@* Rubrik*@
-					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required maxlength="30" />
 
 					@* Textarea för recension *@
-					<textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+					<textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required maxlength="1000"></textarea> <br />
 
 					<footer class="review-input-btn-submit">
 						<button class="btn-design btn-black" title="Publicera recension" aria-label="Publicera recension" type="submit"

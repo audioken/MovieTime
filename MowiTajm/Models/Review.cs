@@ -13,6 +13,9 @@ namespace MowiTajm.Models
         public string Username { get; set; } = "";
 
         [Required]
+        public string MovieTitle { get; set; } = "";
+
+        [Required]
         public string Title { get; set; } = "";
 
         [Required]

@@ -22,7 +22,10 @@ namespace MowiTajm.Areas.Identity.Pages.User
             _reviewService = reviewService;
         }
 
-        public List<Review> Reviews { get; set; }
+        // Initierar Reviews med en tom lista för att eliminera risken för null-värde.
+        // Detta säkerställer att vi alltid kan arbeta med listan utan att behöva göra null-kontroller,
+        // vilket gör koden mer robust och förhindrar NullReferenceException vid åtkomst.
+        public List<Review> Reviews { get; set; } = new List<Review>(); // 
 
         public async Task<IActionResult> OnGetAsync()
         {
