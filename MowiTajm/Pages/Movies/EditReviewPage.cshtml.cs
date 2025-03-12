@@ -16,7 +16,7 @@ namespace MowiTajm.Pages.Movies
             _userService = userService;
         }
 
-        public bool IsUserSignedIn => User.Identity.IsAuthenticated;
+        public bool IsUserSignedIn => User.Identity?.IsAuthenticated ?? false;
         public string DisplayName { get; set; } = string.Empty;
 
 
