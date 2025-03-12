@@ -66,6 +66,11 @@ jobs:
           slot-name: 'Production'
           package: .
 
+      # Steg för att installera dotnet-ef
+      - name: Install dotnet-ef tool
+        run: |
+          dotnet tool install --global dotnet-ef
+
       # Steg för att köra EF Core migrations
       - name: Run EF Core migrations
         run: |
