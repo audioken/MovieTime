@@ -60,7 +60,7 @@ namespace MowiTajm.Pages.Movies
                 (Movie, Reviews, MowiTajmRating) = await _movieService.GetMovieDetailsAsync(Review.ImdbID);
                 return Page();
             }
-
+                                                                                            // Spara filmens titel i recensionen
             Review.DateTime = DateTime.Now;                                                 // Spara aktuellt datum och tid
             await _reviewService.AddReviewAsync(Review);                                    // Använd ReviewService för att lägga till recensionen
             return RedirectToPage("MovieDetailsPage", new { imdbId = Review.ImdbID });      // Ladda om sidan och dess innehåll
