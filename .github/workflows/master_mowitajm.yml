@@ -65,15 +65,3 @@ jobs:
           app-name: 'mowitajm'
           slot-name: 'Production'
           package: .
-
-      # Steg för att installera dotnet-ef
-      - name: Install dotnet-ef tool
-        run: |
-          dotnet tool install --global dotnet-ef
-
-      # Steg för att köra EF Core migrations
-      - name: Run EF Core migrations
-        run: |
-          dotnet ef database update --connection "$DATABASE_CONNECTION_STRING"
-        env:
-          DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}  # Använd GitHub secret för connection string
