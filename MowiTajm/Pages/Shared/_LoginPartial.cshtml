@@ -3,24 +3,20 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@* <div class="menu-toggle" id="menuToggle">
-    &#9776; <!-- Hamburger-symbol -->
-</div> *@
-
 <ul class="navbar-nav" id="navbar">
     @if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User); // Hämta hela ApplicationUser
         var displayName = currentUser?.DisplayName ?? User.Identity?.Name; // Fallback om DisplayName saknas
 
-        @if ((User.Identity.IsAuthenticated))
+        @if (User?.Identity?.IsAuthenticated ?? false)
         {
              <li class="nav-item">
                     <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/User/Index">Mina Recensioner</a>
              </li>
         }
 
-        @if ((await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
+        @if (currentUser != null && (await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
         {
             <li class="nav-item">
                 <a class="btn-design btn-purple btn-navbar" asp-area="Identity" asp-page="/Admin/Index">Admin</a>

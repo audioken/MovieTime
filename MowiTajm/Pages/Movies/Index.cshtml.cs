@@ -24,8 +24,8 @@ namespace MowiTajm.Pages.Movies
             {
                 SearchInput = searchInput;                                      // Spara söksträngen för att kunna använda den i vyn
                 var result = await _omdbService.SearchMoviesAsync(searchInput); // Anropa API:et för att söka efter filmer och hämta resultatet              
-                Movies = result.Search ?? new List<MovieLite>();                // Hämta filmer, men använd en tom lista om inga resultat hittades              
-                TotalResults = result.TotalResults;                             // Spara totala antalet resultat för att kunna visa det i vyn
+                Movies = result.Search ?? new List<MovieLite>();                // Hämta filmlista att visa i sökresultat. Skapa tom lista vid null           
+                TotalResults = result.TotalResults ?? "0";                      // För att kunna visa i vyn. Undvik null genom att använda "0" som fallback
             }
         }
     }
