@@ -671,6 +671,11 @@ legend {
         flex-direction: column;
         width: 100%;
         padding: 1rem;
+        padding-top: 0rem;
+    }
+
+    .review-input-movie-title{
+        margin-top: 1rem;
     }
 
     .review-input-name-and-title {
