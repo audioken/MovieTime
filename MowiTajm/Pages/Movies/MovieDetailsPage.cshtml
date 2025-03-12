@@ -143,7 +143,7 @@
 						@* Namn och betyg *@
 						<header class="review-head">
 							<p class="review-meta" style="font-family: Arial, sans-serif;">
-								<span class="review-name">@review.Username</span>
+								<span class="review-name bolder">@review.Username</span>
 								<span class="review-stars" aria-label="Betyg: @review.Rating av 5 stjärnor">
 									@for (int i = 0; i < review.Rating; i++)
 									{
@@ -154,21 +154,31 @@
 						</header>
 
 						@* Rubrik och recension *@
-@* 						<section class="review-body">
-							<p>@review.Title</p>
-							<p>@review.Text</p>
-						</section> *@
-
 						<section class="review-body">
-							<p>@review.Title</p>
-							<a class="btn btn-link btn-black" data-bs-toggle="collapse" href="#reviewText-@review.Id" role="button">
-								Visa recensionen..
-							</a>
+							<p class="less-bolder">@review.Title</p>
+							<button class="btn btn-link btn-white btn-read-more text-decoration-none" data-bs-toggle="collapse" data-bs-target="#reviewText-@review.Id"
+									aria-expanded="false">
+								Läs mer..
+							</button>
 							<div class="collapse" id="reviewText-@review.Id">
 								<p>@review.Text</p>
 							</div>
 						</section>
 
+						<script>
+							document.addEventListener("DOMContentLoaded", function () {
+								var collapseElement = document.getElementById("reviewText-@review.Id");
+								var button = document.querySelector(`[data-bs-target="#reviewText-@review.Id"]`);
+
+								collapseElement.addEventListener("show.bs.collapse", function () {
+									button.textContent = "Läs mindre..";
+								});
+
+								collapseElement.addEventListener("hide.bs.collapse", function () {
+									button.textContent = "Läs mer..";
+								});
+							});
+						</script>
 
 						@* Datum och knappar *@
 						<footer class="review-footer">

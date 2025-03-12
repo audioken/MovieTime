@@ -125,6 +125,11 @@ input {
     border-color: red;
 }
 
+.btn-read-more{
+    margin-bottom: 1rem;
+
+}
+
 /*----------------------------------------
                  SÖKSIDAN
 ----------------------------------------*/
@@ -288,6 +293,10 @@ input {
 
 .bolder{
     font-weight: bolder;
+}
+
+.less-bolder{
+    font-weight: 600;
 }
 
 .orientation-row{
