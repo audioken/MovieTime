@@ -231,10 +231,13 @@
 
 			@* Formulär för att skriva en recension *@
 			<section class="review-input-container">
+				@* Filmtitel *@
+				<p> @Model.Movie.Title</p> 
 				<form class="review-input-form" method="post" asp-page-handler="AddReview">
 
 					@* Dold filmreferens *@
 					<input type="hidden" asp-for="Review.ImdbID" value="@Model.Movie.ImdbID"/>
+					<input type="hidden" asp-for="Review.MovieTitle" value="@Model.Movie.Title" />
 
 					<fieldset class="review-input-head">
 						<legend>Filtrera recensioner genom att välja antal stjärnor. 1 är lägst och 5 är högst.</legend> @* Döljs visuellt *@
@@ -260,6 +263,8 @@
 							<label class="review-input-star" for="star1">★ </label>
 						</div>
 					</fieldset>
+
+					
 
 					@* Rubrik*@
 					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required maxlength="30" />
