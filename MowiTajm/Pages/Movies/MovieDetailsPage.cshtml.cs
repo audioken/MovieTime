@@ -17,7 +17,7 @@ namespace MowiTajm.Pages.Movies
             _reviewService = reviewService;
         }
 
-        public UserContext? UserContext { get; set; }
+        public UserContext UserContext { get; set; } = new UserContext();
         public MovieFull Movie { get; set; } = new();
 
         [BindProperty]
