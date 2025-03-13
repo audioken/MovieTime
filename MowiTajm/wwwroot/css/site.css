@@ -146,8 +146,16 @@ input {
     color: white !important;
 }
 
-.btn-admin{
-    
+.btn-yellow{
+    background-color: darkgoldenrod;
+    color: white;
+    border: 1px solid darkgoldenrod;
+}
+
+.btn-yellow:hover{
+    background-color: khaki;
+    color: white;
+    border-color: khaki;
 }
 
 /*----------------------------------------

@@ -40,7 +40,7 @@
                         <td>@userRole</td>
                         <td class="orientation-row center-stuff">
                             <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                <button type="submit" class="btn-design btn-purple btn-admin">
+                                <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
                                     Ändra till @((userRole == "Admin") ? "User" : "Admin")
                                 </button>
                             </form>
