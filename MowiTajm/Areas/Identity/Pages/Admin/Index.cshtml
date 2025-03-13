@@ -6,14 +6,14 @@
 
 <div class="page-content-container">
 
-    <h2>Admin</h2>
+    <h1 class="headlines-menu">Admin</h1>
 
     <!-- Två knappar för att hantera användare eller recensioner -->
     <form class="admin-main-buttons" method="post">
-        <button type="submit" asp-page-handler="LoadUsers" class="btn-design btn-black">
+        <button type="submit" asp-page-handler="LoadUsers" class="btn-design btn-admin-menu @(Model.ShowReviews ? "" : "active")">
             Hantera användare
         </button>
-        <button type="submit" asp-page-handler="LoadReviews" class="btn-design btn-black">
+        <button type="submit" asp-page-handler="LoadReviews" class="btn-design btn-admin-menu @(Model.ShowReviews ? "active" : "")">
             Hantera recensioner
         </button>
     </form>
