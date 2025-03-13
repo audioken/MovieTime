@@ -9,7 +9,7 @@
 
     @* Sökfunktionen *@
     <form class="search-input" method="get">
-        <input type="text" class="form-control me-2" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required />
+        <input type="text" class="form-control me-2" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required maxlength="100"/>
         <button class="btn btn-primary btn-search btn-black" type="submit" title="Sök" aria-label="Sök">⌕</button>
 	</form>
 
