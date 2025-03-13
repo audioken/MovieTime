@@ -53,6 +53,18 @@ input {
     gap: 1rem;
 }
 
+.review-column {
+    min-width: 25rem;
+    max-width: 25rem; 
+    width: 100%; 
+    word-wrap: break-word;
+}
+
+.title-column{
+    max-width: 12.5rem;
+    word-wrap: break-word;
+}
+
 .headlines-menu{
     margin-bottom: 2rem;
 }
@@ -791,6 +803,13 @@ legend {
     #navbarSearch{
         width: 50%;
     }
+
+    .review-column {
+        min-width: 15rem;
+        max-width: 15rem;
+        width: 100%;
+        word-wrap: break-word;
+    }
 }
 
 /* ======== Mellanstora skärmar (max 991px) ======== */
@@ -808,6 +827,13 @@ legend {
     .navbar-collapse {
         width: 100%;
         text-align: center;
+    }
+
+    .review-column {
+        min-width: 18rem;
+        max-width: 18rem;
+        width: 100%;
+        word-wrap: break-word;
     }
 }
 
@@ -854,6 +880,11 @@ legend {
 
     .logotyp {
         max-width: 30%;
+    }
+
+    .title-column {
+        max-width: 8rem;
+        word-wrap: break-word;
     }
 }
 
