@@ -6,4 +6,3 @@
         navbar.classList.toggle("show");
     });
 });
-
