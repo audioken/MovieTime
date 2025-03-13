@@ -375,7 +375,7 @@ input {
 }
 
 /* FILTER */
-.date-filter-wrapper {
+.review-title-wrapper {
     display: flex;
     justify-content: flex-start;
     align-items: center; 
@@ -778,13 +778,12 @@ legend {
         height: 10rem;
     }
 
-    .stars-filter-wrapper,
-    .date-filter-wrapper {
-        justify-content: space-between;
+    .stars-filter-wrapper{
+        justify-content: flex-end;
         width: 100%;
     }
 
-    .date-filter-wrapper {
+    .review-title-wrapper {
         padding: 0;
     }
 
