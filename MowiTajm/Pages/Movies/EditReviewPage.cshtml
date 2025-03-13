@@ -47,10 +47,10 @@
             </fieldset>
 
 			@* Rubrik *@
-            <input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required />
+            <input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required maxlength="50" />
 
 			@* Textarea för recension *@
-            <textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required></textarea> <br />
+            <textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required maxlength="1000"></textarea> <br />
 
             @* Spara eller avrbyt redigeringen *@
             <footer class="review-edit-footer">

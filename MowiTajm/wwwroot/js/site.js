@@ -22,5 +22,13 @@
             });
         }
     });
+
+    // Skrolla till recensionerna om TempData säger till
+    if (window.scrollToReviews) {
+        const reviewsTitle = document.getElementById("reviews-title");
+        if (reviewsTitle) {
+            reviewsTitle.scrollIntoView();
+        }
+    }
 });
 

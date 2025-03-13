@@ -20,7 +20,7 @@ namespace MowiTajm.Pages.Movies
         public string DisplayName { get; set; } = string.Empty;
 
         [BindProperty]
-        public Review? Review { get; set; }
+        public Review Review { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
