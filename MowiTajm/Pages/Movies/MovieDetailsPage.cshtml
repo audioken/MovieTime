@@ -112,16 +112,14 @@
 			</div>
 		</header>
 
-		@* Skrollposition efter filtrering *@
 		@if (TempData["ScrollToReviews"] as bool? == true)
 		{
 			<script>
-				window.onload = function () {
-				document.getElementById("reviews-title").scrollIntoView();
-				}
+				window.scrollToReviews = true;
 			</script>
 			TempData.Remove("ScrollToReviews");
 		}
+
 
 		@* Alla filmrecensioner *@
 		<section class="section-all-reviews" id="IdAllReviews">
