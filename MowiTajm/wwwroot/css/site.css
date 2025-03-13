@@ -48,12 +48,14 @@ input {
 }
 
 .admin-main-buttons{
-    margin-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
     gap: 1rem;
 }
 
+.headlines-menu{
+    margin-bottom: 2rem;
+}
 .account-form-wrapper{
     display: flex;
     justify-content:center;
@@ -144,6 +146,30 @@ input {
 .btn-profile[aria-current="page"] {
     background-color: black !important;
     color: white !important;
+}
+
+.btn-yellow{
+    background-color: darkgoldenrod;
+    color: white;
+    border: 1px solid darkgoldenrod;
+}
+
+.btn-yellow:hover{
+    background-color: khaki;
+    color: white;
+    border-color: khaki;
+}
+
+.btn-admin-menu{
+    background-color: transparent;
+    color: black;
+    border: none;
+}
+
+.btn-admin-menu.active {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
 }
 
 /*----------------------------------------

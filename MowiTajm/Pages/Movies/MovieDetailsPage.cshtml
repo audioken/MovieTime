@@ -165,21 +165,6 @@
 							</div>
 						</section>
 
-						<script>
-							document.addEventListener("DOMContentLoaded", function () {
-								var collapseElement = document.getElementById("reviewText-@review.Id");
-								var button = document.querySelector(`[data-bs-target="#reviewText-@review.Id"]`);
-
-								collapseElement.addEventListener("show.bs.collapse", function () {
-									button.textContent = "Läs mindre..";
-								});
-
-								collapseElement.addEventListener("hide.bs.collapse", function () {
-									button.textContent = "Läs mer..";
-								});
-							});
-						</script>
-
 						@* Datum och knappar *@
 						<footer class="review-footer">
 							<p class="date-time-text">@review.DateTime</p>

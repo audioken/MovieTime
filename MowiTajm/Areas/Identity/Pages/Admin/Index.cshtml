@@ -6,89 +6,108 @@
 
 <div class="page-content-container">
 
-    <h2>Admin</h2>
+    <h1 class="headlines-menu">Admin</h1>
 
     <!-- Två knappar för att hantera användare eller recensioner -->
     <form class="admin-main-buttons" method="post">
-        <button type="submit" asp-page-handler="LoadUsers" class="btn-design btn-black">
+        <button type="submit" asp-page-handler="LoadUsers" class="btn-design btn-admin-menu @(Model.ShowReviews ? "" : "active")">
             Hantera användare
         </button>
-        <button type="submit" asp-page-handler="LoadReviews" class="btn-design btn-black">
+        <button type="submit" asp-page-handler="LoadReviews" class="btn-design btn-admin-menu @(Model.ShowReviews ? "active" : "")">
             Hantera recensioner
         </button>
     </form>
 
     @if (!Model.ShowReviews)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>E-Post</th>
-                    <th>Användarnamn</th>
-                    <th>Roll</th>
-                    <th class="center-stuff">Hantera</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model.Users)
-                {
-                    var userRole = Model.UserRoles.ContainsKey(user.Id) ? Model.UserRoles[user.Id] : "Ingen roll";
-
+        <div class="table table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
                     <tr>
-                        <td>@user.UserName</td>
-						<td>@user.DisplayName</td>
-                        <td>@userRole</td>
-                        <td class="orientation-row center-stuff">
-                            <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                <button type="submit" class="btn-design btn-purple">
-                                    Ändra till @((userRole == "Admin") ? "User" : "Admin")
-                                </button>
-                            </form>
-                            <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                <button type="submit" class="btn-design btn-red" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
-                                    ⛌
-                                </button>
-                            </form>
-                        </td>
+                        <th>E-Post</th>
+                        <th>Användarnamn</th>
+                        <th>Roll</th>
+                        <th class="text-center">Hantera</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        var userRole = Model.UserRoles.ContainsKey(user.Id) ? Model.UserRoles[user.Id] : "Ingen roll";
+
+                        <tr>
+                            <td class="align-middle">@user.UserName</td>
+                            <td class="align-middle">@user.DisplayName</td>
+                            <td class="align-middle">@userRole</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
+                                        <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
+                                            Ändra till @((userRole == "Admin") ? "User" : "Admin")
+                                        </button>
+                                    </form>
+                                    <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
+                                        <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                            ⛌
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
     }
     else
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Film</th>
-                    <th>Titel</th>
-                    <th>Recension</th>
-                    <th>Betyg</th>
-                    <th>Användare</th>
-                    <th>Datum</th>
-                    <th>Hantera</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var review in Model.Reviews)
-                {
+        <div class="table table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
                     <tr>
-                        <td>@review.MovieTitle</td>
-                        <td>@review.Title</td>
-                        <td>@review.Text</td>
-                        <td>@review.Rating / 5</td>
-                        <td>@review.Username</td>
-                        <td>@review.DateTime.ToShortDateString()</td>
-                        <td>
-                            <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
-                                    ⛌
-                                </button>
-                            </form>
-                        </td>
+                        <th>Film</th>
+                        <th>Titel</th>
+                        <th>Recension</th>
+                        <th>Betyg</th>
+                        <th>Användare</th>
+                        <th>Datum</th>
+                        <th class="text-center">Hantera</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <tr>
+                            <td>@review.MovieTitle</td>
+                            <td>@review.Title</td>
+                            <td>
+                                <button class="btn btn-link btn-white btn-read-more text-decoration-none"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#reviewText-@review.Id"
+                                        aria-expanded="false">
+                                    Läs mer..
+                                </button>
+                                <div class="collapse" id="reviewText-@review.Id">
+                                    <p>@review.Text</p>
+                                </div>
+                            </td>
+                            <td>@review.Rating / 5</td>
+                            <td>@review.Username</td>
+                            <td>@review.DateTime.ToShortDateString()</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
+                                        <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                            ⛌
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 </div>
