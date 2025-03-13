@@ -26,7 +26,7 @@
                     <th>E-Post</th>
                     <th>Användarnamn</th>
                     <th>Roll</th>
-                    <th class="center-stuff">Hantera</th>
+                    <th class="text-center">Hantera</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,12 +40,12 @@
                         <td>@userRole</td>
                         <td class="orientation-row center-stuff">
                             <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                <button type="submit" class="btn-design btn-purple">
+                                <button type="submit" class="btn-design btn-purple btn-admin">
                                     Ändra till @((userRole == "Admin") ? "User" : "Admin")
                                 </button>
                             </form>
                             <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                <button type="submit" class="btn-design btn-red" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
                                     ⛌
                                 </button>
                             </form>
