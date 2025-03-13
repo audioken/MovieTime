@@ -810,6 +810,12 @@ legend {
         width: 100%;
         word-wrap: break-word;
     }
+
+    .review-title-mobile-wrap {
+        max-width: 15rem;
+        width: 100%;
+        word-wrap: break-word;
+    }
 }
 
 /* ======== Mellanstora skärmar (max 991px) ======== */
