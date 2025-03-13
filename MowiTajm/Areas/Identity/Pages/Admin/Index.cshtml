@@ -39,17 +39,19 @@
                             <td class="align-middle">@user.UserName</td>
                             <td class="align-middle">@user.DisplayName</td>
                             <td class="align-middle">@userRole</td>
-                            <td class="orientation-row center-stuff">
-                                <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                    <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
-                                        Ändra till @((userRole == "Admin") ? "User" : "Admin")
-                                    </button>
-                                </form>
-                                <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                    <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
-                                        ⛌
-                                    </button>
-                                </form>
+                            <td>
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
+                                        <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
+                                            Ändra till @((userRole == "Admin") ? "User" : "Admin")
+                                        </button>
+                                    </form>
+                                    <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
+                                        <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                            ⛌
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     }
