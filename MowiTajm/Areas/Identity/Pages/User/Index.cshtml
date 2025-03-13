@@ -8,8 +8,8 @@
 
     <h1 class="headlines-menu">Mina Recensioner</h1>
 
-    <div>
-        <table class="table">
+    <div class="table table-responsive">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Film</th>
@@ -27,24 +27,35 @@
 					<tr>
 					    <td>@review.MovieTitle</td>
                         <td>@review.Title</td>
-                        <td>@review.Text</td>
+                        <td>
+                            <button class="btn btn-link btn-white btn-read-more text-decoration-none"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#reviewText-@review.Id"
+                                    aria-expanded="false">
+                                Läs mer..
+                            </button>
+                            <div class="collapse" id="reviewText-@review.Id">
+                                <p>@review.Text</p>
+                            </div>
+                        </td>
                         <td>@review.Rating / 5</td>
                         <td>@review.Username</td>
                         <td>@review.DateTime.ToShortDateString()</td>
-                            <td class="orientation-row center-stuff">
-                            <form method="post" asp-page-handler="EditReview" asp-route-reviewId="@review.Id">
-                            <button type="submit" class="btn-design btn-black" title="Redigera recensionen" aria-label="Redigera recensionen" onclick="return confirm('Vill du redigera ditt inlägg?')">✎ᝰ.</button>
-                            </form>
-                            <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
-                                    ⛌
-                                </button>
-                            </form>
+                        <td>
+                            <div class="d-flex justify-content-center gap-1">
+                                <form method="post" asp-page-handler="EditReview" asp-route-reviewId="@review.Id">
+                                    <button type="submit" class="btn-design btn-black" title="Redigera recensionen" aria-label="Redigera recensionen" onclick="return confirm('Vill du redigera ditt inlägg?')">✎ᝰ.</button>
+                                </form>
+                                <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
+                                    <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                        ⛌
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-
 </div>
