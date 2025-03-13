@@ -79,7 +79,11 @@
                     @foreach (var review in Model.Reviews)
                     {
                         <tr>
-                            <td>@review.MovieTitle</td>
+                            <td>
+                                <a href="/Movies/MovieDetailsPage?imdbID=@review.ImdbID">
+                                    @review.MovieTitle
+                                </a>
+                            </td>
                             <td class="title-column">@review.Title</td>
                             <td class="review-column">
                                 <button class="btn btn-link btn-white btn-read-more text-decoration-none"

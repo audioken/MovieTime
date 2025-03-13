@@ -66,11 +66,13 @@
 
 		@* Filmecensionsheader *@
 		<header class="reviews-header">
-			<div class="date-filter-wrapper">
-
+			<div class="review-title-wrapper">
 				@* Titel med antal recensioner *@
 				<h2 id="reviews-title">Recensioner (@reviewsToDisplay.Count())</h2>
+			</div>
 
+			@* Stjärnfilter *@
+			<div class="stars-filter-wrapper">
 				@* Datumfilter *@
 				<form method="post" asp-page-handler="DateFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
@@ -78,10 +80,6 @@
 						@Model.DateSortText
 					</button>
 				</form>
-			</div>
-
-			@* Stjärnfilter *@
-			<div class="stars-filter-wrapper">
 				<form method="post" asp-page-handler="StarFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
 
@@ -247,10 +245,8 @@
 						</div>
 					</fieldset>
 
-					
-
 					@* Rubrik*@
-					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required maxlength="30" />
+					<input class="review-input-title form-control me-2" type="text" class="review-input-title" placeholder="Rubrik.." asp-for="Review.Title" required maxlength="50" />
 
 					@* Textarea för recension *@
 					<textarea class="review-input-text form-control me-2" placeholder="Vad tyckte du om filmen?" asp-for="Review.Text" required maxlength="1000"></textarea> <br />
