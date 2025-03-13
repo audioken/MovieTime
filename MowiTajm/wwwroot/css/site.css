@@ -842,6 +842,12 @@ legend {
         width: 100%;
         word-wrap: break-word;
     }
+
+    .review-title-mobile-wrap {
+        max-width: 36rem;
+        width: 100%;
+        word-wrap: break-word;
+    }
 }
 
 /* ======== Större mobiler och surfplattor (max 1200px) ======== */
