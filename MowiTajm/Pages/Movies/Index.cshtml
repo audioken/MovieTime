@@ -5,7 +5,20 @@
 }
 
 <div class="page-content-container">
-	<h1>Sök på filmtitel</h1>
+	<h1 class="mb-3 text-center">Välkommen till MowiTajm!</h1>
+
+	<h4 class="mb-5 text-center">Sök efter filmer och serier för att läsa recensioner och betyg.</h4>
+    
+    @if (!Model.IsUserSignedIn)
+    {
+        <p class="text-center">
+            @* Länk till inloggningssidan. Vi använder asp-area="Identity" om Identity-området används *@
+            <a asp-area="Identity" asp-page="/Account/Login">Logga in</a> eller
+
+            @* Länk till registreringssidan. Även här används asp-area="Identity" för att peka rätt *@
+            <a asp-area="Identity" asp-page="/Account/Register">registrera dig</a> om du också vill kunna skriva en recension.
+        </p>
+    }
 
     @* Sökfunktionen *@
     <form class="search-input" method="get">
