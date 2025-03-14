@@ -211,7 +211,5 @@ namespace MowiTajm.Pages.Movies
                 ViewData["ErrorMessage"] = "Ett fel uppstod vid hämtning av film och användardata.";
             }
         }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -46,7 +46,5 @@ namespace MowiTajm.Pages.Movies
                 ViewData["ErrorMessage"] = "Ett fel uppstod vid hämtning av filmer. Försök igen senare.";
             }
         }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

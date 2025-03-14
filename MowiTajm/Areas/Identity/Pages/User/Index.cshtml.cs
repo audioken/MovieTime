@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -22,44 +21,79 @@ namespace MowiTajm.Areas.Identity.Pages.User
             _reviewService = reviewService;
         }
 
-        // Initierar Reviews med en tom lista för att eliminera risken för null-värde.
-        // Detta säkerställer att vi alltid kan arbeta med listan utan att behöva göra null-kontroller,
-        // vilket gör koden mer robust och förhindrar NullReferenceException vid åtkomst.
-        public List<Review> Reviews { get; set; } = new List<Review>(); // 
+        // Säkrar nullvärde genom att sätta en tom lista som standardvärde
+        public List<Review> Reviews { get; set; } = new List<Review>();
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Metod som hämtar recensioner från databasen baserat på inloggad användare
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userService.GetUserContextAsync(User);
+            try
+            {
+                // Hämta användarkontext
+                var user = await _userService.GetUserContextAsync(User);
 
+                var displayName = user.DisplayName; //  Viktigt, inte UserName
 
-            var displayName = user.DisplayName; //  Viktigt, inte UserName
+                // Hämta recensioner från databasen baserat på användarens visningsnamn
+                Reviews = await _context.Reviews
+                    .Where(r => r.Username == displayName) //  Matcha Username mot DisplayName
+                    .ToListAsync();
 
-            Reviews = await _context.Reviews
-                .Where(r => r.Username == displayName) //  Matcha Username mot DisplayName
-                .ToListAsync();
-
-            return Page();
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid hämtning av recensioner: {ex.Message}");
+                ViewData["ErrorMessage"] = "Ett fel uppstod vid hämtning av recensioner. Försök igen senare.";
+                return Page();
+            }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Metod som tar bort recensioner från databasen
         public async Task<IActionResult> OnPostDeleteReviewAsync(int reviewId)
         {
-            await _reviewService.DeleteReviewAsync(reviewId);
-            return RedirectToPage();
+            try
+            {
+                await _reviewService.DeleteReviewAsync(reviewId);
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid borttagning av recension: {ex.Message}");
+                ViewData["ErrorMessage"] = "Ett fel uppstod vid borttagning av recensionen. Försök igen senare.";
+                return Page();
+            }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Metod som hanterar redigering av recensioner
         public async Task<IActionResult> OnPostEditReviewAsync(int reviewId)
         {
-            // Hämta recensionen från databasen med reviewId
-            var review = await _context.Reviews.FindAsync(reviewId);
-            if (review == null)
+            try
             {
-                return NotFound();
-            }
+                // Hämta recensionen från databasen med reviewId
+                var review = await _context.Reviews.FindAsync(reviewId);
+                if (review == null)
+                {
+                    return NotFound();
+                }
 
-            // Skicka vidare till EditReviewPage med den här recensionen
-            return RedirectToPage("/Movies/EditReviewPage", new { id = review.Id });
+                // Skicka vidare till EditReviewPage med den här recensionen
+                return RedirectToPage("/Movies/EditReviewPage", new { id = review.Id });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid redigering av recension: {ex.Message}");
+                ViewData["ErrorMessage"] = "Ett fel uppstod vid redigering av recensionen. Försök igen senare.";
+                return Page();
+            }
         }
     }
 }
-   
+
 

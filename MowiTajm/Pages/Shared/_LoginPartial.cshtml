@@ -4,11 +4,14 @@
 @inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav" id="navbar">
+
+	@* Kontrollera om användaren är inloggad *@
     @if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User); // Hämta hela ApplicationUser
         var displayName = currentUser?.DisplayName ?? User.Identity?.Name; // Fallback om DisplayName saknas
 
+		@* Visa länk till Mina Recensioner om användaren är inloggad *@
         @if (User?.Identity?.IsAuthenticated ?? false)
         {
              <li class="nav-item">
@@ -16,6 +19,7 @@
              </li>
         }
 
+		@* Visa länk till Admin-sidan om användaren är inloggad och är admin *@
         @if (currentUser != null && (await UserManager.GetRolesAsync(currentUser)).Contains("Admin"))
         {
             <li class="nav-item">
@@ -23,18 +27,19 @@
             </li>
         }
 
+		@* Knapp för profilinställningar *@
         <li class="nav-item">
             <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Manage/Index" title="Hantera konto" aria-label="Hantera konto">Hej @displayName! ⛯</a>
         </li>
 
+		@* Knapp för att logga ut *@
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
                     <button type="submit" class="btn-design btn-black btn-navbar" onclick="return confirm('Vill du logga ut?')">Logga ut</button>
             </form>
         </li>
     }
-
-    else
+	else @* Om användaren inte är inloggad *@
     {
         <li class="nav-item">
             <a class="btn-design btn-black btn-navbar" asp-area="Identity" asp-page="/Account/Register">Registrera konto</a>
