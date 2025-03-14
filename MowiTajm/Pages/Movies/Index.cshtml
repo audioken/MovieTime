@@ -11,7 +11,7 @@
     
     @if (!Model.IsUserSignedIn)
     {
-        <p>
+        <p class="text-center">
             @* Länk till inloggningssidan. Vi använder asp-area="Identity" om Identity-området används *@
             <a asp-area="Identity" asp-page="/Account/Login">Logga in</a> eller
 
