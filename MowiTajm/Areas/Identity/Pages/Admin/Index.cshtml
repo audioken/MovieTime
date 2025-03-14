@@ -2,6 +2,9 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Admin";
+    var uniqueMovies = Model.Reviews.Select(r => r.MovieTitle).Distinct().ToList();
+	var uniqueUserNames = Model.Reviews.Select(r => r.Username).Distinct().ToList();
+	var uniqueRating = Model.Reviews.Select(r => r.Rating).Distinct().ToList();
 }
 
 <div class="page-content-container">
@@ -42,12 +45,12 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
                                     <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                        <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
+                                        <button type="submit" class="btn-design btn-table @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
                                             Ändra till @((userRole == "Admin") ? "User" : "Admin")
                                         </button>
                                     </form>
                                     <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                        <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                        <button type="submit" class="btn-design btn-red btn-admin btn-table" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
                                             ⛌
                                         </button>
                                     </form>
@@ -58,16 +61,53 @@
                 </tbody>
             </table>
         </div>
-
     }
     else
     {
+        <div class="user-admin-filter center-stuff overflow-auto">
+            <p class="filter-title">Filter:</p>
+
+            <div class="mb-3">
+                <select id="movieFilter" class="form-select">
+                    <option value="">Alla filmer</option>
+                    @foreach (var movie in uniqueMovies.OrderBy(m => m)) // Sortera filmerna i bokstavsordning
+                    {
+                        <option value="@movie">@movie</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <select id="userFilter" class="form-select">
+                    <option value="">Alla användare</option>
+                    @foreach (var user in uniqueUserNames.OrderBy(u => u))
+                    {
+                        <option value="@user">@user</option>
+                    }
+                </select>
+            </div>
+
+		    <div class="mb-3">
+			    <select id="ratingFilter" class="form-select">
+				    <option value="">Alla betyg</option>
+				    @foreach (var rating in uniqueRating.OrderBy(r => r))
+				    {
+					    <option value="@rating">@rating</option>
+				    }
+			    </select>
+		    </div>
+
+            <div class="mb-3">
+                <button type="button" class="btn-design btn-red btn-table" id="resetFilters" title="Återställ filtret">⛌</button>
+            </div>
+        </div>
+
         <div class="table table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Film</th>
-                        <th>Titel</th>
+                        <th>Rubrik</th>
                         <th>Recension</th>
                         <th>Betyg</th>
                         <th>Användare</th>
@@ -78,8 +118,8 @@
                 <tbody>
                     @foreach (var review in Model.Reviews)
                     {
-                        <tr>
-                            <td>
+                        <tr class="review-row" data-movie="@review.MovieTitle" data-user="@review.Username" data-rating="@review.Rating">
+                            <td class="movie-column">
                                 <a href="/Movies/MovieDetailsPage?imdbID=@review.ImdbID">
                                     @review.MovieTitle
                                 </a>
@@ -102,7 +142,7 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
                                     <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                        <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                        <button type="submit" class="btn-design btn-red btn-table" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
                                             ⛌
                                         </button>
                                     </form>
@@ -115,3 +155,4 @@
         </div>
     }
 </div>
+
