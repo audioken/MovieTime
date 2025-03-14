@@ -518,7 +518,6 @@ legend {
     margin-bottom: 0rem;
 }
 
-
 /* TEXTURSKRIFTER */
 .text-no-reviews-yet{
     margin: 2rem 0 1rem;
@@ -851,7 +850,6 @@ legend {
         font-size: 13px; /* Ändra till önskad storlek */
     }
 
-
     .filter-title{
         display:none;
     }
@@ -860,8 +858,6 @@ legend {
         width: 30rem;
         overflow: auto;
     }
-
-    
 }
 
 /* ======== Mellanstora skärmar (max 991px) ======== */
@@ -954,12 +950,6 @@ legend {
         word-wrap: break-word;
     }
 
-/*    .user-admin-filter {
-        flex-direction: column;
-        width: 100%;
-
-    }*/
-
     #movieFilter, #userFilter, #ratingFilter{
         max-width: 10rem;
     }
@@ -996,4 +986,3 @@ legend {
 .navbar-search {
     margin-left: 1rem; /* Lägger till lite mellanrum mellan logotyp och sökruta */
 }
-

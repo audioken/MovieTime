@@ -31,7 +31,7 @@
                     {
                         <form method="get" asp-page="/Movies/Index" class="navbar-search d-flex align-items-center">
                             <input class="form-control me-2" type="text" name="searchInput" id="navbarSearch"
-                                   value="@Context?.Request.Query["searchInput"]" placeholder="Sök på filmtitel.." required maxlength="100">
+                                   value="@Context?.Request.Query["searchInput"]" placeholder="Sök på en titel.." required maxlength="100">
                             <button class="btn btn-primary" title="Sök" aria-label="Sök" type="submit">⌕</button>
                         </form>
                     }
@@ -59,7 +59,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container text-center">
             &copy; 2025 - MowiTajm 
         </div>
     </footer>
