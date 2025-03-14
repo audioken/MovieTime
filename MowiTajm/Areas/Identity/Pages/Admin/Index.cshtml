@@ -2,6 +2,9 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Admin";
+    var uniqueMovies = Model.Reviews.Select(r => r.MovieTitle).Distinct().ToList();
+	var uniqueUserNames = Model.Reviews.Select(r => r.Username).Distinct().ToList();
+	var uniqueRating = Model.Reviews.Select(r => r.Rating).Distinct().ToList();
 }
 
 <div class="page-content-container">
@@ -58,16 +61,50 @@
                 </tbody>
             </table>
         </div>
-
     }
     else
     {
+        <div class="orientation-row">
+            <div class="mb-3">
+                <label for="movieFilter" class="form-label">Film:</label>
+                <select id="movieFilter" class="form-select" onchange="filterTable()">
+                    <option value="">Alla filmer</option>
+                    @foreach (var movie in uniqueMovies.OrderBy(m => m)) // Sortera filmerna i bokstavsordning
+                    {
+                        <option value="@movie">@movie</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="userFilter" class="form-label">Användare:</label>
+                <select id="userFilter" class="form-select" onchange="filterTable()">
+                    <option value="">Alla användare</option>
+                    @foreach (var user in uniqueUserNames.OrderBy(u => u))
+                    {
+                        <option value="@user">@user</option>
+                    }
+                </select>
+            </div>
+
+		    <div class="mb-3">
+			    <label for="ratingFilter" class="form-label">Betyg:</label>
+			    <select id="ratingFilter" class="form-select" onchange="filterTable()">
+				    <option value="">Alla betyg</option>
+				    @foreach (var rating in uniqueRating)
+				    {
+					    <option value="@rating">@rating</option>
+				    }
+			    </select>
+		    </div>
+        </div>
+
         <div class="table table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Film</th>
-                        <th>Titel</th>
+                        <th>Rubrik</th>
                         <th>Recension</th>
                         <th>Betyg</th>
                         <th>Användare</th>
@@ -78,7 +115,7 @@
                 <tbody>
                     @foreach (var review in Model.Reviews)
                     {
-                        <tr>
+                        <tr class="review-row" data-movie="@review.MovieTitle" data-user="@review.Username" data-rating="@review.Rating">
                             <td>
                                 <a href="/Movies/MovieDetailsPage?imdbID=@review.ImdbID">
                                     @review.MovieTitle
@@ -115,3 +152,4 @@
         </div>
     }
 </div>
+
