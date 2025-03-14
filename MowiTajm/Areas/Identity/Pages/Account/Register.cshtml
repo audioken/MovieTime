@@ -35,47 +35,14 @@
 				</div>
 				<div class="form-floating mb-3">
 					<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-					<label asp-for="Input.ConfirmPassword">Konfirmera lösenord</label>
+					<label asp-for="Input.ConfirmPassword">Bekräfta lösenord</label>
 					<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 				</div>
 				<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-black">Registrera konto</button>
 			</form>
 		</div>
-		@* <div class="col-md-6 col-md-offset-2">
-			<section>
-				<h3>use another service to register.</h3>
-				<hr />
-				@{
-					if ((model.externallogins?.count ?? 0) == 0)
-					{
-						<div>
-							<p>
-								there are no external authentication services configured. see this <a href="https://go.microsoft.com/fwlink/?linkid=532715">
-									article
-									about setting up this asp.net application to support logging in via external services
-								</a>.
-							</p>
-						</div>
-					}
-					else
-					{
-						<form id="external-account" asp-page="./externallogin" asp-route-returnurl="@model.returnurl" method="post" class="form-horizontal">
-							<div>
-								<p>
-									@foreach (var provider in model.externallogins!)
-									{
-										<button type="submit" class="btn btn-primary" name="provider" value="@provider.name" title="log in using your @provider.displayname account">@provider.displayname</button>
-									}
-								</p>
-							</div>
-						</form>
-					}
-				}
-			</section>
-		</div> *@
 	</div>
 </div>
-
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />

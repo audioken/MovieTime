@@ -16,13 +16,13 @@
             <a asp-area="Identity" asp-page="/Account/Login">Logga in</a> eller
 
             @* Länk till registreringssidan. Även här används asp-area="Identity" för att peka rätt *@
-            <a asp-area="Identity" asp-page="/Account/Register">registrera dig</a> om du också vill kunna skriva en recension.
+            <a asp-area="Identity" asp-page="/Account/Register">registrera dig</a> om du också vill kunna skriva recensioner!
         </p>
     }
 
     @* Sökfunktionen *@
     <form class="search-input" method="get">
-        <input type="text" class="form-control me-2" name="searchInput" placeholder="sök på filmtitel.." value="@Model.SearchInput" required maxlength="100"/>
+        <input type="text" class="form-control me-2" name="searchInput" placeholder="Sök på en titel.." value="@Model.SearchInput" required maxlength="100"/>
         <button class="btn btn-primary btn-search btn-black" type="submit" title="Sök" aria-label="Sök">⌕</button>
 	</form>
 
