@@ -67,12 +67,14 @@
 		@* Filmecensionsheader *@
 		<header class="reviews-header">
 			<div class="review-title-wrapper">
+
 				@* Titel med antal recensioner *@
 				<h2 id="reviews-title">Recensioner (@reviewsToDisplay.Count())</h2>
 			</div>
 
 			@* Stjärnfilter *@
 			<div class="stars-filter-wrapper">
+
 				@* Datumfilter *@
 				<form method="post" asp-page-handler="DateFilter">
 					<input type="hidden" name="Review.ImdbID" value="@Model.Movie.ImdbID" />
@@ -110,6 +112,7 @@
 			</div>
 		</header>
 
+		@* Skrollposition vid användning av filter *@
 		@if (TempData["ScrollToReviews"] as bool? == true)
 		{
 			<script>

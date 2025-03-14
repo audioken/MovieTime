@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MowiTajm.Data;
 using MowiTajm.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 public class IndexModel : PageModel
 {
@@ -27,68 +24,150 @@ public class IndexModel : PageModel
     [BindProperty]
     public bool ShowReviews { get; set; } = false; // Standard: Visa användare först
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som laddar användarna vid sidans första uppslag
     public async Task OnGetAsync()
     {
-        await LoadUsersAsync(); // Standard: Ladda användare direkt
+        try
+        {
+            await LoadUsersAsync(); // Standard: Ladda användare direkt
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid laddning av användare: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid laddning av användare. Försök igen senare.";
+        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som laddar om användarna när knappen "Hantera användare" trycks
     public async Task<IActionResult> OnPostLoadUsersAsync()
     {
-        ShowReviews = false;
-        await LoadUsersAsync();
-        return Page();
+        try
+        {
+            ShowReviews = false;
+            await LoadUsersAsync();
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid omladdning av användare: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid omladdning av användare. Försök igen senare.";
+            return Page();
+        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som laddar recensionerna när knappen "Hantera recensioner" trycks
     public IActionResult OnPostLoadReviewsAsync()
     {
-        ShowReviews = true;
-        Reviews = _context.Reviews.ToList();
-        return Page();
+        try
+        {
+            ShowReviews = true;
+            Reviews = _context.Reviews.ToList();
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid laddning av recensioner: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid laddning av recensioner. Försök igen senare.";
+            return Page();
+        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som laddar användarna och deras roller från databasen
     private async Task LoadUsersAsync()
     {
-        Users = _userManager.Users.ToList();
-        foreach (var user in Users)
+        try
         {
-            var roles = await _userManager.GetRolesAsync(user);
-            UserRoles[user.Id] = roles.FirstOrDefault() ?? "Ingen roll";
+            Users = _userManager.Users.ToList();
+            foreach (var user in Users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                UserRoles[user.Id] = roles.FirstOrDefault() ?? "Ingen roll";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid laddning av användare och deras roller: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid laddning av användare och roller. Försök igen senare.";
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som uppdaterar en användares roll
     public async Task<IActionResult> OnPostUpdateRoleAsync(string userId, string newRole)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null) return NotFound();
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
 
-        var currentRoles = await _userManager.GetRolesAsync(user);
-        await _userManager.RemoveFromRolesAsync(user, currentRoles);
-        var result = await _userManager.AddToRoleAsync(user, newRole);
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            var result = await _userManager.AddToRoleAsync(user, newRole);
 
-        if (!result.Succeeded) return BadRequest("Fel vid ändring av roll.");
+            if (!result.Succeeded) return BadRequest("Fel vid ändring av roll.");
 
-        return RedirectToPage();
+            return RedirectToPage();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid uppdatering av användarroll: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid uppdatering av användarens roll. Försök igen senare.";
+            return Page();
+        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som tar bort en användare från databasen
     public async Task<IActionResult> OnPostDeleteUserAsync(string userId)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user != null)
+        try
         {
-            var result = await _userManager.DeleteAsync(user);
-            if (!result.Succeeded) return BadRequest("Fel vid borttagning av användare.");
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (!result.Succeeded) return BadRequest("Fel vid borttagning av användare.");
+            }
+            return RedirectToPage();
         }
-        return RedirectToPage();
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid borttagning av användare: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid borttagning av användaren. Försök igen senare.";
+            return Page();
+        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Metod som tar bort en recension från databasen
     public async Task<IActionResult> OnPostDeleteReviewAsync(int reviewId)
     {
-        var review = await _context.Reviews.FindAsync(reviewId);
-        if (review != null)
+        try
         {
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
+            var review = await _context.Reviews.FindAsync(reviewId);
+            if (review != null)
+            {
+                _context.Reviews.Remove(review);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage();
         }
-        return RedirectToPage();
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fel vid borttagning av recension: {ex.Message}");
+            ViewData["ErrorMessage"] = "Ett fel uppstod vid borttagning av recensionen. Försök igen senare.";
+            return Page();
+        }
     }
 }
