@@ -48,10 +48,10 @@
                         <td>
                             <div class="d-flex justify-content-center gap-1">
                                 <form method="post" asp-page-handler="EditReview" asp-route-reviewId="@review.Id">
-                                    <button type="submit" class="btn-design btn-black" title="Redigera recensionen" aria-label="Redigera recensionen" onclick="return confirm('Vill du redigera ditt inlägg?')">✎ᝰ.</button>
+                                    <button type="submit" class="btn-design btn-black btn-table" title="Redigera recensionen" aria-label="Redigera recensionen" onclick="return confirm('Vill du redigera ditt inlägg?')">✎ᝰ.</button>
                                 </form>
                                 <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                    <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                    <button type="submit" class="btn-design btn-red btn-table" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
                                         ⛌
                                     </button>
                                 </form>

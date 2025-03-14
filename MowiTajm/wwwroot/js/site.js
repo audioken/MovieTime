@@ -31,6 +31,17 @@
         }
     }
 
+    // Lägg till funktion för att återställa filter
+    document.getElementById("resetFilters").addEventListener("click", function () {
+        // Återställ alla filter till sina ursprungliga värden
+        document.getElementById("movieFilter").value = "";
+        document.getElementById("userFilter").value = "";
+        document.getElementById("ratingFilter").value = "";
+
+        // Uppdatera tabellen så att alla recensioner visas igen
+        filterTable();
+    });
+
     function filterTable() {
         var movieFilter = document.getElementById("movieFilter").value.toLowerCase();
         var userFilter = document.getElementById("userFilter").value.toLowerCase();

@@ -66,6 +66,12 @@ input {
     word-wrap: break-word;
 }
 
+.movie-column{
+    min-width: 8rem;
+    max-width: 12.5rem;
+    word-wrap: break-word;
+}
+
 .headlines-menu{
     margin-bottom: 2rem;
 }
@@ -185,6 +191,12 @@ input {
     background-color: black;
     color: white;
     border: 1px solid black;
+}
+
+.btn-table {
+    padding: 0.5rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
 }
 
 /*----------------------------------------
@@ -358,6 +370,12 @@ input {
 
 .orientation-row{
     display:flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.user-admin-filter {
+    display: flex;
     flex-direction: row;
     gap: 0.5rem;
 }
@@ -824,6 +842,26 @@ legend {
         width: 100%;
         word-wrap: break-word;
     }
+
+    #movieFilter, #userFilter, #ratingFilter {
+        font-size: 13px;
+    }
+
+    select {
+        font-size: 13px; /* Ändra till önskad storlek */
+    }
+
+
+    .filter-title{
+        display:none;
+    }
+
+    .user-admin-filter{
+        width: 30rem;
+        overflow: auto;
+    }
+
+    
 }
 
 /* ======== Mellanstora skärmar (max 991px) ======== */
@@ -858,6 +896,10 @@ legend {
         max-width: 36rem;
         width: 100%;
         word-wrap: break-word;
+    }
+
+    #movieFilter, #userFilter, #ratingFilter {
+        width: 6rem;
     }
 }
 
@@ -910,6 +952,16 @@ legend {
     .title-column {
         max-width: 8rem;
         word-wrap: break-word;
+    }
+
+/*    .user-admin-filter {
+        flex-direction: column;
+        width: 100%;
+
+    }*/
+
+    #movieFilter, #userFilter, #ratingFilter{
+        max-width: 10rem;
     }
 }
 

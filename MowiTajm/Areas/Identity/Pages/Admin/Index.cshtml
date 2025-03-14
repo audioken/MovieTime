@@ -45,12 +45,12 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
                                     <form method="post" asp-page-handler="UpdateRole" asp-route-userId="@user.Id" asp-route-newRole="@(userRole == "Admin" ? "User" : "Admin")">
-                                        <button type="submit" class="btn-design @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
+                                        <button type="submit" class="btn-design btn-table @(userRole == "Admin" ? "btn-purple" : "btn-yellow") btn-admin">
                                             Ändra till @((userRole == "Admin") ? "User" : "Admin")
                                         </button>
                                     </form>
                                     <form method="post" asp-page-handler="DeleteUser" asp-route-userId="@user.Id">
-                                        <button type="submit" class="btn-design btn-red btn-admin" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
+                                        <button type="submit" class="btn-design btn-red btn-admin btn-table" title="Ta bort användaren" aria-label="Ta bort användaren" onclick="return confirm('Är du säker att du vill ta bort denna användare?')">
                                             ⛌
                                         </button>
                                     </form>
@@ -64,10 +64,11 @@
     }
     else
     {
-        <div class="orientation-row">
+        <div class="user-admin-filter center-stuff overflow-auto">
+            <p class="filter-title">Filter:</p>
+
             <div class="mb-3">
-                <label for="movieFilter" class="form-label">Film:</label>
-                <select id="movieFilter" class="form-select" onchange="filterTable()">
+                <select id="movieFilter" class="form-select">
                     <option value="">Alla filmer</option>
                     @foreach (var movie in uniqueMovies.OrderBy(m => m)) // Sortera filmerna i bokstavsordning
                     {
@@ -77,8 +78,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="userFilter" class="form-label">Användare:</label>
-                <select id="userFilter" class="form-select" onchange="filterTable()">
+                <select id="userFilter" class="form-select">
                     <option value="">Alla användare</option>
                     @foreach (var user in uniqueUserNames.OrderBy(u => u))
                     {
@@ -88,15 +88,18 @@
             </div>
 
 		    <div class="mb-3">
-			    <label for="ratingFilter" class="form-label">Betyg:</label>
-			    <select id="ratingFilter" class="form-select" onchange="filterTable()">
+			    <select id="ratingFilter" class="form-select">
 				    <option value="">Alla betyg</option>
-				    @foreach (var rating in uniqueRating)
+				    @foreach (var rating in uniqueRating.OrderBy(r => r))
 				    {
 					    <option value="@rating">@rating</option>
 				    }
 			    </select>
 		    </div>
+
+            <div class="mb-3">
+                <button type="button" class="btn-design btn-red btn-table" id="resetFilters" title="Återställ filtret">⛌</button>
+            </div>
         </div>
 
         <div class="table table-responsive">
@@ -116,7 +119,7 @@
                     @foreach (var review in Model.Reviews)
                     {
                         <tr class="review-row" data-movie="@review.MovieTitle" data-user="@review.Username" data-rating="@review.Rating">
-                            <td>
+                            <td class="movie-column">
                                 <a href="/Movies/MovieDetailsPage?imdbID=@review.ImdbID">
                                     @review.MovieTitle
                                 </a>
@@ -139,7 +142,7 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
                                     <form method="post" asp-page-handler="DeleteReview" asp-route-reviewId="@review.Id">
-                                        <button type="submit" class="btn-design btn-red" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
+                                        <button type="submit" class="btn-design btn-red btn-table" title="Ta bort recension" aria-label="Ta bort recension" onclick="return confirm('Är du säker att du vill ta bort denna recension?')">
                                             ⛌
                                         </button>
                                     </form>
